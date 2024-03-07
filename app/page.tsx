@@ -1,4 +1,4 @@
-import { MainPage } from '@/components/page/main_page'
+import { MainPage } from '@/components/pages/main_page'
 import MaxWidthWrapper from '@/components/ui/max_width_wrapper'
 
 export default function Home() {

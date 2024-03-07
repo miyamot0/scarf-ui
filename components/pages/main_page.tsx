@@ -1,15 +1,11 @@
 'use client'
 import { useState } from 'react'
 import { Button } from '../ui/button'
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
-} from '../ui/card'
+import { Card, CardContent } from '../ui/card'
 import MaxWidthWrapper from '../ui/max_width_wrapper'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs'
+import { InstructionsView } from './instructions/instructions_view'
+import { StudiesView } from './studies/studies_view'
 
 type DisplayState = 'instructions' | 'studies' | 'visuals' | 'metrics'
 
@@ -28,7 +24,10 @@ export function MainPage() {
             </div>
             <Card>
                 <CardContent className="pt-6">
-                    <Tabs value={displayState} className="w-full">
+                    <Tabs
+                        value={displayState}
+                        className="w-full flex flex-col gap-y-4"
+                    >
                         <TabsList className="w-full flex flex-row">
                             <TabsTrigger
                                 value="instructions"
@@ -52,10 +51,10 @@ export function MainPage() {
                             </TabsTrigger>
                         </TabsList>
                         <TabsContent value="instructions">
-                            Make changes to your account here.
+                            <InstructionsView />
                         </TabsContent>
                         <TabsContent value="studies">
-                            Change your password here.
+                            <StudiesView />
                         </TabsContent>
                         <TabsContent value="visuals">
                             Change your password here.
