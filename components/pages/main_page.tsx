@@ -1,17 +1,16 @@
 'use client'
-import { useState } from 'react'
+
 import { Button } from '../ui/button'
 import { Card, CardContent } from '../ui/card'
 import MaxWidthWrapper from '../ui/max_width_wrapper'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs'
 import { InstructionsView } from './instructions/instructions_view'
 import { StudiesView } from './studies/studies_view'
-
-type DisplayState = 'instructions' | 'studies' | 'visuals' | 'metrics'
+import { database_reducer, dbAtom } from '@/atoms/db_atom'
+import { useReducerAtom } from 'jotai/utils'
 
 export function MainPage() {
-    const [displayState, setDisplayState] =
-        useState<DisplayState>('instructions')
+    const [state, dispatch] = useReducerAtom(dbAtom, database_reducer)
 
     return (
         <MaxWidthWrapper className="flex flex-col gap-y-4">
@@ -25,21 +24,35 @@ export function MainPage() {
             <Card>
                 <CardContent className="pt-6">
                     <Tabs
-                        value={displayState}
+                        value={state.DisplayState}
                         className="w-full flex flex-col gap-y-4"
                     >
                         <TabsList className="w-full flex flex-row">
                             <TabsTrigger
                                 value="instructions"
                                 className="w-full"
-                                onClick={() => setDisplayState('instructions')}
+                                onClick={() =>
+                                    dispatch({
+                                        type: 'update_display_state',
+                                        payload: {
+                                            display_state: 'instructions',
+                                        },
+                                    })
+                                }
                             >
                                 Instructions
                             </TabsTrigger>
                             <TabsTrigger
                                 value="studies"
                                 className="w-full"
-                                onClick={() => setDisplayState('studies')}
+                                onClick={() =>
+                                    dispatch({
+                                        type: 'update_display_state',
+                                        payload: {
+                                            display_state: 'studies',
+                                        },
+                                    })
+                                }
                             >
                                 Studies
                             </TabsTrigger>

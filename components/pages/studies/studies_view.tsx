@@ -29,7 +29,7 @@ const color_code = (status: string) => {
 
 export function StudiesView() {
     const { toast } = useToast()
-    const [studies, dispatch] = useReducerAtom(dbAtom, database_reducer)
+    const [state, dispatch] = useReducerAtom(dbAtom, database_reducer)
 
     return (
         <div className="flex flex-col gap-y-4">
@@ -52,22 +52,27 @@ export function StudiesView() {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {studies.map((study) => {
+                    {state.Studies.map((study: StudyObject) => {
                         return (
-                            <TableRow>
-                                <TableCell>[Blank]</TableCell>
-                                <TableCell>[Blank]</TableCell>
-                                <TableCell>[Blank]</TableCell>
-                                <TableCell>[Blank]</TableCell>
-                                <TableCell>[Blank]</TableCell>
+                            <TableRow key={`study_display_${study.StudyID}`}>
+                                <TableCell>{study.StudyTag}</TableCell>
+                                <TableCell>
+                                    {study.StudyAuthors.join(', ')}
+                                </TableCell>
+                                <TableCell>{study.StudyTitle}</TableCell>
+                                <TableCell>{study.StudyJournal}</TableCell>
+                                <TableCell>
+                                    {study.StudyYear !== -1
+                                        ? study.StudyYear
+                                        : ''}
+                                </TableCell>
                                 <TableCell className={''}>
                                     <Button
                                         size={'sm'}
                                         className={cn(
                                             color_code(
                                                 study.InternalValidity.Status
-                                            ),
-                                            'w-full'
+                                            )
                                         )}
                                         onClick={() => {
                                             toast({
@@ -77,7 +82,7 @@ export function StudiesView() {
                                             })
                                         }}
                                     >
-                                        Temp
+                                        <PenIcon size={16} color="white" />
                                     </Button>
                                 </TableCell>
                                 <TableCell>
@@ -86,8 +91,7 @@ export function StudiesView() {
                                         className={cn(
                                             color_code(
                                                 study.ExternalValidity.Status
-                                            ),
-                                            'w-full'
+                                            )
                                         )}
                                         onClick={() => {
                                             toast({
@@ -97,15 +101,14 @@ export function StudiesView() {
                                             })
                                         }}
                                     >
-                                        Temp
+                                        <PenIcon size={16} color="white" />
                                     </Button>
                                 </TableCell>
                                 <TableCell>
                                     <Button
                                         size={'sm'}
                                         className={cn(
-                                            color_code(study.Reporting.Status),
-                                            'w-full'
+                                            color_code(study.Reporting.Status)
                                         )}
                                         onClick={() => {
                                             toast({
@@ -115,15 +118,14 @@ export function StudiesView() {
                                             })
                                         }}
                                     >
-                                        Temp
+                                        <PenIcon size={16} color="white" />
                                     </Button>
                                 </TableCell>
                                 <TableCell>
                                     <Button
                                         size={'sm'}
                                         className={cn(
-                                            color_code(study.Outcomes.Status),
-                                            'w-full'
+                                            color_code(study.Outcomes.Status)
                                         )}
                                         onClick={() => {
                                             toast({
@@ -133,7 +135,7 @@ export function StudiesView() {
                                             })
                                         }}
                                     >
-                                        Temp
+                                        <PenIcon size={16} color="white" />
                                     </Button>
                                 </TableCell>
                                 <TableCell>
