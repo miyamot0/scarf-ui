@@ -143,10 +143,15 @@ export function StudiesView() {
                                         size={'sm'}
                                         className={cn('w-full')}
                                         onClick={() => {
-                                            toast({
-                                                title: 'TODO: Edit Study Details Dialog',
-                                                description: 'TODO',
-                                                duration: 2000,
+                                            dispatch({
+                                                type: 'update_dialog_state',
+                                                payload: {
+                                                    dialog_state: {
+                                                        dialog_type:
+                                                            'study_details',
+                                                        study: study,
+                                                    },
+                                                },
                                             })
                                         }}
                                     >

@@ -1,5 +1,6 @@
 'use client'
 
+import { StudyDetailsDialog } from '../dialogs/study_details_dialog'
 import { Button } from '../ui/button'
 import { Card, CardContent } from '../ui/card'
 import MaxWidthWrapper from '../ui/max_width_wrapper'
@@ -78,6 +79,7 @@ export function MainPage() {
                     </Tabs>
                 </CardContent>
             </Card>
+            <StudyDetailsDialog />
         </MaxWidthWrapper>
     )
 }

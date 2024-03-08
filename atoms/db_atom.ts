@@ -2,9 +2,13 @@ import { atom } from 'jotai'
 import { StudyObject } from '@/types/QuestionTypes'
 import { v4 as uuidv4 } from 'uuid'
 import { GlobalStateType } from '@/types/GlobalStateType'
-import { DisplayState } from '@/types/DisplayStateTypes'
+import { DialogState, DisplayState } from '@/types/DisplayStateTypes'
 
 export const dbAtom = atom<GlobalStateType>({
+    DialogState: {
+        dialog_type: undefined,
+        study: undefined,
+    },
     DisplayState: 'studies',
     Studies: [],
 })
@@ -12,6 +16,7 @@ export const dbAtom = atom<GlobalStateType>({
 export type DatabaseAction =
     | { type: 'add' }
     | { type: 'update_display_state'; payload: { display_state: DisplayState } }
+    | { type: 'update_dialog_state'; payload: { dialog_state: DialogState } }
     | { type: 'remove'; payload: { study_id: string } }
 
 export const database_reducer = (
@@ -64,6 +69,11 @@ export const database_reducer = (
             return {
                 ...state,
                 DisplayState: action.payload.display_state,
+            }
+        case 'update_dialog_state':
+            return {
+                ...state,
+                DialogState: action.payload.dialog_state,
             }
         default:
             return state
