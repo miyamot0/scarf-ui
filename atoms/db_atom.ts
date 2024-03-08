@@ -4,6 +4,8 @@ import { v4 as uuidv4 } from 'uuid'
 import { GlobalStateType } from '@/types/GlobalStateType'
 import { DialogState, DisplayState } from '@/types/DisplayStateTypes'
 
+const KEY_LOCAL_STORAGE = 'scarf-web-ui'
+
 export const dbAtom = atom<GlobalStateType>({
     DialogState: {
         dialog_type: undefined,
@@ -24,6 +26,9 @@ function update_study(
 }
 
 export type DatabaseAction =
+    | { type: 'load_local' }
+    | { type: 'load_external'; payload: { saved_state: GlobalStateType } }
+    | { type: 'save_local' }
     | { type: 'add' }
     | { type: 'update_display_state'; payload: { display_state: DisplayState } }
     | { type: 'update_dialog_state'; payload: { dialog_state: DialogState } }
@@ -38,6 +43,21 @@ export const database_reducer = (
     action: DatabaseAction
 ) => {
     switch (action.type) {
+        case 'load_local':
+            const value = localStorage.getItem(KEY_LOCAL_STORAGE)
+
+            if (value) return JSON.parse(value) as GlobalStateType
+
+            return state
+
+        case 'load_external':
+            return action.payload.saved_state
+
+        case 'save_local':
+            localStorage.setItem(KEY_LOCAL_STORAGE, JSON.stringify(state))
+
+            return state
+
         case 'add':
             const new_study: StudyObject = {
                 StudyID: uuidv4(),
