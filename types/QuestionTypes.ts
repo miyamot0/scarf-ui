@@ -8,6 +8,15 @@ export type QuestionCategory =
     | 'Reporting'
     | 'Outcomes'
 
+export type QuestionCategoryDVMeasurement =
+    | 'DV_Measurement_1'
+    | 'DV_Measurement_2'
+    | 'DV_Measurement_3'
+    | 'DV_Measurement_4'
+    | 'DV_Measurement_5'
+    | 'DV_Measurement_6'
+    | 'DV_Measurement_7'
+
 export type QuestionType =
     | 'YesNo'
     | 'Text'
