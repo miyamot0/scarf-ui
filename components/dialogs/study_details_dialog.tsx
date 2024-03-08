@@ -38,7 +38,7 @@ export function StudyDetailsDialog() {
                         <DialogDescription>{`Editing study with tag: ${state.DialogState.study?.StudyTag}`}</DialogDescription>
                     </DialogHeader>
 
-                    <StudyDetailsForm />
+                    <StudyDetailsForm study={state.DialogState.study} />
                 </DialogContent>
             </DialogOverlay>
         </Dialog>

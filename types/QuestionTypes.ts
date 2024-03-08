@@ -48,7 +48,7 @@ export type AnswerCategoryObject = {
 export type StudyObject = {
     StudyID: string
     StudyTag: string
-    StudyAuthors: string[]
+    StudyAuthors: string
     StudyTitle: string
     StudyJournal: string
     StudyYear: number

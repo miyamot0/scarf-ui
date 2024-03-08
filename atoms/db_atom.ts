@@ -13,10 +13,24 @@ export const dbAtom = atom<GlobalStateType>({
     Studies: [],
 })
 
+function update_study(
+    study_array: StudyObject[],
+    id: string,
+    updatedData: StudyObject
+) {
+    return study_array.map((item) =>
+        item.StudyID === id ? { ...item, ...updatedData } : item
+    )
+}
+
 export type DatabaseAction =
     | { type: 'add' }
     | { type: 'update_display_state'; payload: { display_state: DisplayState } }
     | { type: 'update_dialog_state'; payload: { dialog_state: DialogState } }
+    | {
+          type: 'update_study'
+          payload: { study_id: string; updatedData: StudyObject }
+      }
     | { type: 'remove'; payload: { study_id: string } }
 
 export const database_reducer = (
@@ -28,7 +42,7 @@ export const database_reducer = (
             const new_study: StudyObject = {
                 StudyID: uuidv4(),
                 StudyTag: '',
-                StudyAuthors: [],
+                StudyAuthors: '',
                 StudyTitle: '',
                 StudyJournal: '',
                 StudyYear: -1,
@@ -74,6 +88,19 @@ export const database_reducer = (
             return {
                 ...state,
                 DialogState: action.payload.dialog_state,
+            }
+        case 'update_study':
+            return {
+                ...state,
+                DialogState: {
+                    dialog_type: undefined,
+                    study: undefined,
+                },
+                Studies: update_study(
+                    state.Studies,
+                    action.payload.study_id,
+                    action.payload.updatedData
+                ),
             }
         default:
             return state

@@ -56,9 +56,7 @@ export function StudiesView() {
                         return (
                             <TableRow key={`study_display_${study.StudyID}`}>
                                 <TableCell>{study.StudyTag}</TableCell>
-                                <TableCell>
-                                    {study.StudyAuthors.join(', ')}
-                                </TableCell>
+                                <TableCell>{study.StudyAuthors}</TableCell>
                                 <TableCell>{study.StudyTitle}</TableCell>
                                 <TableCell>{study.StudyJournal}</TableCell>
                                 <TableCell>

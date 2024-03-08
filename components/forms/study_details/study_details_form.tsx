@@ -14,25 +14,40 @@ import {
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useToast } from '@/components/ui/use-toast'
+import { dbAtom, database_reducer } from '@/atoms/db_atom'
+import { useReducerAtom } from 'jotai/utils'
+import { StudyObject } from '@/types/QuestionTypes'
 
-export function StudyDetailsForm() {
+export function StudyDetailsForm({ study }: { study?: StudyObject }) {
     const { toast } = useToast()
+    const [, dispatch] = useReducerAtom(dbAtom, database_reducer)
     const form = useForm<z.infer<typeof StudyDetailsSchema>>({
         resolver: zodResolver(StudyDetailsSchema),
         defaultValues: {
-            code: '',
-            authors: '',
-            title: '',
-            journal: '',
-            year: 0,
+            code: study?.StudyTag,
+            authors: study?.StudyAuthors,
+            title: study?.StudyTitle,
+            journal: study?.StudyJournal,
+            year: study?.StudyYear,
         },
     })
 
-    // 2. Define a submit handler.
     function onSubmit(values: z.infer<typeof StudyDetailsSchema>) {
-        // Do something with the form values.
-        // ✅ This will be type-safe and validated.
-        console.log(values)
+        if (!study) throw new Error('Study should not be undefined')
+
+        const updated_study: StudyObject = {
+            ...study,
+            StudyTag: values.code,
+            StudyAuthors: values.authors,
+            StudyTitle: values.title,
+            StudyJournal: values.journal,
+            StudyYear: values.year,
+        }
+
+        dispatch({
+            type: 'update_study',
+            payload: { study_id: study.StudyID, updatedData: updated_study },
+        })
 
         toast({
             title: 'TODO: Updated in DB',
