@@ -36,3 +36,23 @@ export type AnswerObject = {
     QuestionID: string
     QuestionType: QuestionType
 }
+
+export type ResponseStatus = 'NotStarted' | 'InProgress' | 'Completed'
+
+export type AnswerCategoryObject = {
+    Category: 'InternalValidity' | 'ExternalValidity' | 'Reporting' | 'Outcomes'
+    Answers: AnswerObject[]
+    Status: ResponseStatus
+}
+
+export type StudyObject = {
+    StudyID: string
+    StudyAuthors: string[]
+    StudyTitle: string
+    StudyJournal: string
+    StudyYear: number
+    InternalValidity: AnswerCategoryObject
+    ExternalValidity: AnswerCategoryObject
+    Reporting: AnswerCategoryObject
+    Outcomes: AnswerCategoryObject
+}
