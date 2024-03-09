@@ -9,7 +9,6 @@ import { InstructionsView } from './instructions/instructions_view'
 import { StudiesView } from './studies/studies_view'
 import { database_reducer, dbAtom } from '@/atoms/db_atom'
 import { useReducerAtom } from 'jotai/utils'
-import { useToast } from '../ui/use-toast'
 import { StudyInternalValidityDialog } from '../dialogs/study_internal_validity_dialog'
 import { StudyExternalValidityDialog } from '../dialogs/study_external_validity_dialog'
 import { StudyReportingDialog } from '../dialogs/study_reporting_dialog'
@@ -17,7 +16,6 @@ import { StudyOutcomesDialog } from '../dialogs/study_outcomes_dialog'
 import { VisualsView } from './visuals/visuals_view'
 
 export function MainPage() {
-    const { toast } = useToast()
     const [state, dispatch] = useReducerAtom(dbAtom, database_reducer)
 
     useEffect(() => {
@@ -80,7 +78,7 @@ export function MainPage() {
                             </TabsTrigger>
                             <TabsTrigger
                                 value="metrics"
-                                className="w-full"
+                                className="w-full hidden"
                                 onClick={() =>
                                     dispatch({
                                         type: 'update_display_state',

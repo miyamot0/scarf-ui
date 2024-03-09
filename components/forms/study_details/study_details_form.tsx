@@ -13,13 +13,11 @@ import {
 } from '@/components/ui/form'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { useToast } from '@/components/ui/use-toast'
 import { dbAtom, database_reducer } from '@/atoms/db_atom'
 import { useReducerAtom } from 'jotai/utils'
 import { StudyObject } from '@/types/QuestionTypes'
 
 export function StudyDetailsForm({ study }: { study?: StudyObject }) {
-    const { toast } = useToast()
     const [, dispatch] = useReducerAtom(dbAtom, database_reducer)
     const form = useForm<z.infer<typeof StudyDetailsSchema>>({
         resolver: zodResolver(StudyDetailsSchema),
@@ -47,12 +45,6 @@ export function StudyDetailsForm({ study }: { study?: StudyObject }) {
         dispatch({
             type: 'update_study',
             payload: { study_id: study.StudyID, updatedData: updated_study },
-        })
-
-        toast({
-            title: 'TODO: Updated in DB',
-            description: 'TODO',
-            duration: 2000,
         })
     }
 
