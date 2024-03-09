@@ -39,14 +39,6 @@ export type QuestionObjectHolder = {
     Response?: string
 }
 
-export type QuestionObject = {
-    Category: QuestionCategory
-    QuestionID: string
-    QuestionStem: string
-    QuestionInstruction: string
-    QuestionType: QuestionType
-}
-
 export type ResponseStatus = 'NotStarted' | 'InProgress' | 'Completed'
 
 export type PublicationType =

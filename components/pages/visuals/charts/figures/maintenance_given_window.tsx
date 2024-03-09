@@ -63,13 +63,17 @@ export function MaintenanceGivenWindow({
                     type="number"
                     dataKey="x"
                     name="IV Indicators"
+                    tick={{ fill: 'black' }}
+                    tickLine={{ stroke: 'black' }}
                     tickMargin={5}
                     label={{
                         value: 'Period of Maintenance',
                         position: 'middle',
                         dy: 25,
+                        fill: 'black',
                     }}
                     domain={['dataMin-0.5', 'dataMax+0.5']}
+                    axisLine={{ stroke: 'black' }}
                     ticks={[0, 1, 2, 3, 4]}
                     tickFormatter={(value) => {
                         switch (value) {
@@ -91,14 +95,19 @@ export function MaintenanceGivenWindow({
                     type="number"
                     dataKey="y"
                     name="Strength"
+                    tick={{ fill: 'black' }}
+                    tickLine={{ stroke: 'black' }}
                     tickMargin={5}
                     label={{
                         value: 'Maintenance',
                         position: 'middle',
                         angle: -90,
                         dx: -125,
+                        fill: 'black',
                     }}
+                    color="black"
                     domain={['dataMin-0.5', 'dataMax+0.5']}
+                    axisLine={{ stroke: 'black' }}
                     ticks={[0, 1, 2, 3, 4]}
                     tickFormatter={(value) => {
                         switch (value) {

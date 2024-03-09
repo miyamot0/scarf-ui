@@ -63,12 +63,16 @@ export function VisualFunctionalRelationGivenIV({
                     type="number"
                     dataKey="x"
                     name="IV Indicators"
+                    tick={{ fill: 'black' }}
+                    tickLine={{ stroke: 'black' }}
                     tickMargin={5}
                     label={{
                         value: 'Indicators of Internal Validity',
                         position: 'middle',
                         dy: 25,
+                        fill: 'black',
                     }}
+                    axisLine={{ stroke: 'black' }}
                     domain={['dataMin-0.5', 'dataMax+0.5']}
                     ticks={[
                         0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
@@ -78,13 +82,17 @@ export function VisualFunctionalRelationGivenIV({
                     type="number"
                     dataKey="y"
                     name="Strength"
+                    tick={{ fill: 'black' }}
+                    tickLine={{ stroke: 'black' }}
                     tickMargin={5}
                     label={{
                         value: 'Functional Relation',
                         position: 'middle',
                         angle: -90,
                         dx: -125,
+                        fill: 'black',
                     }}
+                    axisLine={{ stroke: 'black' }}
                     domain={['dataMin-0.5', 'dataMax+0.5']}
                     ticks={[0, 1, 2, 3, 4]}
                     tickFormatter={(value) => {
