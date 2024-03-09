@@ -13,7 +13,6 @@ import { Button } from '@/components/ui/button'
 import { dbAtom, database_reducer } from '@/atoms/db_atom'
 import { useReducerAtom } from 'jotai/utils'
 import { QuestionObjectHolder, StudyObject } from '@/types/QuestionTypes'
-import { StudyInternalValiditySchema } from './study_internal_validity_schema'
 import {
     Select,
     SelectContent,
@@ -22,68 +21,60 @@ import {
     SelectValue,
 } from '@/components/ui/select'
 import { GetSelectOptionsFromTag } from '../inputs/select_options'
+import { StudyReportingSchema } from './study_reporting_schema'
 
-export function StudyInternalValidityForm({ study }: { study?: StudyObject }) {
+export function StudyReportingForm({ study }: { study?: StudyObject }) {
     const [, dispatch] = useReducerAtom(dbAtom, database_reducer)
 
-    const form = useForm<z.infer<typeof StudyInternalValiditySchema>>({
-        resolver: zodResolver(StudyInternalValiditySchema),
+    const form = useForm<z.infer<typeof StudyReportingSchema>>({
+        resolver: zodResolver(StudyReportingSchema),
         defaultValues: {
-            DV_Measurement_1: study?.InternalValidity.Questions.find(
-                (q) => q.QuestionID === 'DV_Measurement_1'
+            Reporting_1: study?.Reporting.Questions.find(
+                (q) => q.QuestionID === 'Reporting_1'
             )?.Response,
-            DV_Measurement_2: study?.InternalValidity.Questions.find(
-                (q) => q.QuestionID === 'DV_Measurement_2'
+            Reporting_2: study?.Reporting.Questions.find(
+                (q) => q.QuestionID === 'Reporting_2'
             )?.Response,
-            DV_Measurement_3: study?.InternalValidity.Questions.find(
-                (q) => q.QuestionID === 'DV_Measurement_3'
+            Reporting_3: study?.Reporting.Questions.find(
+                (q) => q.QuestionID === 'Reporting_3'
             )?.Response,
-            DV_Measurement_4: study?.InternalValidity.Questions.find(
-                (q) => q.QuestionID === 'DV_Measurement_4'
+            Reporting_4: study?.Reporting.Questions.find(
+                (q) => q.QuestionID === 'Reporting_4'
             )?.Response,
-            DV_Measurement_5: study?.InternalValidity.Questions.find(
-                (q) => q.QuestionID === 'DV_Measurement_5'
+            Reporting_5: study?.Reporting.Questions.find(
+                (q) => q.QuestionID === 'Reporting_5'
             )?.Response,
-            DV_Measurement_6: study?.InternalValidity.Questions.find(
-                (q) => q.QuestionID === 'DV_Measurement_6'
+            Reporting_6: study?.Reporting.Questions.find(
+                (q) => q.QuestionID === 'Reporting_6'
             )?.Response,
-            DV_Measurement_7: study?.InternalValidity.Questions.find(
-                (q) => q.QuestionID === 'DV_Measurement_7'
+            Reporting_7: study?.Reporting.Questions.find(
+                (q) => q.QuestionID === 'Reporting_7'
             )?.Response,
-            Design_Appropriateness_1: study?.InternalValidity.Questions.find(
-                (q) => q.QuestionID === 'Design_Appropriateness_1'
+            Reporting_8: study?.Reporting.Questions.find(
+                (q) => q.QuestionID === 'Reporting_8'
             )?.Response,
-            Design_Appropriateness_2: study?.InternalValidity.Questions.find(
-                (q) => q.QuestionID === 'Design_Appropriateness_2'
+            Reporting_9: study?.Reporting.Questions.find(
+                (q) => q.QuestionID === 'Reporting_9'
             )?.Response,
-            Design_Appropriateness_3: study?.InternalValidity.Questions.find(
-                (q) => q.QuestionID === 'Design_Appropriateness_3'
+            Reporting_10: study?.Reporting.Questions.find(
+                (q) => q.QuestionID === 'Reporting_10'
             )?.Response,
-            Design_Appropriateness_4: study?.InternalValidity.Questions.find(
-                (q) => q.QuestionID === 'Design_Appropriateness_4'
+            Reporting_11: study?.Reporting.Questions.find(
+                (q) => q.QuestionID === 'Reporting_11'
             )?.Response,
-            Fidelity_1: study?.InternalValidity.Questions.find(
-                (q) => q.QuestionID === 'Fidelity_1'
+            Reporting_12: study?.Reporting.Questions.find(
+                (q) => q.QuestionID === 'Reporting_12'
             )?.Response,
-            Fidelity_2: study?.InternalValidity.Questions.find(
-                (q) => q.QuestionID === 'Fidelity_2'
-            )?.Response,
-            Fidelity_3: study?.InternalValidity.Questions.find(
-                (q) => q.QuestionID === 'Fidelity_3'
-            )?.Response,
-            Fidelity_4: study?.InternalValidity.Questions.find(
-                (q) => q.QuestionID === 'Fidelity_4'
-            )?.Response,
-            Fidelity_5: study?.InternalValidity.Questions.find(
-                (q) => q.QuestionID === 'Fidelity_5'
+            Reporting_13: study?.Reporting.Questions.find(
+                (q) => q.QuestionID === 'Reporting_13'
             )?.Response,
         },
     })
 
-    function onSubmit(values: z.infer<typeof StudyInternalValiditySchema>) {
+    function onSubmit(values: z.infer<typeof StudyReportingSchema>) {
         if (!study) throw new Error('Study should not be undefined')
 
-        let questions = study.InternalValidity.Questions
+        let questions = study.Reporting.Questions
 
         let t: keyof QuestionObjectHolder
 
@@ -100,8 +91,8 @@ export function StudyInternalValidityForm({ study }: { study?: StudyObject }) {
 
         const updated_study = {
             ...study,
-            InternalValidity: {
-                ...study.InternalValidity,
+            Reporting: {
+                ...study.Reporting,
                 Questions: questions,
                 Status: 'Completed',
             },
@@ -116,7 +107,7 @@ export function StudyInternalValidityForm({ study }: { study?: StudyObject }) {
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-                {study?.InternalValidity.Questions.map((question) => {
+                {study?.Reporting.Questions.map((question) => {
                     return (
                         <FormField
                             key={question.QuestionID}
@@ -132,6 +123,7 @@ export function StudyInternalValidityForm({ study }: { study?: StudyObject }) {
                                         <Select
                                             onValueChange={field.onChange}
                                             defaultValue={field.value}
+                                            value={field.value}
                                         >
                                             <SelectTrigger>
                                                 <SelectValue placeholder="" />

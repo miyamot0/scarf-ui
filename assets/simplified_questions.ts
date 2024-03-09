@@ -197,7 +197,7 @@ export const ExternalValidityQuestions: QuestionObjectHolder[] = [
             'Is implementation in a relevant typical setting applicable to your research question (e.g., in homes, schools, or community settings)? If "No", report NA for the next row.',
         QuestionInstruction:
             'Identify specifically what settings are of interest (e.g., homes, schools, community, clinical offices)',
-        QuestionType: 'YesNoNotApplicable',
+        QuestionType: 'YesNo',
     },
     {
         Category: 'Generality & Boundedness',
@@ -205,16 +205,16 @@ export const ExternalValidityQuestions: QuestionObjectHolder[] = [
         QuestionStem:
             'Does implementation occur in a relevant typical setting?',
         QuestionInstruction: '',
-        QuestionType: 'YesNo',
+        QuestionType: 'YesNoNotApplicable',
     },
     {
         Category: 'Generality & Boundedness',
         QuestionID: 'Generality_Boundedness_3',
         QuestionStem:
-            'Is implementation by a relevant endogenous implementer applicable to your research question (e.g., implementation by teachers rather than researchers)?  If "No", report NA for the next row.',
+            'Is implementation by a relevant endogenous implementer applicable to your research question (e.g., implementation by teachers rather than researchers)?  If "No", report N/A for the next row.',
         QuestionInstruction:
             "Endogenous = typically present in the participant's typical environments. Identify specifically what implementers are of interest according to your research quesionts (e.g., teachers, caregivers, therapists).",
-        QuestionType: 'YesNoNotApplicable',
+        QuestionType: 'YesNo',
     },
     {
         Category: 'Generality & Boundedness',
@@ -238,7 +238,7 @@ export const ExternalValidityQuestions: QuestionObjectHolder[] = [
         Category: 'Generality & Boundedness',
         QuestionID: 'Generality_Boundedness_6',
         QuestionStem:
-            'Did authors assess generalization that is relevant to your other generalization question? (i.e., what you specified in row 34).',
+            'Did authors assess generalization that is relevant to your other generalization question? (i.e., what you specified before).',
         QuestionInstruction: '',
         QuestionType: 'YesNoNotApplicable',
     },
@@ -247,7 +247,7 @@ export const ExternalValidityQuestions: QuestionObjectHolder[] = [
         QuestionID: 'Generality_Boundedness_7',
         QuestionStem: 'How were generalization outcomes measured?',
         QuestionInstruction:
-            'If multiple types of generalization were measured (e.g., with different materials and implementers), and the measurement occurrences differed for each, report the most rigorous measurement here (e.g., single case design). SCD = Throughout the study (in the context of the single case design, with at least three data points per condition). Intermittent = In each primary comparison condition, but with fewer than three data points per condition. Pre/post = Before and after intervention. Post Only = After intervention only or some other measurement. None = No measurement. N/A = no generalization questions were asked ("No" scores in rows 30, 32, and 34)',
+            'If multiple types of generalization were measured (e.g., with different materials and implementers), and the measurement occurrences differed for each, report the most rigorous measurement here (e.g., single case design). SCD = Throughout the study (in the context of the single case design, with at least three data points per condition). Intermittent = In each primary comparison condition, but with fewer than three data points per condition. Pre/post = Before and after intervention. Post Only = After intervention only or some other measurement. None = No measurement. N/A = no generalization questions were asked',
         QuestionType: 'GeneralizationOutcomes',
     },
     {
@@ -266,7 +266,7 @@ export const ExternalValidityQuestions: QuestionObjectHolder[] = [
             'Was maintenance of behavior change assessed when the intervention was removed?',
         QuestionInstruction:
             'Note that authors sometimes refer to a condition as “maintenance” even though intervention is still in place (see Ledford et al., 2021 for a discussion of this in relation to interruption and redirection procedures). For example, in an intervention where teachers are taught to implement an intervention, a “maintenance” condition might refer to a final condition where teachers do not receive coaching but children are still receiving the intervention. In this case, teacher behaviors would be scored a "yes" (i.e., the coaching had been removed), but child behavior would be scored a "no" (i.e., the teacher intervention was still in place). For some cases would be selected when maintenance occurs for some but not all tiers in a multiple baseline or multiple probe design.',
-        QuestionType: 'YesNo',
+        QuestionType: 'YesNoNotApplicable',
     },
     {
         Category: 'Maintenance',

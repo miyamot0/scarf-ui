@@ -21,60 +21,39 @@ import {
     SelectValue,
 } from '@/components/ui/select'
 import { GetSelectOptionsFromTag } from '../inputs/select_options'
-import { StudyReportingSchema } from './study_reporting_schema'
+import { StudyOutcomesSchema } from './study_outcomes_schema'
 
-export function StudyReportingForm({ study }: { study?: StudyObject }) {
+export function StudyOutcomesForm({ study }: { study?: StudyObject }) {
     const [, dispatch] = useReducerAtom(dbAtom, database_reducer)
 
-    const form = useForm<z.infer<typeof StudyReportingSchema>>({
-        resolver: zodResolver(StudyReportingSchema),
+    const form = useForm<z.infer<typeof StudyOutcomesSchema>>({
+        resolver: zodResolver(StudyOutcomesSchema),
         defaultValues: {
-            Reporting_1: study?.Reporting.Questions.find(
-                (q) => q.QuestionID === 'Reporting_1'
+            Outcomes_1: study?.Outcomes.Questions.find(
+                (q) => q.QuestionID === 'Outcomes_1'
             )?.Response,
-            Reporting_2: study?.Reporting.Questions.find(
-                (q) => q.QuestionID === 'Reporting_2'
+            Outcomes_2: study?.Outcomes.Questions.find(
+                (q) => q.QuestionID === 'Outcomes_2'
             )?.Response,
-            Reporting_3: study?.Reporting.Questions.find(
-                (q) => q.QuestionID === 'Reporting_3'
+            Outcomes_3: study?.Outcomes.Questions.find(
+                (q) => q.QuestionID === 'Outcomes_3'
             )?.Response,
-            Reporting_4: study?.Reporting.Questions.find(
-                (q) => q.QuestionID === 'Reporting_4'
+            Outcomes_4: study?.Outcomes.Questions.find(
+                (q) => q.QuestionID === 'Outcomes_4'
             )?.Response,
-            Reporting_5: study?.Reporting.Questions.find(
-                (q) => q.QuestionID === 'Reporting_5'
+            Outcomes_5: study?.Outcomes.Questions.find(
+                (q) => q.QuestionID === 'Outcomes_5'
             )?.Response,
-            Reporting_6: study?.Reporting.Questions.find(
-                (q) => q.QuestionID === 'Reporting_6'
-            )?.Response,
-            Reporting_7: study?.Reporting.Questions.find(
-                (q) => q.QuestionID === 'Reporting_7'
-            )?.Response,
-            Reporting_8: study?.Reporting.Questions.find(
-                (q) => q.QuestionID === 'Reporting_8'
-            )?.Response,
-            Reporting_9: study?.Reporting.Questions.find(
-                (q) => q.QuestionID === 'Reporting_9'
-            )?.Response,
-            Reporting_10: study?.Reporting.Questions.find(
-                (q) => q.QuestionID === 'Reporting_10'
-            )?.Response,
-            Reporting_11: study?.Reporting.Questions.find(
-                (q) => q.QuestionID === 'Reporting_11'
-            )?.Response,
-            Reporting_12: study?.Reporting.Questions.find(
-                (q) => q.QuestionID === 'Reporting_12'
-            )?.Response,
-            Reporting_13: study?.Reporting.Questions.find(
-                (q) => q.QuestionID === 'Reporting_13'
+            Outcomes_6: study?.Outcomes.Questions.find(
+                (q) => q.QuestionID === 'Outcomes_6'
             )?.Response,
         },
     })
 
-    function onSubmit(values: z.infer<typeof StudyReportingSchema>) {
+    function onSubmit(values: z.infer<typeof StudyOutcomesSchema>) {
         if (!study) throw new Error('Study should not be undefined')
 
-        let questions = study.Reporting.Questions
+        let questions = study.Outcomes.Questions
 
         let t: keyof QuestionObjectHolder
 
@@ -91,8 +70,8 @@ export function StudyReportingForm({ study }: { study?: StudyObject }) {
 
         const updated_study = {
             ...study,
-            Reporting: {
-                ...study.Reporting,
+            Outcomes: {
+                ...study.Outcomes,
                 Questions: questions,
                 Status: 'Completed',
             },
@@ -104,10 +83,17 @@ export function StudyReportingForm({ study }: { study?: StudyObject }) {
         })
     }
 
+    function manual_overrides(question: QuestionObjectHolder, value: string) {
+        if (question.QuestionID === 'Outcomes_2' && value === 'No') {
+            form.setValue('Outcomes_3', 'N/A')
+            form.trigger('Outcomes_3')
+        }
+    }
+
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-                {study?.Reporting.Questions.map((question) => {
+                {study?.Outcomes.Questions.map((question) => {
                     return (
                         <FormField
                             key={question.QuestionID}
@@ -121,8 +107,15 @@ export function StudyReportingForm({ study }: { study?: StudyObject }) {
                                     </FormLabel>
                                     <FormControl>
                                         <Select
-                                            onValueChange={field.onChange}
+                                            onValueChange={(value) => {
+                                                field.onChange(value)
+                                                manual_overrides(
+                                                    question,
+                                                    value
+                                                )
+                                            }}
                                             defaultValue={field.value}
+                                            value={field.value}
                                         >
                                             <SelectTrigger>
                                                 <SelectValue placeholder="" />

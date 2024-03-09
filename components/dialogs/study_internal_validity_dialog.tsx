@@ -7,7 +7,7 @@ import {
 } from '../ui/dialog'
 import { dbAtom, database_reducer } from '@/atoms/db_atom'
 import { useReducerAtom } from 'jotai/utils'
-import { StudyInternalValidityForm } from '../forms/study_details/study_internal_validity_form'
+import { StudyInternalValidityForm } from '../forms/study_internal_validity/study_internal_validity_form'
 
 export function StudyInternalValidityDialog() {
     const [state, dispatch] = useReducerAtom(dbAtom, database_reducer)

@@ -7,7 +7,7 @@ import {
 } from '../ui/dialog'
 import { dbAtom, database_reducer } from '@/atoms/db_atom'
 import { useReducerAtom } from 'jotai/utils'
-import { StudyOutcomesForm } from '../forms/study_details/study_outcomes_form'
+import { StudyOutcomesForm } from '../forms/study_outcomes_form/study_outcomes_form'
 
 export function StudyOutcomesDialog() {
     const [state, dispatch] = useReducerAtom(dbAtom, database_reducer)
