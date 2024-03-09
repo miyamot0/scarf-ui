@@ -2,6 +2,7 @@ import {
     ExternalValidityQuestions,
     InternalValidityQuestions,
     QuestionObjectHolder,
+    ReportingQuestions,
 } from '@/assets/simplified_questions'
 
 export type QuestionCategory =
@@ -63,7 +64,7 @@ export type StudyObject = {
     StudyYear: number
     InternalValidity: TypeOfValidityObject
     ExternalValidity: TypeOfValidityObject
-    //Reporting: AnswerCategoryObject
+    Reporting: TypeOfValidityObject
     //Outcomes: AnswerCategoryObject
 }
 
@@ -80,4 +81,9 @@ export const InternalValidityQuestionDefault: TypeOfValidityObject = {
 export const ExternalValidityQuestionDefault: TypeOfValidityObject = {
     Status: 'NotStarted',
     Questions: ExternalValidityQuestions,
+}
+
+export const ReportingQuestionDefault: TypeOfValidityObject = {
+    Status: 'NotStarted',
+    Questions: ReportingQuestions,
 }

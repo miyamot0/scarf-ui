@@ -1,6 +1,7 @@
 import { QuestionType } from '@/types/QuestionTypes'
 
 export const OptionsYesNo = ['Yes', 'No'] as const
+export const OptionsYesNoPartial = ['Yes', 'No', 'Partial'] as const
 export const OptionsYesNoNA = ['Yes', 'No', 'N/A'] as const
 export const OptionsYesNoNAForSome = ['Yes', 'No', 'For Some', 'N/A'] as const
 export const OptionsYesNoNotPossible = ['Yes', 'No', 'Not Possible'] as const
@@ -71,12 +72,9 @@ export function GetSelectOptionsFromTag(type: QuestionType) {
             return OptionsYesNoNAForSome
         case 'MaintenancePeriod':
             return OptionsMaintenancePeriod
-        //case 'PrimarySecondaryUnknown':
-        //    return PrimarySecondaryUnknown
-        //case 'CbPcbG':
-        //    return StrongWeakCounterTherapeutic
-        //case 'CbPcbGNA':
-        //    return StrongWeakCounterTherapeuticNA
+        case 'YesNoPartial':
+            return OptionsYesNoPartial
+
         default:
             throw new Error('Invalid Question Type')
     }

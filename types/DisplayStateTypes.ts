@@ -8,5 +8,6 @@ export type DialogState = {
         | 'study_details'
         | 'study_internal_validity'
         | 'study_external_validity'
+        | 'study_reporting'
     study: undefined | StudyObject
 }
