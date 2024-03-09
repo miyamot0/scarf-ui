@@ -1,9 +1,16 @@
-import { dbAtom, database_reducer } from '@/atoms/db_atom'
+import { dbAtom } from '@/atoms/db_atom'
 import { useReducerAtom } from 'jotai/utils'
 import React from 'react'
 import { VisualFunctionalRelations } from './charts/visual_fx_relation'
 import { Switch } from '@/components/ui/switch'
 import { Label } from '@/components/ui/label'
+import {
+    CalculateOutcomeScore,
+    GenerateGeneralizationRating,
+    GenerateMaintenanceWindow,
+    GenerateStrengthRating,
+} from './helpers/scarf_scoring'
+import { database_reducer } from '@/atoms/reducers/reducer'
 
 function randomIntFromInterval(min: number, max: number) {
     return Math.floor(Math.random() * (max - min + 1) + min)
@@ -20,106 +27,30 @@ export function VisualsView() {
     const { Studies } = state
 
     const recordsToVisualize = Studies.map((study) => {
-        const score_internal_validity = study.InternalValidity.Questions.reduce(
-            (acc, question) => {
-                const derived_score = question.Response?.includes('Yes') ? 1 : 0
-
-                return acc + derived_score
-            },
-            0
+        const score_internal_validity = CalculateOutcomeScore(
+            'Internal Validity',
+            study
         )
 
-        const score_external_validity = study.ExternalValidity.Questions.reduce(
-            (acc, question) => {
-                const derived_score = question.Response?.includes('Yes') ? 1 : 0
-
-                return acc + derived_score
-            },
-            0
+        const score_external_validity = CalculateOutcomeScore(
+            'External Validity',
+            study
         )
 
-        const score_reporting = study.Reporting.Questions.reduce(
-            (acc, question) => {
-                const derived_score = question.Response?.includes('Yes') ? 1 : 0
+        const score_reporting = CalculateOutcomeScore('Reporting', study)
 
-                return acc + derived_score
-            },
-            0
+        const score_outcomes_value = GenerateStrengthRating(
+            'Functional Relations',
+            study
         )
-
-        const functional_rel_outcomes = study.Outcomes.Questions.find(
-            (q) => q.QuestionID === 'Outcomes_4'
+        const score_maintained_value = GenerateStrengthRating(
+            'Maintenance',
+            study
         )
-
-        const maintained_outcomes = study.Outcomes.Questions.find(
-            (q) => q.QuestionID === 'Outcomes_5'
+        const score_generalized_value = GenerateStrengthRating(
+            'Generalization',
+            study
         )
-
-        const generalized_outcomes = study.Outcomes.Questions.find(
-            (q) => q.QuestionID === 'Outcomes_6'
-        )
-
-        if (
-            !functional_rel_outcomes ||
-            !maintained_outcomes ||
-            !generalized_outcomes
-        )
-            throw new Error('Missing outcomes data')
-
-        let score_outcomes_value = 0
-        let score_maintained_value = 0
-        let score_generalized_value = 0
-
-        switch (functional_rel_outcomes.Response) {
-            case 'Strong':
-                score_outcomes_value = 4
-                break
-            case 'Weak':
-                score_outcomes_value = 3
-                break
-            case 'Inconsistent':
-                score_outcomes_value = 2
-                break
-            case 'Null':
-                score_outcomes_value = 1
-                break
-            default:
-                score_outcomes_value = 0
-        }
-
-        switch (maintained_outcomes.Response) {
-            case 'Strong':
-                score_maintained_value = 4
-                break
-            case 'Weak':
-                score_maintained_value = 3
-                break
-            case 'Inconsistent':
-                score_maintained_value = 2
-                break
-            case 'Null':
-                score_maintained_value = 1
-                break
-            default:
-                score_maintained_value = 0
-        }
-
-        switch (generalized_outcomes.Response) {
-            case 'Strong':
-                score_generalized_value = 4
-                break
-            case 'Weak':
-                score_generalized_value = 3
-                break
-            case 'Inconsistent':
-                score_generalized_value = 2
-                break
-            case 'Null':
-                score_generalized_value = 1
-                break
-            default:
-                score_generalized_value = 0
-        }
 
         return {
             Tag: study.StudyTag,
@@ -132,9 +63,17 @@ export function VisualsView() {
                 jitter,
                 score_maintained_value
             ),
+            MaintenanceWindow: applyConditionalJittering(
+                jitter,
+                GenerateMaintenanceWindow(study)
+            ),
             Generalized: applyConditionalJittering(
                 jitter,
                 score_generalized_value
+            ),
+            GeneralizationRigor: applyConditionalJittering(
+                jitter,
+                GenerateGeneralizationRating(study)
             ),
             Type: study.PublicationType,
         }
@@ -153,7 +92,7 @@ export function VisualsView() {
     const maintained_data_published = recordsToVisualize
         .filter((s) => s.Type === 'Journal')
         .map((record) => ({
-            x: record.IV,
+            x: record.MaintenanceWindow,
             y: record.Maintained,
             id: record.ID,
             label: record.Tag,
@@ -163,7 +102,7 @@ export function VisualsView() {
     const generalized_data_published = recordsToVisualize
         .filter((s) => s.Type === 'Journal')
         .map((record) => ({
-            x: record.IV,
+            x: record.GeneralizationRigor,
             y: record.Generalized,
             id: record.ID,
             label: record.Tag,
@@ -183,7 +122,7 @@ export function VisualsView() {
     const maintained_data_unpublished = recordsToVisualize
         .filter((s) => s.Type === 'Unpublished')
         .map((record) => ({
-            x: record.IV,
+            x: record.MaintenanceWindow,
             y: record.Outcome,
             id: record.ID,
             label: record.Tag,
@@ -193,7 +132,7 @@ export function VisualsView() {
     const generalized_data_unpublished = recordsToVisualize
         .filter((s) => s.Type === 'Unpublished')
         .map((record) => ({
-            x: record.IV,
+            x: record.GeneralizationRigor,
             y: record.Outcome,
             id: record.ID,
             label: record.Tag,
