@@ -14,6 +14,7 @@ import { StudyInternalValidityDialog } from '../dialogs/study_internal_validity_
 import { StudyExternalValidityDialog } from '../dialogs/study_external_validity_dialog'
 import { StudyReportingDialog } from '../dialogs/study_reporting_dialog'
 import { StudyOutcomesDialog } from '../dialogs/study_outcomes_dialog'
+import { VisualsView } from './visuals/visuals_view'
 
 export function MainPage() {
     const { toast } = useToast()
@@ -99,7 +100,7 @@ export function MainPage() {
                             <StudiesView />
                         </TabsContent>
                         <TabsContent value="visuals">
-                            TODO: Visuals Here.
+                            <VisualsView />
                         </TabsContent>
                         <TabsContent value="metrics">
                             TODO: Metrics Here.
