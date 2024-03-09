@@ -8,10 +8,16 @@ import {
     TableRow,
 } from '@/components/ui/table'
 import { useToast } from '@/components/ui/use-toast'
-import { MoreHorizontal, PenIcon } from 'lucide-react'
+import {
+    DeleteIcon,
+    EditIcon,
+    FilePlus2Icon,
+    MoreHorizontal,
+    PenIcon,
+} from 'lucide-react'
 import { useReducerAtom } from 'jotai/utils'
 import { dbAtom, database_reducer } from '@/atoms/db_atom'
-import { StudyObject } from '@/types/QuestionTypes'
+import { ResponseStatus, StudyObject } from '@/types/QuestionTypes'
 import { cn } from '@/lib/utils'
 import {
     DropdownMenu,
@@ -21,18 +27,17 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { color_code, text_color_code } from '@/lib/color_coding'
 
-const color_code = (status: string) => {
-    switch (status) {
-        case 'NotStarted':
-            return 'bg-red-500'
-        case 'InProgress':
-            return 'bg-yellow-500'
-        case 'Completed':
-            return 'bg-green-500'
-        default:
-            return 'bg-gray-500'
-    }
+const StatusCoding = ({ status }: { status?: ResponseStatus }) => {
+    return (
+        <div
+            className={cn(
+                'w-2 h-2 mr-2 rounded-full',
+                color_code(status ?? '')
+            )}
+        ></div>
+    )
 }
 
 export function StudiesView() {
@@ -41,10 +46,6 @@ export function StudiesView() {
 
     return (
         <div className="flex flex-col gap-y-4">
-            <p className="text-red">
-                Note: Color code whether or not features are completed.
-            </p>
-
             <Table>
                 <TableHeader>
                     <TableRow>
@@ -53,6 +54,8 @@ export function StudiesView() {
                         <TableHead>Study Title</TableHead>
                         <TableHead>Study Journal</TableHead>
                         <TableHead>Study Year</TableHead>
+                        <TableHead>Status</TableHead>
+                        <TableHead>Actions</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -68,6 +71,28 @@ export function StudiesView() {
                                         ? study.StudyYear
                                         : ''}
                                 </TableCell>
+
+                                <TableCell>
+                                    <div className="h-100 flex flex-row ">
+                                        <StatusCoding
+                                            status={
+                                                study.InternalValidity.Status
+                                            }
+                                        />
+                                        <StatusCoding
+                                            status={
+                                                study.ExternalValidity.Status
+                                            }
+                                        />
+                                        <StatusCoding
+                                            status={study.Reporting.Status}
+                                        />
+                                        <StatusCoding
+                                            status={study.Outcomes.Status}
+                                        />
+                                    </div>
+                                </TableCell>
+
                                 <TableCell>
                                     <DropdownMenu>
                                         <DropdownMenuTrigger asChild>
@@ -78,7 +103,7 @@ export function StudiesView() {
                                                 <span className="sr-only">
                                                     Open menu
                                                 </span>
-                                                <MoreHorizontal className="h-4 w-4" />
+                                                <MoreHorizontal />
                                             </Button>
                                         </DropdownMenuTrigger>
                                         <DropdownMenuContent align="end">
@@ -99,12 +124,10 @@ export function StudiesView() {
                                                     })
                                                 }}
                                             >
-                                                <div
-                                                    className={cn(
-                                                        'w-2 h-2 mr-2 rounded-full',
-                                                        'bg-green-500'
-                                                    )}
-                                                ></div>
+                                                <EditIcon
+                                                    size={20}
+                                                    className={cn('mr-2')}
+                                                />
                                                 Study Information
                                             </DropdownMenuItem>
                                             <DropdownMenuItem
@@ -121,16 +144,17 @@ export function StudiesView() {
                                                     })
                                                 }}
                                             >
-                                                <div
+                                                <EditIcon
+                                                    size={20}
                                                     className={cn(
-                                                        'w-2 h-2 mr-2 rounded-full',
-                                                        color_code(
+                                                        'mr-2',
+                                                        text_color_code(
                                                             study
                                                                 .InternalValidity
                                                                 .Status
                                                         )
                                                     )}
-                                                ></div>
+                                                />
                                                 Internal Validity Details
                                             </DropdownMenuItem>
                                             <DropdownMenuItem
@@ -147,16 +171,17 @@ export function StudiesView() {
                                                     })
                                                 }}
                                             >
-                                                <div
+                                                <EditIcon
+                                                    size={20}
                                                     className={cn(
-                                                        'w-2 h-2 mr-2 rounded-full',
-                                                        color_code(
+                                                        'mr-2',
+                                                        text_color_code(
                                                             study
                                                                 .ExternalValidity
                                                                 .Status
                                                         )
                                                     )}
-                                                ></div>
+                                                />
                                                 External Validity Details
                                             </DropdownMenuItem>
                                             <DropdownMenuItem
@@ -173,15 +198,16 @@ export function StudiesView() {
                                                     })
                                                 }}
                                             >
-                                                <div
+                                                <EditIcon
+                                                    size={20}
                                                     className={cn(
-                                                        'w-2 h-2 mr-2 rounded-full',
-                                                        color_code(
+                                                        'mr-2',
+                                                        text_color_code(
                                                             study.Reporting
                                                                 .Status
                                                         )
                                                     )}
-                                                ></div>
+                                                />
                                                 Reporting Details
                                             </DropdownMenuItem>
                                             <DropdownMenuItem
@@ -198,20 +224,21 @@ export function StudiesView() {
                                                     })
                                                 }}
                                             >
-                                                <div
+                                                <EditIcon
+                                                    size={20}
                                                     className={cn(
-                                                        'w-2 h-2 mr-2 rounded-full',
-                                                        color_code(
+                                                        'mr-2',
+                                                        text_color_code(
                                                             study.Outcomes
                                                                 .Status
                                                         )
                                                     )}
-                                                ></div>
+                                                />
                                                 Outcomes Details
                                             </DropdownMenuItem>
                                             <DropdownMenuSeparator />
                                             <DropdownMenuItem
-                                                className="text-red-500"
+                                                className="hover:bg-red-500 hover:text-white"
                                                 onClick={() => {
                                                     const confirm =
                                                         window.confirm(
@@ -236,6 +263,10 @@ export function StudiesView() {
                                                     })
                                                 }}
                                             >
+                                                <DeleteIcon
+                                                    size={20}
+                                                    className="mr-2"
+                                                />
                                                 Delete Record
                                             </DropdownMenuItem>
                                         </DropdownMenuContent>
@@ -258,6 +289,7 @@ export function StudiesView() {
                     })
                 }}
             >
+                <FilePlus2Icon size={20} className="mr-2" />
                 Add Study
             </Button>
         </div>

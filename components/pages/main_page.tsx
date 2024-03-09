@@ -14,8 +14,12 @@ import { useToast } from '../ui/use-toast'
 import { StudyInternalValidityDialog } from '../dialogs/study_internal_validity_dialog'
 import { StudyExternalValidityDialog } from '../dialogs/study_external_validity_dialog'
 import { StudyReportingDialog } from '../dialogs/study_reporting_dialog'
-import { StudyOutcomesForm } from '../forms/study_details/study_outcomes_form'
 import { StudyOutcomesDialog } from '../dialogs/study_outcomes_dialog'
+import {
+    HardDriveDownloadIcon,
+    HardDriveUploadIcon,
+    SaveIcon,
+} from 'lucide-react'
 
 export function MainPage() {
     const { toast } = useToast()
@@ -54,6 +58,7 @@ export function MainPage() {
                         })
                     }}
                 >
+                    <SaveIcon size={20} className="mr-2" />
                     Save
                 </Button>
                 <div className=" flex flex-row w-fit gap-x-2">
@@ -64,6 +69,7 @@ export function MainPage() {
                             }
                         }}
                     >
+                        <HardDriveUploadIcon size={20} className="mr-2" />
                         Import
                     </Button>
                     <input
@@ -99,6 +105,7 @@ export function MainPage() {
                             saveTxtToFile('scarf-web-ui.json', data)
                         }}
                     >
+                        <HardDriveDownloadIcon size={20} className="mr-2" />
                         Export
                     </Button>
                 </div>
@@ -138,10 +145,32 @@ export function MainPage() {
                             >
                                 Studies
                             </TabsTrigger>
-                            <TabsTrigger value="visuals" className="w-full">
+                            <TabsTrigger
+                                value="visuals"
+                                className="w-full"
+                                onClick={() =>
+                                    dispatch({
+                                        type: 'update_display_state',
+                                        payload: {
+                                            display_state: 'visuals',
+                                        },
+                                    })
+                                }
+                            >
                                 Visuals
                             </TabsTrigger>
-                            <TabsTrigger value="metrics" className="w-full">
+                            <TabsTrigger
+                                value="metrics"
+                                className="w-full"
+                                onClick={() =>
+                                    dispatch({
+                                        type: 'update_display_state',
+                                        payload: {
+                                            display_state: 'metrics',
+                                        },
+                                    })
+                                }
+                            >
                                 Metrics
                             </TabsTrigger>
                         </TabsList>
@@ -152,10 +181,10 @@ export function MainPage() {
                             <StudiesView />
                         </TabsContent>
                         <TabsContent value="visuals">
-                            Change your password here.
+                            TODO: Visuals Here.
                         </TabsContent>
                         <TabsContent value="metrics">
-                            Change your password here.
+                            TODO: Metrics Here.
                         </TabsContent>
                     </Tabs>
                 </CardContent>

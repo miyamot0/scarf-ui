@@ -32,7 +32,7 @@ export function StudyOutcomesDialog() {
                 <DialogContent className="max-h-[80%] overflow-y-auto">
                     <DialogHeader>
                         <DialogTitle>Study Information Editor</DialogTitle>
-                        <DialogDescription>{`Editing study with tag: ${state.DialogState.study?.StudyTag}`}</DialogDescription>
+                        <DialogDescription>{`Editing outcome metrics`}</DialogDescription>
                     </DialogHeader>
 
                     <StudyOutcomesForm study={state.DialogState.study} />
