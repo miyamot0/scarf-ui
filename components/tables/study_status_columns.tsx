@@ -1,7 +1,15 @@
 import { ResponseStatus, StudyObject } from '@/types/QuestionTypes'
 import { ColumnDef } from '@tanstack/react-table'
 import { Button } from '../ui/button'
-import { MoreHorizontal } from 'lucide-react'
+import {
+    Mail,
+    MessageSquare,
+    MoreHorizontal,
+    Plus,
+    PlusCircle,
+    UserPlus,
+    Users,
+} from 'lucide-react'
 import { Checkbox } from '../ui/checkbox'
 import { DataTableColumnHeader } from './study_status_column_header'
 import { color_code } from '@/lib/color_coding'
@@ -13,6 +21,12 @@ import {
     DropdownMenuLabel,
     DropdownMenuItem,
     DropdownMenuSeparator,
+    DropdownMenuGroup,
+    DropdownMenuSub,
+    DropdownMenuSubContent,
+    DropdownMenuPortal,
+    DropdownMenuSubTrigger,
+    DropdownMenuCheckboxItem,
 } from '@/components/ui/dropdown-menu'
 import { toast } from '../ui/use-toast'
 import { dbAtom, database_reducer } from '@/atoms/db_atom'
@@ -100,7 +114,10 @@ export const study_columns: ColumnDef<StudyObject>[] = [
                 study.Outcomes.Status,
             ]
 
-            if (values.every((v) => v === 'Completed')) {
+            if (
+                values.every((v) => v === 'Completed') &&
+                study.PublicationType !== 'Unclassified'
+            ) {
                 return <Badge className="bg-green-500">Completed</Badge>
             }
 
@@ -131,6 +148,7 @@ export const study_columns: ColumnDef<StudyObject>[] = [
                     <DropdownMenuContent align="end">
                         <DropdownMenuLabel>Edit Record</DropdownMenuLabel>
                         <DropdownMenuSeparator />
+
                         <DropdownMenuItem
                             onClick={() => {
                                 dispatch({
@@ -146,6 +164,71 @@ export const study_columns: ColumnDef<StudyObject>[] = [
                         >
                             Study Information
                         </DropdownMenuItem>
+
+                        <DropdownMenuGroup>
+                            <DropdownMenuSub>
+                                <DropdownMenuSubTrigger>
+                                    <span>Peer Review Status</span>
+                                </DropdownMenuSubTrigger>
+                                <DropdownMenuPortal>
+                                    <DropdownMenuSubContent>
+                                        <DropdownMenuCheckboxItem
+                                            checked={
+                                                study.PublicationType ===
+                                                'Unclassified'
+                                            }
+                                            onCheckedChange={() => {
+                                                dispatch({
+                                                    type: 'update_study_category',
+                                                    payload: {
+                                                        study_id: study.StudyID,
+                                                        category:
+                                                            'Unclassified',
+                                                    },
+                                                })
+                                            }}
+                                        >
+                                            Unclassified
+                                        </DropdownMenuCheckboxItem>
+                                        <DropdownMenuCheckboxItem
+                                            checked={
+                                                study.PublicationType ===
+                                                'Journal'
+                                            }
+                                            onCheckedChange={() => {
+                                                dispatch({
+                                                    type: 'update_study_category',
+                                                    payload: {
+                                                        study_id: study.StudyID,
+                                                        category: 'Journal',
+                                                    },
+                                                })
+                                            }}
+                                        >
+                                            Published Article
+                                        </DropdownMenuCheckboxItem>
+                                        <DropdownMenuCheckboxItem
+                                            checked={
+                                                study.PublicationType ===
+                                                'Unpublished'
+                                            }
+                                            onCheckedChange={() => {
+                                                dispatch({
+                                                    type: 'update_study_category',
+                                                    payload: {
+                                                        study_id: study.StudyID,
+                                                        category: 'Unpublished',
+                                                    },
+                                                })
+                                            }}
+                                        >
+                                            Unpublished
+                                        </DropdownMenuCheckboxItem>
+                                    </DropdownMenuSubContent>
+                                </DropdownMenuPortal>
+                            </DropdownMenuSub>
+                        </DropdownMenuGroup>
+
                         <DropdownMenuItem
                             onClick={() => {
                                 dispatch({

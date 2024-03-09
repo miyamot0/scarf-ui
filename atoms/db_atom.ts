@@ -3,6 +3,7 @@ import {
     ExternalValidityQuestionDefault,
     InternalValidityQuestionDefault,
     OutcomesQuestionDefault,
+    PublicationType,
     ReportingQuestionDefault,
     StudyObject,
 } from '@/types/QuestionTypes'
@@ -47,6 +48,10 @@ export type DatabaseAction =
           payload: { study_id: string; updatedData: StudyObject }
       }
     | { type: 'remove'; payload: { study_id: string } }
+    | {
+          type: 'update_study_category'
+          payload: { study_id: string; category: PublicationType }
+      }
 
 export const database_reducer = (
     state: GlobalStateType,
@@ -80,6 +85,7 @@ export const database_reducer = (
                 ExternalValidity: ExternalValidityQuestionDefault,
                 Reporting: ReportingQuestionDefault,
                 Outcomes: OutcomesQuestionDefault,
+                PublicationType: 'Unclassified',
             }
 
             return {
@@ -114,6 +120,15 @@ export const database_reducer = (
                     state.Studies,
                     action.payload.study_id,
                     action.payload.updatedData
+                ),
+            }
+        case 'update_study_category':
+            return {
+                ...state,
+                Studies: state.Studies.map((item) =>
+                    item.StudyID === action.payload.study_id
+                        ? { ...item, PublicationType: action.payload.category }
+                        : item
                 ),
             }
         default:

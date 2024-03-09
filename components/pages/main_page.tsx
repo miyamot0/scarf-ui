@@ -1,8 +1,7 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 import { StudyDetailsDialog } from '../dialogs/study_details_dialog'
-import { Button } from '../ui/button'
 import { Card, CardContent } from '../ui/card'
 import MaxWidthWrapper from '../ui/max_width_wrapper'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs'
@@ -15,18 +14,13 @@ import { StudyInternalValidityDialog } from '../dialogs/study_internal_validity_
 import { StudyExternalValidityDialog } from '../dialogs/study_external_validity_dialog'
 import { StudyReportingDialog } from '../dialogs/study_reporting_dialog'
 import { StudyOutcomesDialog } from '../dialogs/study_outcomes_dialog'
-import {
-    HardDriveDownloadIcon,
-    HardDriveUploadIcon,
-    SaveIcon,
-} from 'lucide-react'
 
 export function MainPage() {
     const { toast } = useToast()
     const [state, dispatch] = useReducerAtom(dbAtom, database_reducer)
 
     useEffect(() => {
-        //dispatch({ type: 'load_local' })
+        dispatch({ type: 'load_local' })
     }, [dispatch])
 
     return (

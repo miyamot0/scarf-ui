@@ -49,6 +49,13 @@ export type QuestionObject = {
 
 export type ResponseStatus = 'NotStarted' | 'InProgress' | 'Completed'
 
+export type PublicationType =
+    | 'Journal'
+    | 'Proceeding'
+    | 'Preprint'
+    | 'Unpublished'
+    | 'Unclassified'
+
 export type StudyObject = {
     StudyID: string
     StudyTag: string
@@ -60,6 +67,7 @@ export type StudyObject = {
     ExternalValidity: TypeOfValidityObject
     Reporting: TypeOfValidityObject
     Outcomes: TypeOfValidityObject
+    PublicationType: PublicationType
 }
 
 export type TypeOfValidityObject = {

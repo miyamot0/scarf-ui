@@ -3,22 +3,8 @@ import { useToast } from '@/components/ui/use-toast'
 import { FilePlus2Icon } from 'lucide-react'
 import { useReducerAtom } from 'jotai/utils'
 import { dbAtom, database_reducer } from '@/atoms/db_atom'
-import { ResponseStatus } from '@/types/QuestionTypes'
-import { cn } from '@/lib/utils'
-import { color_code } from '@/lib/color_coding'
 import { study_columns } from '@/components/tables/study_status_columns'
 import { StudyStatusDataTable } from '@/components/tables/study_status_table'
-
-const StatusCoding = ({ status }: { status?: ResponseStatus }) => {
-    return (
-        <div
-            className={cn(
-                'w-2 h-2 mr-2 rounded-full',
-                color_code(status ?? '')
-            )}
-        ></div>
-    )
-}
 
 export function StudiesView() {
     const { toast } = useToast()
