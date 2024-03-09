@@ -22,60 +22,20 @@ import {
 } from '@/components/ui/select'
 import { GetSelectOptionsFromTag } from '../inputs/select_options'
 import { QuestionObjectHolder } from '@/assets/simplified_questions'
-import { StudyReportingSchema } from './study_reporting_schema'
+import { StudyOutcomesSchema } from './study_outcomes_schema'
 
-export function StudyReportingForm({ study }: { study?: StudyObject }) {
+export function StudyOutcomesForm({ study }: { study?: StudyObject }) {
     const [, dispatch] = useReducerAtom(dbAtom, database_reducer)
 
-    const form = useForm<z.infer<typeof StudyReportingSchema>>({
-        resolver: zodResolver(StudyReportingSchema),
-        defaultValues: {
-            Reporting_1: study?.Reporting.Questions.find(
-                (q) => q.QuestionID === 'Reporting_1'
-            )?.Response,
-            Reporting_2: study?.Reporting.Questions.find(
-                (q) => q.QuestionID === 'Reporting_2'
-            )?.Response,
-            Reporting_3: study?.Reporting.Questions.find(
-                (q) => q.QuestionID === 'Reporting_3'
-            )?.Response,
-            Reporting_4: study?.Reporting.Questions.find(
-                (q) => q.QuestionID === 'Reporting_4'
-            )?.Response,
-            Reporting_5: study?.Reporting.Questions.find(
-                (q) => q.QuestionID === 'Reporting_5'
-            )?.Response,
-            Reporting_6: study?.Reporting.Questions.find(
-                (q) => q.QuestionID === 'Reporting_6'
-            )?.Response,
-            Reporting_7: study?.Reporting.Questions.find(
-                (q) => q.QuestionID === 'Reporting_7'
-            )?.Response,
-            Reporting_8: study?.Reporting.Questions.find(
-                (q) => q.QuestionID === 'Reporting_8'
-            )?.Response,
-            Reporting_9: study?.Reporting.Questions.find(
-                (q) => q.QuestionID === 'Reporting_9'
-            )?.Response,
-            Reporting_10: study?.Reporting.Questions.find(
-                (q) => q.QuestionID === 'Reporting_10'
-            )?.Response,
-            Reporting_11: study?.Reporting.Questions.find(
-                (q) => q.QuestionID === 'Reporting_11'
-            )?.Response,
-            Reporting_12: study?.Reporting.Questions.find(
-                (q) => q.QuestionID === 'Reporting_12'
-            )?.Response,
-            Reporting_13: study?.Reporting.Questions.find(
-                (q) => q.QuestionID === 'Reporting_13'
-            )?.Response,
-        },
+    const form = useForm<z.infer<typeof StudyOutcomesSchema>>({
+        resolver: zodResolver(StudyOutcomesSchema),
+        defaultValues: {},
     })
 
-    function onSubmit(values: z.infer<typeof StudyReportingSchema>) {
+    function onSubmit(values: z.infer<typeof StudyOutcomesSchema>) {
         if (!study) throw new Error('Study should not be undefined')
 
-        let questions = study.Reporting.Questions
+        let questions = study.Outcomes.Questions
 
         let t: keyof QuestionObjectHolder
 
@@ -92,8 +52,8 @@ export function StudyReportingForm({ study }: { study?: StudyObject }) {
 
         const updated_study = {
             ...study,
-            Reporting: {
-                ...study.Reporting,
+            Outcomes: {
+                ...study.Outcomes,
                 Questions: questions,
                 Status: 'Completed',
             },
@@ -108,7 +68,7 @@ export function StudyReportingForm({ study }: { study?: StudyObject }) {
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-                {study?.Reporting.Questions.map((question) => {
+                {study?.Outcomes.Questions.map((question) => {
                     return (
                         <FormField
                             key={question.QuestionID}

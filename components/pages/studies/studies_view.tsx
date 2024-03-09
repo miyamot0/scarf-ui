@@ -48,7 +48,7 @@ export function StudiesView() {
                         <TableHead>Internal Validity</TableHead>
                         <TableHead>External Validity</TableHead>
                         <TableHead>Reporting</TableHead>
-                        <TableHead>Action</TableHead>
+                        <TableHead>Outcomes</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -137,15 +137,19 @@ export function StudiesView() {
                                 <TableCell>
                                     <Button
                                         size={'sm'}
-                                        className={
-                                            cn()
-                                            //color_code(study.Outcomes.Status)
-                                        }
+                                        className={cn(
+                                            color_code(study.Outcomes.Status)
+                                        )}
                                         onClick={() => {
-                                            toast({
-                                                title: 'TODO: Edit Study Outcomes',
-                                                description: 'TODO',
-                                                duration: 2000,
+                                            dispatch({
+                                                type: 'update_dialog_state',
+                                                payload: {
+                                                    dialog_state: {
+                                                        dialog_type:
+                                                            'study_outcomes',
+                                                        study: study,
+                                                    },
+                                                },
                                             })
                                         }}
                                     >

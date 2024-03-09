@@ -2,6 +2,7 @@ import { atom } from 'jotai'
 import {
     ExternalValidityQuestionDefault,
     InternalValidityQuestionDefault,
+    OutcomesQuestionDefault,
     ReportingQuestionDefault,
     StudyObject,
 } from '@/types/QuestionTypes'
@@ -78,13 +79,7 @@ export const database_reducer = (
                 InternalValidity: InternalValidityQuestionDefault,
                 ExternalValidity: ExternalValidityQuestionDefault,
                 Reporting: ReportingQuestionDefault,
-                /*
-                Outcomes: {
-                    Category: 'Outcomes',
-                    Answers: [],
-                    Status: 'NotStarted',
-                },
-                */
+                Outcomes: OutcomesQuestionDefault,
             }
 
             return {

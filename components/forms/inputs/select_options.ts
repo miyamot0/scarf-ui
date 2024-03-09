@@ -74,6 +74,12 @@ export function GetSelectOptionsFromTag(type: QuestionType) {
             return OptionsMaintenancePeriod
         case 'YesNoPartial':
             return OptionsYesNoPartial
+        case 'PrimarySecondaryUnknown':
+            return PrimarySecondaryUnknown
+        case 'ConditionChangeCharacterization':
+            return StrongWeakCounterTherapeutic
+        case 'ConditionChangeCharacterizationNA':
+            return StrongWeakCounterTherapeuticNA
 
         default:
             throw new Error('Invalid Question Type')

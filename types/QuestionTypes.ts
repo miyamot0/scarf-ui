@@ -1,6 +1,7 @@
 import {
     ExternalValidityQuestions,
     InternalValidityQuestions,
+    OutcomesQuestions,
     QuestionObjectHolder,
     ReportingQuestions,
 } from '@/assets/simplified_questions'
@@ -14,15 +15,6 @@ export type QuestionCategory =
     | 'Maintenance'
     | 'Reporting'
     | 'Outcomes'
-
-export type QuestionCategoryDVMeasurement =
-    | 'DV_Measurement_1'
-    | 'DV_Measurement_2'
-    | 'DV_Measurement_3'
-    | 'DV_Measurement_4'
-    | 'DV_Measurement_5'
-    | 'DV_Measurement_6'
-    | 'DV_Measurement_7'
 
 export type QuestionType =
     | 'YesNo'
@@ -47,12 +39,6 @@ export type QuestionObject = {
     QuestionType: QuestionType
 }
 
-export type AnswerObject = {
-    Category: QuestionCategory
-    QuestionID: string
-    QuestionType: QuestionType
-}
-
 export type ResponseStatus = 'NotStarted' | 'InProgress' | 'Completed'
 
 export type StudyObject = {
@@ -65,7 +51,7 @@ export type StudyObject = {
     InternalValidity: TypeOfValidityObject
     ExternalValidity: TypeOfValidityObject
     Reporting: TypeOfValidityObject
-    //Outcomes: AnswerCategoryObject
+    Outcomes: TypeOfValidityObject
 }
 
 export type TypeOfValidityObject = {
@@ -86,4 +72,9 @@ export const ExternalValidityQuestionDefault: TypeOfValidityObject = {
 export const ReportingQuestionDefault: TypeOfValidityObject = {
     Status: 'NotStarted',
     Questions: ReportingQuestions,
+}
+
+export const OutcomesQuestionDefault: TypeOfValidityObject = {
+    Status: 'NotStarted',
+    Questions: OutcomesQuestions,
 }

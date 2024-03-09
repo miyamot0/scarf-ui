@@ -14,6 +14,8 @@ import { useToast } from '../ui/use-toast'
 import { StudyInternalValidityDialog } from '../dialogs/study_internal_validity_dialog'
 import { StudyExternalValidityDialog } from '../dialogs/study_external_validity_dialog'
 import { StudyReportingDialog } from '../dialogs/study_reporting_dialog'
+import { StudyOutcomesForm } from '../forms/study_details/study_outcomes_form'
+import { StudyOutcomesDialog } from '../dialogs/study_outcomes_dialog'
 
 export function MainPage() {
     const { toast } = useToast()
@@ -163,6 +165,7 @@ export function MainPage() {
             <StudyInternalValidityDialog />
             <StudyExternalValidityDialog />
             <StudyReportingDialog />
+            <StudyOutcomesDialog />
         </MaxWidthWrapper>
     )
 }
