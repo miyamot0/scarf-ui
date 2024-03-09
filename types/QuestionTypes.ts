@@ -2,7 +2,6 @@ import {
     ExternalValidityQuestions,
     InternalValidityQuestions,
     OutcomesQuestions,
-    QuestionObjectHolder,
     ReportingQuestions,
 } from '@/assets/simplified_questions'
 
@@ -30,6 +29,15 @@ export type QuestionType =
     | 'PrimarySecondaryUnknown'
     | 'ConditionChangeCharacterization'
     | 'ConditionChangeCharacterizationNA'
+
+export type QuestionObjectHolder = {
+    Category: QuestionCategory
+    QuestionID: string
+    QuestionStem: string
+    QuestionInstruction: string
+    QuestionType: QuestionType
+    Response?: string
+}
 
 export type QuestionObject = {
     Category: QuestionCategory

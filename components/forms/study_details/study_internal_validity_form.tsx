@@ -12,10 +12,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { dbAtom, database_reducer } from '@/atoms/db_atom'
 import { useReducerAtom } from 'jotai/utils'
-import {
-    QuestionCategoryDVMeasurement,
-    StudyObject,
-} from '@/types/QuestionTypes'
+import { QuestionObjectHolder, StudyObject } from '@/types/QuestionTypes'
 import { StudyInternalValiditySchema } from './study_internal_validity_schema'
 import {
     Select,
@@ -25,7 +22,6 @@ import {
     SelectValue,
 } from '@/components/ui/select'
 import { GetSelectOptionsFromTag } from '../inputs/select_options'
-import { QuestionObjectHolder } from '@/assets/simplified_questions'
 
 export function StudyInternalValidityForm({ study }: { study?: StudyObject }) {
     const [, dispatch] = useReducerAtom(dbAtom, database_reducer)
@@ -125,9 +121,8 @@ export function StudyInternalValidityForm({ study }: { study?: StudyObject }) {
                         <FormField
                             key={question.QuestionID}
                             control={form.control}
-                            name={
-                                question.QuestionID as QuestionCategoryDVMeasurement
-                            }
+                            // @ts-ignore
+                            name={question.QuestionID}
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>

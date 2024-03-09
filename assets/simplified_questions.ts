@@ -1,13 +1,4 @@
-import { QuestionCategory, QuestionType } from '@/types/QuestionTypes'
-
-export type QuestionObjectHolder = {
-    Category: QuestionCategory
-    QuestionID: string
-    QuestionStem: string
-    QuestionInstruction: string
-    QuestionType: QuestionType
-    Response?: string
-}
+import { QuestionObjectHolder } from '@/types/QuestionTypes'
 
 export const InternalValidityQuestions: QuestionObjectHolder[] = [
     {

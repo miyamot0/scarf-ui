@@ -213,6 +213,15 @@ export function StudiesView() {
                                             <DropdownMenuItem
                                                 className="text-red-500"
                                                 onClick={() => {
+                                                    const confirm =
+                                                        window.confirm(
+                                                            'Are you sure you want to delete this record?'
+                                                        )
+
+                                                    if (!confirm) {
+                                                        return
+                                                    }
+
                                                     dispatch({
                                                         type: 'remove',
                                                         payload: {

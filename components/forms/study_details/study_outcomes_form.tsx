@@ -12,7 +12,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { dbAtom, database_reducer } from '@/atoms/db_atom'
 import { useReducerAtom } from 'jotai/utils'
-import { StudyObject } from '@/types/QuestionTypes'
+import { QuestionObjectHolder, StudyObject } from '@/types/QuestionTypes'
 import {
     Select,
     SelectContent,
@@ -21,7 +21,6 @@ import {
     SelectValue,
 } from '@/components/ui/select'
 import { GetSelectOptionsFromTag } from '../inputs/select_options'
-import { QuestionObjectHolder } from '@/assets/simplified_questions'
 import { StudyOutcomesSchema } from './study_outcomes_schema'
 
 export function StudyOutcomesForm({ study }: { study?: StudyObject }) {
