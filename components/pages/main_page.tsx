@@ -11,6 +11,7 @@ import { StudiesView } from './studies/studies_view'
 import { database_reducer, dbAtom } from '@/atoms/db_atom'
 import { useReducerAtom } from 'jotai/utils'
 import { useToast } from '../ui/use-toast'
+import { StudyInternalValidityDialog } from '../dialogs/study_internal_validity_dialog'
 
 export function MainPage() {
     const { toast } = useToast()
@@ -32,7 +33,7 @@ export function MainPage() {
     }
 
     useEffect(() => {
-        dispatch({ type: 'load_local' })
+        //dispatch({ type: 'load_local' })
     }, [dispatch])
 
     return (
@@ -155,7 +156,9 @@ export function MainPage() {
                     </Tabs>
                 </CardContent>
             </Card>
+            {/* Dialogs */}
             <StudyDetailsDialog />
+            <StudyInternalValidityDialog />
         </MaxWidthWrapper>
     )
 }

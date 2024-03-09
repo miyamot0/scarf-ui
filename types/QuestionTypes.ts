@@ -1,3 +1,8 @@
+import {
+    InternalValidityQuestions,
+    QuestionObjectHolder,
+} from '@/assets/simplified_questions'
+
 export type QuestionCategory =
     | 'DV Measurement'
     | 'Design Appropriateness'
@@ -61,8 +66,18 @@ export type StudyObject = {
     StudyTitle: string
     StudyJournal: string
     StudyYear: number
-    InternalValidity: AnswerCategoryObject
-    ExternalValidity: AnswerCategoryObject
-    Reporting: AnswerCategoryObject
-    Outcomes: AnswerCategoryObject
+    InternalValidity: InternalValidityObject
+    //ExternalValidity: AnswerCategoryObject
+    //Reporting: AnswerCategoryObject
+    //Outcomes: AnswerCategoryObject
+}
+
+export type InternalValidityObject = {
+    Status: ResponseStatus
+    Questions: QuestionObjectHolder[]
+}
+
+export const InternalValidityQuestionDefault: InternalValidityObject = {
+    Status: 'NotStarted',
+    Questions: InternalValidityQuestions,
 }

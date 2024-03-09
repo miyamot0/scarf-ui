@@ -7,14 +7,14 @@ import {
 } from '../ui/dialog'
 import { dbAtom, database_reducer } from '@/atoms/db_atom'
 import { useReducerAtom } from 'jotai/utils'
-import { StudyDetailsForm } from '../forms/study_details/study_details_form'
+import { StudyInternalValidityForm } from '../forms/study_details/study_internal_validity_form'
 
-export function StudyDetailsDialog() {
+export function StudyInternalValidityDialog() {
     const [state, dispatch] = useReducerAtom(dbAtom, database_reducer)
 
     return (
         <Dialog
-            open={state.DialogState.dialog_type === 'study_details'}
+            open={state.DialogState.dialog_type === 'study_internal_validity'}
             onOpenChange={() => {
                 dispatch({
                     type: 'update_dialog_state',
@@ -35,7 +35,9 @@ export function StudyDetailsDialog() {
                         <DialogDescription>{`Editing study with tag: ${state.DialogState.study?.StudyTag}`}</DialogDescription>
                     </DialogHeader>
 
-                    <StudyDetailsForm study={state.DialogState.study} />
+                    <StudyInternalValidityForm
+                        study={state.DialogState.study}
+                    />
                 </DialogContent>
             </DialogOverlay>
         </Dialog>

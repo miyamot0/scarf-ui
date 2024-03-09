@@ -1,5 +1,8 @@
 import { atom } from 'jotai'
-import { StudyObject } from '@/types/QuestionTypes'
+import {
+    InternalValidityQuestionDefault,
+    StudyObject,
+} from '@/types/QuestionTypes'
 import { v4 as uuidv4 } from 'uuid'
 import { GlobalStateType } from '@/types/GlobalStateType'
 import { DialogState, DisplayState } from '@/types/DisplayStateTypes'
@@ -36,6 +39,10 @@ export type DatabaseAction =
           type: 'update_study'
           payload: { study_id: string; updatedData: StudyObject }
       }
+    | {
+          type: 'update_study_internal_validity'
+          payload: { study_id: string; updatedData: StudyObject }
+      }
     | { type: 'remove'; payload: { study_id: string } }
 
 export const database_reducer = (
@@ -66,11 +73,8 @@ export const database_reducer = (
                 StudyTitle: '',
                 StudyJournal: '',
                 StudyYear: -1,
-                InternalValidity: {
-                    Category: 'InternalValidity',
-                    Answers: [],
-                    Status: 'NotStarted',
-                },
+                InternalValidity: InternalValidityQuestionDefault,
+                /*
                 ExternalValidity: {
                     Category: 'ExternalValidity',
                     Answers: [],
@@ -86,6 +90,7 @@ export const database_reducer = (
                     Answers: [],
                     Status: 'NotStarted',
                 },
+                */
             }
 
             return {
