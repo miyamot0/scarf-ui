@@ -13,9 +13,10 @@ import {
 } from '@/components/ui/form'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { dbAtom, database_reducer } from '@/atoms/db_atom'
+import { dbAtom } from '@/atoms/db_atom'
 import { useReducerAtom } from 'jotai/utils'
 import { StudyObject } from '@/types/QuestionTypes'
+import { database_reducer } from '@/atoms/reducers/reducer'
 
 export function StudyDetailsForm({ study }: { study?: StudyObject }) {
     const [, dispatch] = useReducerAtom(dbAtom, database_reducer)

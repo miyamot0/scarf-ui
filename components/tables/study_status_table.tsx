@@ -32,9 +32,10 @@ import {
     SaveIcon,
 } from 'lucide-react'
 import { useReducerAtom } from 'jotai/utils'
-import { database_reducer, dbAtom } from '@/atoms/db_atom'
+import { dbAtom } from '@/atoms/db_atom'
 import { useToast } from '../ui/use-toast'
 import { StudyObject } from '@/types/QuestionTypes'
+import { database_reducer } from '@/atoms/reducers/reducer'
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]

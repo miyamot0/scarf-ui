@@ -10,7 +10,8 @@ import {
     FormMessage,
 } from '@/components/ui/form'
 import { Button } from '@/components/ui/button'
-import { dbAtom, database_reducer } from '@/atoms/db_atom'
+import { dbAtom } from '@/atoms/db_atom'
+import { database_reducer } from '@/atoms/reducers/reducer'
 import { useReducerAtom } from 'jotai/utils'
 import { QuestionObjectHolder, StudyObject } from '@/types/QuestionTypes'
 import {

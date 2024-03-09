@@ -5,9 +5,10 @@ import {
     DialogHeader,
     DialogOverlay,
 } from '../ui/dialog'
-import { dbAtom, database_reducer } from '@/atoms/db_atom'
+import { dbAtom } from '@/atoms/db_atom'
 import { useReducerAtom } from 'jotai/utils'
 import { StudyOutcomesForm } from '../forms/study_outcomes_form/study_outcomes_form'
+import { database_reducer } from '@/atoms/reducers/reducer'
 
 export function StudyOutcomesDialog() {
     const [state, dispatch] = useReducerAtom(dbAtom, database_reducer)

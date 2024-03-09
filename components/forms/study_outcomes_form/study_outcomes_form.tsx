@@ -10,7 +10,7 @@ import {
     FormMessage,
 } from '@/components/ui/form'
 import { Button } from '@/components/ui/button'
-import { dbAtom, database_reducer } from '@/atoms/db_atom'
+import { dbAtom } from '@/atoms/db_atom'
 import { useReducerAtom } from 'jotai/utils'
 import { QuestionObjectHolder, StudyObject } from '@/types/QuestionTypes'
 import {
@@ -22,6 +22,7 @@ import {
 } from '@/components/ui/select'
 import { GetSelectOptionsFromTag } from '../inputs/select_options'
 import { StudyOutcomesSchema } from './study_outcomes_schema'
+import { database_reducer } from '@/atoms/reducers/reducer'
 
 export function StudyOutcomesForm({ study }: { study?: StudyObject }) {
     const [, dispatch] = useReducerAtom(dbAtom, database_reducer)

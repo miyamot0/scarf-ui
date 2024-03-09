@@ -1,7 +1,6 @@
 import { dbAtom } from '@/atoms/db_atom'
 import { useReducerAtom } from 'jotai/utils'
 import React from 'react'
-import { VisualFunctionalRelations } from './charts/visual_fx_relation'
 import { Switch } from '@/components/ui/switch'
 import { Label } from '@/components/ui/label'
 import {

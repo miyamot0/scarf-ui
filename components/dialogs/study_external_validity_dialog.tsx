@@ -5,9 +5,10 @@ import {
     DialogHeader,
     DialogOverlay,
 } from '../ui/dialog'
-import { dbAtom, database_reducer } from '@/atoms/db_atom'
+import { dbAtom } from '@/atoms/db_atom'
 import { useReducerAtom } from 'jotai/utils'
 import { StudyExternalValidityForm } from '../forms/study_external_validity/study_external_validity_form'
+import { database_reducer } from '@/atoms/reducers/reducer'
 
 export function StudyExternalValidityDialog() {
     const [state, dispatch] = useReducerAtom(dbAtom, database_reducer)
