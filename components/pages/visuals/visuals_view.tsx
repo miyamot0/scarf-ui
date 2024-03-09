@@ -11,6 +11,10 @@ import {
     GenerateStrengthRating,
 } from './helpers/scarf_scoring'
 import { database_reducer } from '@/atoms/reducers/reducer'
+import { PublicationType } from '@/types/QuestionTypes'
+import { VisualFunctionalRelationGivenIV } from './charts/figures/fx_rel_given_iv_strength'
+import { MaintenanceGivenWindow } from './charts/figures/maintenance_given_window'
+import { GeneralizationGivenWindow } from './charts/figures/generalization_given_window'
 
 function randomIntFromInterval(min: number, max: number) {
     return Math.floor(Math.random() * (max - min + 1) + min)
@@ -18,6 +22,20 @@ function randomIntFromInterval(min: number, max: number) {
 
 function applyConditionalJittering(jitter: boolean, value: number) {
     return jitter ? value + randomIntFromInterval(-10, 10) / 100 : value
+}
+
+export type CommonVisualOutput = {
+    Tag: string
+    ID: string
+    IV: number
+    EV: number
+    Reporting: number
+    Outcome: number
+    Maintained: number
+    MaintenanceWindow: number
+    Generalized: number
+    GeneralizationRigor: number
+    Type: PublicationType
 }
 
 export function VisualsView() {
@@ -79,51 +97,11 @@ export function VisualsView() {
         }
     })
 
-    const fx_rel_data_published = recordsToVisualize
-        .filter((s) => s.Type === 'Journal')
-        .map((record) => ({
-            x: record.IV,
-            y: record.Outcome,
-            id: record.ID,
-            label: record.Tag,
-            z: 20,
-        }))
-
-    const maintained_data_published = recordsToVisualize
-        .filter((s) => s.Type === 'Journal')
-        .map((record) => ({
-            x: record.MaintenanceWindow,
-            y: record.Maintained,
-            id: record.ID,
-            label: record.Tag,
-            z: 20,
-        }))
-
     const generalized_data_published = recordsToVisualize
         .filter((s) => s.Type === 'Journal')
         .map((record) => ({
             x: record.GeneralizationRigor,
             y: record.Generalized,
-            id: record.ID,
-            label: record.Tag,
-            z: 20,
-        }))
-
-    const fx_rel_data_unpublished = recordsToVisualize
-        .filter((s) => s.Type === 'Unpublished')
-        .map((record) => ({
-            x: record.IV,
-            y: record.Outcome,
-            id: record.ID,
-            label: record.Tag,
-            z: 20,
-        }))
-
-    const maintained_data_unpublished = recordsToVisualize
-        .filter((s) => s.Type === 'Unpublished')
-        .map((record) => ({
-            x: record.MaintenanceWindow,
-            y: record.Outcome,
             id: record.ID,
             label: record.Tag,
             z: 20,
@@ -151,24 +129,12 @@ export function VisualsView() {
                     <Label htmlFor="jitter-mode">Jitter Data</Label>
                 </div>
             </div>
-            <VisualFunctionalRelations
-                data_published={fx_rel_data_published}
-                data_unpublished={fx_rel_data_unpublished}
-                y_axis_title="Functional Relation"
-                jitter={jitter}
-            />
-            <VisualFunctionalRelations
-                data_published={maintained_data_published}
-                data_unpublished={maintained_data_unpublished}
-                y_axis_title="Maintenance"
-                jitter={jitter}
-            />
-            <VisualFunctionalRelations
-                data_published={generalized_data_published}
-                data_unpublished={generalized_data_unpublished}
-                y_axis_title="Generalization"
-                jitter={jitter}
-            />
+
+            <VisualFunctionalRelationGivenIV Data={recordsToVisualize} />
+
+            <MaintenanceGivenWindow Data={recordsToVisualize} />
+
+            <GeneralizationGivenWindow Data={recordsToVisualize} />
         </>
     )
 }

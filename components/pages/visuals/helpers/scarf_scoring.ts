@@ -101,13 +101,13 @@ export function GenerateMaintenanceWindow(study: StudyObject) {
 
     switch (maintenance_window.Response) {
         case '>= 1 Month':
-            return 4
-        case '>= 2 Weeks':
             return 3
-        case '>= 1 Week':
+        case '>= 2 Weeks':
             return 2
-        case 'Immediately after Cessation':
+        case '>= 1 Week':
             return 1
+        case 'Immediately after Cessation':
+            return 0
         default:
             return 0
     }
@@ -122,12 +122,10 @@ export function GenerateGeneralizationRating(study: StudyObject) {
 
     switch (maintenance_window.Response) {
         case 'SCD':
-            return 4
-        case 'Intermittent':
             return 3
-        case 'Pre/Post':
+        case 'Intermittent':
             return 2
-        case 'Post Only':
+        case 'Pre/Post':
             return 1
         default:
             return 0
