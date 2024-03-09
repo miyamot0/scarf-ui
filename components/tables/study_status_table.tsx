@@ -21,18 +21,12 @@ import {
     TableRow,
 } from '@/components/ui/table'
 import { Button } from '../ui/button'
-import {
-    DropdownMenu,
-    DropdownMenuCheckboxItem,
-    DropdownMenuContent,
-    DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
 import React from 'react'
 import { Input } from '../ui/input'
-import { StudyObject } from '@/types/QuestionTypes'
 import { DataTablePagination } from './study_status_table_pagination'
 import { DataTableViewOptions } from './study_status_table_column_toggle'
 import {
+    DeleteIcon,
     HardDriveDownloadIcon,
     HardDriveUploadIcon,
     SaveIcon,
@@ -40,13 +34,14 @@ import {
 import { useReducerAtom } from 'jotai/utils'
 import { database_reducer, dbAtom } from '@/atoms/db_atom'
 import { useToast } from '../ui/use-toast'
+import { StudyObject } from '@/types/QuestionTypes'
 
-interface DataTableProps<StudyObject, TValue> {
-    columns: ColumnDef<StudyObject, TValue>[]
+interface DataTableProps<TData, TValue> {
+    columns: ColumnDef<TData, TValue>[]
     data: StudyObject[]
 }
 
-export function StudyStatusDataTable<StudyObject, TValue>({
+export function StudyStatusDataTable<TData, TValue>({
     columns,
     data,
 }: DataTableProps<StudyObject, TValue>) {
@@ -59,9 +54,7 @@ export function StudyStatusDataTable<StudyObject, TValue>({
             StudyID: false,
         })
     const [rowSelection, setRowSelection] = React.useState({})
-
     const [state, dispatch] = useReducerAtom(dbAtom, database_reducer)
-
     const refFileInput = React.useRef<HTMLInputElement>(null)
 
     function saveTxtToFile(fileName: string, textData: string) {
@@ -89,6 +82,7 @@ export function StudyStatusDataTable<StudyObject, TValue>({
         getFilteredRowModel: getFilteredRowModel(),
         onColumnVisibilityChange: setColumnVisibility,
         onRowSelectionChange: setRowSelection,
+        enableMultiRowSelection: true,
         state: {
             sorting,
             columnFilters,
@@ -96,6 +90,8 @@ export function StudyStatusDataTable<StudyObject, TValue>({
             rowSelection,
         },
     })
+
+    const selected_rows = table.getSelectedRowModel().rows
 
     return (
         <div className="flex flex-col gap-y-4">
@@ -115,6 +111,34 @@ export function StudyStatusDataTable<StudyObject, TValue>({
                     className="max-w-sm"
                 />
                 <div className="flex flex-row gap-x-2">
+                    {selected_rows.length > 0 && (
+                        <Button
+                            variant="destructive"
+                            size="sm"
+                            className="ml-auto hidden h-8 lg:flex "
+                            onClick={() => {
+                                const selected_ids = selected_rows
+                                    .map((r) => r.original)
+                                    .map((r) => r.StudyID)
+
+                                dispatch({
+                                    type: 'remove',
+                                    payload: { study_ids: selected_ids },
+                                })
+
+                                toast({
+                                    title: 'Item(s) Removed.',
+                                    description:
+                                        'Data has been removed from data set.',
+                                    duration: 2000,
+                                })
+                            }}
+                        >
+                            <DeleteIcon size={20} className="mr-2" />
+                            Delete Selected
+                        </Button>
+                    )}
+
                     <Button
                         variant="outline"
                         size="sm"

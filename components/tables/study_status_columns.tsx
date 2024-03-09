@@ -291,32 +291,6 @@ export const study_columns: ColumnDef<StudyObject>[] = [
                         >
                             Outcomes Details
                         </DropdownMenuItem>
-                        <DropdownMenuItem
-                            className="text-red-500 hidden"
-                            onClick={() => {
-                                const confirm = window.confirm(
-                                    'Are you sure you want to delete this record?'
-                                )
-
-                                if (!confirm) {
-                                    return
-                                }
-
-                                dispatch({
-                                    type: 'remove',
-                                    payload: {
-                                        study_id: study.StudyID,
-                                    },
-                                })
-
-                                toast({
-                                    title: 'Study Removed.',
-                                    duration: 2000,
-                                })
-                            }}
-                        >
-                            Delete Record
-                        </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
             )

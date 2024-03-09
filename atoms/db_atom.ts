@@ -47,7 +47,7 @@ export type DatabaseAction =
           type: 'update_study_internal_validity'
           payload: { study_id: string; updatedData: StudyObject }
       }
-    | { type: 'remove'; payload: { study_id: string } }
+    | { type: 'remove'; payload: { study_ids: string[] } }
     | {
           type: 'update_study_category'
           payload: { study_id: string; category: PublicationType }
@@ -96,7 +96,7 @@ export const database_reducer = (
             return {
                 ...state,
                 Studies: state.Studies.filter(
-                    (item) => item.StudyID !== action.payload.study_id
+                    (item) => !action.payload.study_ids.includes(item.StudyID)
                 ),
             }
         case 'update_display_state':
