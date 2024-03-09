@@ -2,9 +2,20 @@ import { dbAtom, database_reducer } from '@/atoms/db_atom'
 import { useReducerAtom } from 'jotai/utils'
 import React from 'react'
 import { VisualFunctionalRelations } from './charts/visual_fx_relation'
+import { Switch } from '@/components/ui/switch'
+import { Label } from '@/components/ui/label'
+
+function randomIntFromInterval(min: number, max: number) {
+    return Math.floor(Math.random() * (max - min + 1) + min)
+}
+
+function applyConditionalJittering(jitter: boolean, value: number) {
+    return jitter ? value + randomIntFromInterval(-10, 10) / 100 : value
+}
 
 export function VisualsView() {
     const [state] = useReducerAtom(dbAtom, database_reducer)
+    const [jitter, setJitter] = React.useState(false)
 
     const { Studies } = state
 
@@ -113,12 +124,18 @@ export function VisualsView() {
         return {
             Tag: study.StudyTag,
             ID: study.StudyID,
-            IV: score_internal_validity,
-            EV: score_external_validity,
-            Reporting: score_reporting,
-            Outcome: score_outcomes_value,
-            Maintained: score_maintained_value,
-            Generalized: score_generalized_value,
+            IV: applyConditionalJittering(jitter, score_internal_validity),
+            EV: applyConditionalJittering(jitter, score_external_validity),
+            Reporting: applyConditionalJittering(jitter, score_reporting),
+            Outcome: applyConditionalJittering(jitter, score_outcomes_value),
+            Maintained: applyConditionalJittering(
+                jitter,
+                score_maintained_value
+            ),
+            Generalized: applyConditionalJittering(
+                jitter,
+                score_generalized_value
+            ),
             Type: study.PublicationType,
         }
     })
@@ -185,20 +202,33 @@ export function VisualsView() {
 
     return (
         <>
+            <div className="flex flex-row justify-end">
+                <div className="flex items-center space-x-2">
+                    <Switch
+                        id="jitter-mode"
+                        checked={jitter}
+                        onCheckedChange={() => setJitter(!jitter)}
+                    />
+                    <Label htmlFor="jitter-mode">Jitter Data</Label>
+                </div>
+            </div>
             <VisualFunctionalRelations
                 data_published={fx_rel_data_published}
                 data_unpublished={fx_rel_data_unpublished}
                 y_axis_title="Functional Relation"
+                jitter={jitter}
             />
             <VisualFunctionalRelations
                 data_published={maintained_data_published}
                 data_unpublished={maintained_data_unpublished}
                 y_axis_title="Maintenance"
+                jitter={jitter}
             />
             <VisualFunctionalRelations
                 data_published={generalized_data_published}
                 data_unpublished={generalized_data_unpublished}
                 y_axis_title="Generalization"
+                jitter={jitter}
             />
         </>
     )

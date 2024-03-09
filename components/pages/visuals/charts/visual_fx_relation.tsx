@@ -27,6 +27,7 @@ export function VisualFunctionalRelations({
     data_published,
     data_unpublished,
     y_axis_title,
+    jitter,
 }: any) {
     return (
         <ResponsiveContainer width="100%" height={400}>
