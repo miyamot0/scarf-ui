@@ -12,11 +12,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { dbAtom, database_reducer } from '@/atoms/db_atom'
 import { useReducerAtom } from 'jotai/utils'
-import {
-    QuestionCategoryDVMeasurement,
-    StudyObject,
-} from '@/types/QuestionTypes'
-import { StudyInternalValiditySchema } from './study_internal_validity_schema'
+import { StudyObject } from '@/types/QuestionTypes'
 import {
     Select,
     SelectContent,
@@ -26,68 +22,20 @@ import {
 } from '@/components/ui/select'
 import { GetSelectOptionsFromTag } from '../inputs/select_options'
 import { QuestionObjectHolder } from '@/assets/simplified_questions'
+import { StudyExternalValiditySchema } from './study_external_validity_schema'
 
-export function StudyInternalValidityForm({ study }: { study?: StudyObject }) {
+export function StudyExternalValidityForm({ study }: { study?: StudyObject }) {
     const [, dispatch] = useReducerAtom(dbAtom, database_reducer)
 
-    const form = useForm<z.infer<typeof StudyInternalValiditySchema>>({
-        resolver: zodResolver(StudyInternalValiditySchema),
-        defaultValues: {
-            DV_Measurement_1: study?.InternalValidity.Questions.find(
-                (q) => q.QuestionID === 'DV_Measurement_1'
-            )?.Response,
-            DV_Measurement_2: study?.InternalValidity.Questions.find(
-                (q) => q.QuestionID === 'DV_Measurement_2'
-            )?.Response,
-            DV_Measurement_3: study?.InternalValidity.Questions.find(
-                (q) => q.QuestionID === 'DV_Measurement_3'
-            )?.Response,
-            DV_Measurement_4: study?.InternalValidity.Questions.find(
-                (q) => q.QuestionID === 'DV_Measurement_4'
-            )?.Response,
-            DV_Measurement_5: study?.InternalValidity.Questions.find(
-                (q) => q.QuestionID === 'DV_Measurement_5'
-            )?.Response,
-            DV_Measurement_6: study?.InternalValidity.Questions.find(
-                (q) => q.QuestionID === 'DV_Measurement_6'
-            )?.Response,
-            DV_Measurement_7: study?.InternalValidity.Questions.find(
-                (q) => q.QuestionID === 'DV_Measurement_7'
-            )?.Response,
-            Design_Appropriateness_1: study?.InternalValidity.Questions.find(
-                (q) => q.QuestionID === 'Design_Appropriateness_1'
-            )?.Response,
-            Design_Appropriateness_2: study?.InternalValidity.Questions.find(
-                (q) => q.QuestionID === 'Design_Appropriateness_2'
-            )?.Response,
-            Design_Appropriateness_3: study?.InternalValidity.Questions.find(
-                (q) => q.QuestionID === 'Design_Appropriateness_3'
-            )?.Response,
-            Design_Appropriateness_4: study?.InternalValidity.Questions.find(
-                (q) => q.QuestionID === 'Design_Appropriateness_4'
-            )?.Response,
-            Fidelity_1: study?.InternalValidity.Questions.find(
-                (q) => q.QuestionID === 'Fidelity_1'
-            )?.Response,
-            Fidelity_2: study?.InternalValidity.Questions.find(
-                (q) => q.QuestionID === 'Fidelity_2'
-            )?.Response,
-            Fidelity_3: study?.InternalValidity.Questions.find(
-                (q) => q.QuestionID === 'Fidelity_3'
-            )?.Response,
-            Fidelity_4: study?.InternalValidity.Questions.find(
-                (q) => q.QuestionID === 'Fidelity_4'
-            )?.Response,
-            Fidelity_5: study?.InternalValidity.Questions.find(
-                (q) => q.QuestionID === 'Fidelity_5'
-            )?.Response,
-        },
+    const form = useForm<z.infer<typeof StudyExternalValiditySchema>>({
+        resolver: zodResolver(StudyExternalValiditySchema),
+        defaultValues: {},
     })
 
-    function onSubmit(values: z.infer<typeof StudyInternalValiditySchema>) {
+    function onSubmit(values: z.infer<typeof StudyExternalValiditySchema>) {
         if (!study) throw new Error('Study should not be undefined')
 
-        let questions = study.InternalValidity.Questions
+        let questions = study.ExternalValidity.Questions
 
         let t: keyof QuestionObjectHolder
 
@@ -104,8 +52,8 @@ export function StudyInternalValidityForm({ study }: { study?: StudyObject }) {
 
         const updated_study = {
             ...study,
-            InternalValidity: {
-                ...study.InternalValidity,
+            ExternalValidity: {
+                ...study.ExternalValidity,
                 Questions: questions,
                 Status: 'Completed',
             },
@@ -120,14 +68,13 @@ export function StudyInternalValidityForm({ study }: { study?: StudyObject }) {
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-                {study?.InternalValidity.Questions.map((question) => {
+                {study?.ExternalValidity.Questions.map((question) => {
                     return (
                         <FormField
                             key={question.QuestionID}
                             control={form.control}
-                            name={
-                                question.QuestionID as QuestionCategoryDVMeasurement
-                            }
+                            // @ts-ignore
+                            name={question.QuestionID}
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>

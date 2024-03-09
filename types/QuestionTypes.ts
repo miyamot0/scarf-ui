@@ -1,4 +1,5 @@
 import {
+    ExternalValidityQuestions,
     InternalValidityQuestions,
     QuestionObjectHolder,
 } from '@/assets/simplified_questions'
@@ -53,12 +54,6 @@ export type AnswerObject = {
 
 export type ResponseStatus = 'NotStarted' | 'InProgress' | 'Completed'
 
-export type AnswerCategoryObject = {
-    Category: 'InternalValidity' | 'ExternalValidity' | 'Reporting' | 'Outcomes'
-    Answers: AnswerObject[]
-    Status: ResponseStatus
-}
-
 export type StudyObject = {
     StudyID: string
     StudyTag: string
@@ -66,18 +61,23 @@ export type StudyObject = {
     StudyTitle: string
     StudyJournal: string
     StudyYear: number
-    InternalValidity: InternalValidityObject
-    //ExternalValidity: AnswerCategoryObject
+    InternalValidity: TypeOfValidityObject
+    ExternalValidity: TypeOfValidityObject
     //Reporting: AnswerCategoryObject
     //Outcomes: AnswerCategoryObject
 }
 
-export type InternalValidityObject = {
+export type TypeOfValidityObject = {
     Status: ResponseStatus
     Questions: QuestionObjectHolder[]
 }
 
-export const InternalValidityQuestionDefault: InternalValidityObject = {
+export const InternalValidityQuestionDefault: TypeOfValidityObject = {
     Status: 'NotStarted',
     Questions: InternalValidityQuestions,
+}
+
+export const ExternalValidityQuestionDefault: TypeOfValidityObject = {
+    Status: 'NotStarted',
+    Questions: ExternalValidityQuestions,
 }

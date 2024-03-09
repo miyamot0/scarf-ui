@@ -12,6 +12,7 @@ import { database_reducer, dbAtom } from '@/atoms/db_atom'
 import { useReducerAtom } from 'jotai/utils'
 import { useToast } from '../ui/use-toast'
 import { StudyInternalValidityDialog } from '../dialogs/study_internal_validity_dialog'
+import { StudyExternalValidityDialog } from '../dialogs/study_external_validity_dialog'
 
 export function MainPage() {
     const { toast } = useToast()
@@ -159,6 +160,7 @@ export function MainPage() {
             {/* Dialogs */}
             <StudyDetailsDialog />
             <StudyInternalValidityDialog />
+            <StudyExternalValidityDialog />
         </MaxWidthWrapper>
     )
 }

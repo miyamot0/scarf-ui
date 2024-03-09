@@ -61,7 +61,7 @@ export const InternalValidityQuestions: QuestionObjectHolder[] = [
             'Do authors use naïve coders as a safeguard against measurement bias?',
         QuestionInstruction:
             'Yes: Authors use coders who are naïve to study condition and/or expected outcomes.\n \nNo: Coders are aware of study conditions and expected outcomes.\n \nNot Possible: Due to the nature of the intervention, it is not possible to blind coders (e.g., it is apparent even to naïve personnel when intervention is implemented due to differences in materials or interactions). For example, if the intervention is use of visual supports, blinding of personnel is not possible becuase visual supports may be necssarily included in intervention conditions.',
-        QuestionType: 'YesNo',
+        QuestionType: 'YesNoNotPossible',
     },
     {
         Category: 'DV Measurement',
@@ -69,7 +69,7 @@ export const InternalValidityQuestions: QuestionObjectHolder[] = [
         QuestionStem: 'What is the context for data collection?',
         QuestionInstruction:
             'Context bound (CB): Data are collected in intervention contexts, or in contexts that are very similar to intervention (e.g., have the same implementer/social partners, seettings, materials, and interactions). \nPartially context bound (PCB): Data are collected in contexts that are similar to intervention, including at least one of the same: implementer/social partners, materials, and interactions (e.g., given an intervention involving system of least prompts in a research context with a researcher, a partially context bound variable could be one measured in a context with a teacher in a classroom, if the teacher is using system of least prompts)\nGeneralized (G): Data are collected in contexts that are dissimilar from intervention in that none of the following are the same: implementer/social partners, materials, and interactions. \nFor more information about boundedness, read this article: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9552805/',
-        QuestionType: 'YesNo',
+        QuestionType: 'CbPcbG',
     },
     {
         Category: 'Design Appropriateness',
@@ -113,7 +113,7 @@ export const InternalValidityQuestions: QuestionObjectHolder[] = [
             'Do authors measure fidelity of condition implementation?',
         QuestionInstruction:
             'Implementation fidelity data may be referred to as procedural fidelity or treatment integrity. Fidelity of condition implementation refers to the measurement of behaviors of implementers in study conditions and the extent to which they match procedural descriptions. Note that in studies where implementer behavior is a primary dependent variable, this generally meets criterion for fidelity measurement. For example, if your research question is about child behavior change during naturalistic interventions, and authors report both caregiver and child behavior in single case designs, the caregiver behavior variable may appropriately serve as fidelity measurement for the child dependent variable. If your research question is about parent behavior change, the implementation fidelity data needed would be training behaviors (e.g., whether researchers trained parents in a way that matched intended procedures).',
-        QuestionType: 'YesNo',
+        QuestionType: 'YIntOnlyYBothNo',
     },
     {
         Category: 'Fidelity',
@@ -150,5 +150,139 @@ export const InternalValidityQuestions: QuestionObjectHolder[] = [
         QuestionInstruction:
             'Historically, 80-90% accurate implementation was a typical benchmark but there may be reasons to have lower or higher standards given the specific context of a review (e.g., complex interventions delivered long-term by endogenous implementers may typically have lower fidelity than short-term, researcher-delivered interventions)',
         QuestionType: 'YesNo',
+    },
+]
+
+export const ExternalValidityQuestions: QuestionObjectHolder[] = [
+    {
+        Category: 'Social Validity',
+        QuestionID: 'Social_Validity_1',
+        QuestionStem:
+            'Do you have a research question related to the measurement of social validity? If not, score "N/A" for remaining items in this section.',
+        QuestionInstruction:
+            "Social validity measurement includes assessments of shareholder beliefs about the acceptability and/or importance of goals, outcomes and/or procedures of the study. Shareholders could include anyone impacted by the intervention, including individuals receiving intervention or those they are connected to (e.g., parents, teachers, administrators). Shareholders could also include community members who may have some indirect connection to a study's participants or knowledge about the study's goals, outcomes, and/or procedures (e.g., asking speech-language therapists about the acceptability of a language intervention or importance of its outcomes).",
+        QuestionType: 'YesNo',
+    },
+    {
+        Category: 'Social Validity',
+        QuestionID: 'Social_Validity_2',
+        QuestionStem:
+            'Do authors provide evidence that the dependent variable is important to the participants themselves, to other shareholders, or to the community? Or do they engage in direct behaviors prior to the study that increase the likelihood of a socially valid dependent variable (e.g., DV was selected by participants).',
+        QuestionInstruction:
+            'Examples: Dependent variable was selected based on pre-intervention shareholder or participant interview; direct or indirect shareholders complete post-intervention questionnaire or interview with content related to importance of goal selection. Credit is not provided if authors argue for the  importance of the dependent variable in the introduction.',
+        QuestionType: 'YesNoNotApplicable',
+    },
+    {
+        Category: 'Social Validity',
+        QuestionID: 'Social_Validity_3',
+        QuestionStem:
+            "Do authors provide evidence that the intervention is acceptable to the participants themselves, to other shareholders, or to the community? Or do they engage in direct behaviors prior to the study that increase the likelihood of a socially valid intervention (e.g., intervention was adapted prior to the study based on a teacher's request for improving feasibility).",
+        QuestionInstruction:
+            'Examples: Non-participating shareholders rate the intervention, as seen in a video, as acceptable and feasible for use in their context; child participant is directly offered opportunities to select intervention contexts versus non-intervention contexts; continued use of intervention by typical agents is measured after study completion; direct or indirect shareholders complete questionnaire or interview with content related to intervention acceptability.',
+        QuestionType: 'YesNoNotApplicable',
+    },
+    {
+        Category: 'Social Validity',
+        QuestionID: 'Social_Validity_4',
+        QuestionStem:
+            'Do authors provide evidence that the change in behavior is valuable to the participants themselves, to other shareholders, or to the community?',
+        QuestionInstruction:
+            'Examples: Naïve raters identify differences between conditions (e.g., without information about which of two videos is the intervention context, a rater determines that child behavior is more acceptable in intervention video when compared to baseline video); direct or indirect shareholders complete questionnaire or interview with content related to value of behavior change.',
+        QuestionType: 'YesNoNotApplicable',
+    },
+    {
+        Category: 'Social Validity',
+        QuestionID: 'Social_Validity_5',
+        QuestionStem:
+            'Is at least one of social validity measures used unlikely to be subject to social desirability bias?',
+        QuestionInstruction:
+            'N/A: No social validity measures. No: Interviews/ questionnaires/surveys that are conducted by implementing personnel (or unreported personnel). Yes: Interviews/ questionnaires/surveys that are conducted by non-implementing personnel (i.e., researchers who are not actively involved in treatment), naïve raters (e.g., non-participating shareholders who report on acceptability), direct preference assessments of participants who are implementing intervention (e.g., confirmation that they continued intervention after study completion but not verbal reports that they will do so) or participants receiving intervention (e.g., a child offered opportunities to select intervention and non-intervention contexts), explicit report that procedures or goals were targeted based on stakeholder report.',
+        QuestionType: 'YesNoNotApplicable',
+    },
+    {
+        Category: 'Generality & Boundedness',
+        QuestionID: 'Generality_Boundedness_1',
+        QuestionStem:
+            'Is implementation in a relevant typical setting applicable to your research question (e.g., in homes, schools, or community settings)? If "No", report NA for the next row.',
+        QuestionInstruction:
+            'Identify specifically what settings are of interest (e.g., homes, schools, community, clinical offices)',
+        QuestionType: 'YesNoNotApplicable',
+    },
+    {
+        Category: 'Generality & Boundedness',
+        QuestionID: 'Generality_Boundedness_2',
+        QuestionStem:
+            'Does implementation occur in a relevant typical setting?',
+        QuestionInstruction: '',
+        QuestionType: 'YesNo',
+    },
+    {
+        Category: 'Generality & Boundedness',
+        QuestionID: 'Generality_Boundedness_3',
+        QuestionStem:
+            'Is implementation by a relevant endogenous implementer applicable to your research question (e.g., implementation by teachers rather than researchers)?  If "No", report NA for the next row.',
+        QuestionInstruction:
+            "Endogenous = typically present in the participant's typical environments. Identify specifically what implementers are of interest according to your research quesionts (e.g., teachers, caregivers, therapists).",
+        QuestionType: 'YesNoNotApplicable',
+    },
+    {
+        Category: 'Generality & Boundedness',
+        QuestionID: 'Generality_Boundedness_4',
+        QuestionStem:
+            'Are conditions conducted by an endogenous implementer applicable to your research question?',
+        QuestionInstruction:
+            'Generally, if authors describe implementers using vague terms (e.g., therapist, implementer, interventionist), no credit is given for this question.',
+        QuestionType: 'YesNoNotApplicable',
+    },
+    {
+        Category: 'Generality & Boundedness',
+        QuestionID: 'Generality_Boundedness_5',
+        QuestionStem:
+            'Do you have another generalization question?  If "No", report NA for the next row.',
+        QuestionInstruction:
+            'These questions might include generalization to materials, social partners, activities (stimulus generalization) or generalization to dependent variables that you are not considering a primary outcome (response generalization).',
+        QuestionType: 'YesNo',
+    },
+    {
+        Category: 'Generality & Boundedness',
+        QuestionID: 'Generality_Boundedness_6',
+        QuestionStem:
+            'Did authors assess generalization that is relevant to your other generalization question? (i.e., what you specified in row 34).',
+        QuestionInstruction: '',
+        QuestionType: 'YesNoNotApplicable',
+    },
+    {
+        Category: 'Generality & Boundedness',
+        QuestionID: 'Generality_Boundedness_7',
+        QuestionStem: 'How were generalization outcomes measured?',
+        QuestionInstruction:
+            'If multiple types of generalization were measured (e.g., with different materials and implementers), and the measurement occurrences differed for each, report the most rigorous measurement here (e.g., single case design). SCD = Throughout the study (in the context of the single case design, with at least three data points per condition). Intermittent = In each primary comparison condition, but with fewer than three data points per condition. Pre/post = Before and after intervention. Post Only = After intervention only or some other measurement. None = No measurement. N/A = no generalization questions were asked ("No" scores in rows 30, 32, and 34)',
+        QuestionType: 'GeneralizationOutcomes',
+    },
+    {
+        Category: 'Maintenance',
+        QuestionID: 'Maintenance_1',
+        QuestionStem:
+            'Do you have a research question about whether maintenance of behavior occurred when intervention was removed? If not, score "N/A" for remaining items in this section.',
+        QuestionInstruction:
+            'Maintenance is not always applicable. For example, when we use withdrawal (A-B-A-B) designs, we implicitly expect that intervention removal will immediately results in behavior returning to baseline levels. In this case, it may not be reasonable to assess whether studies measure maintenance.',
+        QuestionType: 'YesNo',
+    },
+    {
+        Category: 'Maintenance',
+        QuestionID: 'Maintenance_2',
+        QuestionStem:
+            'Was maintenance of behavior change assessed when the intervention was removed?',
+        QuestionInstruction:
+            'Note that authors sometimes refer to a condition as “maintenance” even though intervention is still in place (see Ledford et al., 2021 for a discussion of this in relation to interruption and redirection procedures). For example, in an intervention where teachers are taught to implement an intervention, a “maintenance” condition might refer to a final condition where teachers do not receive coaching but children are still receiving the intervention. In this case, teacher behaviors would be scored a "yes" (i.e., the coaching had been removed), but child behavior would be scored a "no" (i.e., the teacher intervention was still in place). For some cases would be selected when maintenance occurs for some but not all tiers in a multiple baseline or multiple probe design.',
+        QuestionType: 'YesNo',
+    },
+    {
+        Category: 'Maintenance',
+        QuestionID: 'Maintenance_3',
+        QuestionStem: 'How long was the maintenance period?',
+        QuestionInstruction:
+            'N/A = no maintenance question. Imm/UC = Maintenance is measured immediately after intervention cessation, or latency to maintenance measurement is unclear. Other options: The most distal maintenance data point (e.g., if maintenance data are collected 10 days after intervention is completed, select ≥1 week). For multiple baseline designs, select the most distal data point across all tiers.',
+        QuestionType: 'MaintenancePeriod',
     },
 ]

@@ -73,12 +73,6 @@ export function StudiesView() {
                                             )
                                         )}
                                         onClick={() => {
-                                            toast({
-                                                title: 'TODO: Edit Study Internal Validity',
-                                                description: 'TODO',
-                                                duration: 2000,
-                                            })
-
                                             dispatch({
                                                 type: 'update_dialog_state',
                                                 payload: {
@@ -97,15 +91,21 @@ export function StudiesView() {
                                 <TableCell>
                                     <Button
                                         size={'sm'}
-                                        className={
-                                            cn()
-                                            //color_code(study.ExternalValidity.Status)
-                                        }
+                                        className={cn(
+                                            color_code(
+                                                study.ExternalValidity.Status
+                                            )
+                                        )}
                                         onClick={() => {
-                                            toast({
-                                                title: 'TODO: Edit Study External Validity',
-                                                description: 'TODO',
-                                                duration: 2000,
+                                            dispatch({
+                                                type: 'update_dialog_state',
+                                                payload: {
+                                                    dialog_state: {
+                                                        dialog_type:
+                                                            'study_external_validity',
+                                                        study: study,
+                                                    },
+                                                },
                                             })
                                         }}
                                     >
@@ -133,8 +133,9 @@ export function StudiesView() {
                                 <TableCell>
                                     <Button
                                         size={'sm'}
-                                        className={cn()
-                                        //color_code(study.Outcomes.Status)
+                                        className={
+                                            cn()
+                                            //color_code(study.Outcomes.Status)
                                         }
                                         onClick={() => {
                                             toast({
