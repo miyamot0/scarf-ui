@@ -135,7 +135,7 @@ export function StudyStatusDataTable<TData, TValue>({
                                 })
                             }}
                         >
-                            <DeleteIcon size={20} className="mr-2" />
+                            <DeleteIcon size={18} className="mr-2" />
                             Delete Selected
                         </Button>
                     )}
@@ -154,7 +154,7 @@ export function StudyStatusDataTable<TData, TValue>({
                             })
                         }}
                     >
-                        <SaveIcon size={20} className="mr-2" />
+                        <SaveIcon size={18} className="mr-2" />
                         Save
                     </Button>
 
@@ -168,7 +168,7 @@ export function StudyStatusDataTable<TData, TValue>({
                             }
                         }}
                     >
-                        <HardDriveUploadIcon size={20} className="mr-2" />
+                        <HardDriveUploadIcon size={18} className="mr-2" />
                         Import
                     </Button>
                     <input
@@ -207,7 +207,7 @@ export function StudyStatusDataTable<TData, TValue>({
                             saveTxtToFile('scarf-web-ui.json', data)
                         }}
                     >
-                        <HardDriveDownloadIcon size={20} className="mr-2" />
+                        <HardDriveDownloadIcon size={18} className="mr-2" />
                         Export
                     </Button>
 

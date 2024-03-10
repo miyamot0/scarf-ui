@@ -153,8 +153,8 @@ export function VisualsView() {
     return (
         <>
             <div className="flex flex-row justify-between mb-2">
-                <div className="flex flex-col md:flex-row md:items-center md:space-x-2 space-y-2">
-                    <Label className="md:ml-4 mt-2">Marker Type: </Label>
+                <div className="flex flex-col md:flex-row items-center md:space-x-2 space-y-2 md:space-y-0 my-auto">
+                    <Label className="md:ml-4">Marker Type: </Label>
                     <Select
                         value={shape}
                         onValueChange={(value) => setShape(value as SymbolType)}

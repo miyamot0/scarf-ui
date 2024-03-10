@@ -5,12 +5,16 @@ import { DialogDescription, DialogHeader, DialogTitle } from '../ui/dialog'
 import { NavigationMenu, NavigationMenuList } from '../ui/navigation-menu'
 import { DialogHeaderItem } from './views/dialog_header_item'
 import Link from 'next/link'
+import { Code2Icon, GithubIcon, InfoIcon } from 'lucide-react'
 
 export const Header = () => {
     return (
-        <NavigationMenu>
-            <NavigationMenuList className="gap-x-4">
-                <DialogHeaderItem LinkText="Information">
+        <NavigationMenu className="w-full justify-end max-w-full">
+            <NavigationMenuList className="gap-x-4 ">
+                <DialogHeaderItem
+                    LinkText="Information"
+                    Image={<InfoIcon size={20} />}
+                >
                     <DialogHeader>
                         <DialogTitle>SCARF-UI Web-app Information</DialogTitle>
                         <DialogDescription>
@@ -37,7 +41,10 @@ export const Header = () => {
                     </div>
                 </DialogHeaderItem>
 
-                <DialogHeaderItem LinkText="Licenses">
+                <DialogHeaderItem
+                    LinkText="Licenses"
+                    Image={<Code2Icon size={20} />}
+                >
                     <DialogHeader>
                         <DialogTitle>Open Source Licenses</DialogTitle>
                         <DialogDescription>
@@ -66,7 +73,10 @@ export const Header = () => {
                     </div>
                 </DialogHeaderItem>
 
-                <DialogHeaderItem LinkText="Source Code">
+                <DialogHeaderItem
+                    LinkText="Source Code"
+                    Image={<GithubIcon size={20} />}
+                >
                     <DialogHeader>
                         <DialogTitle>Source Code</DialogTitle>
                         <DialogDescription>

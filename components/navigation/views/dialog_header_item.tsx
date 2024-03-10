@@ -7,12 +7,15 @@ import {
     NavigationMenuLink,
     navigationMenuTriggerStyle,
 } from '../../ui/navigation-menu'
+import { cn } from '@/lib/utils'
 
 export const DialogHeaderItem = ({
     LinkText,
+    Image,
     children,
 }: {
     LinkText: string
+    Image?: ReactNode
     children: ReactNode
 }) => {
     return (
@@ -20,8 +23,12 @@ export const DialogHeaderItem = ({
             <Dialog>
                 <DialogTrigger asChild>
                     <NavigationMenuLink
-                        className={navigationMenuTriggerStyle()}
+                        className={cn(
+                            navigationMenuTriggerStyle(),
+                            'flex flex-row gap-x-2 border shadow'
+                        )}
                     >
+                        {Image}
                         {LinkText}
                     </NavigationMenuLink>
                 </DialogTrigger>

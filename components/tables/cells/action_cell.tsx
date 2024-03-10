@@ -1,5 +1,5 @@
 import { StudyObject } from '@/types/QuestionTypes'
-import { MoreHorizontal } from 'lucide-react'
+import { Edit, MoreHorizontal } from 'lucide-react'
 import {
     DropdownMenu,
     DropdownMenuTrigger,
@@ -25,9 +25,13 @@ export function ActionCell({ Study }: { Study: StudyObject }) {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="h-8 w-8 p-0">
+                <Button
+                    variant="ghost"
+                    className="flex flex-row shadow-none gap-x-2"
+                >
                     <span className="sr-only">Open menu</span>
-                    <MoreHorizontal className="h-4 w-4" />
+                    <Edit size={18} />
+                    Edit
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
