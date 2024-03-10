@@ -66,13 +66,34 @@ const MarkerSizes = [
     },
 ]
 
+const FigureHeights = [
+    {
+        value: 300,
+        label: 'Compact',
+    },
+    {
+        value: 400,
+        label: 'Normal',
+    },
+    {
+        value: 500,
+        label: 'Tall',
+    },
+    {
+        value: 600,
+        label: 'Extra Tall',
+    },
+]
+
 export type MarkerSizingType = (typeof MarkerSizes)[0]
+export type FigureSizingType = (typeof FigureHeights)[0]
 
 export function VisualsView() {
     const [state] = useReducerAtom(dbAtom, database_reducer)
     const [jitter, setJitter] = React.useState(false)
     const [shape, setShape] = React.useState<SymbolType>('circle')
     const [size, setSize] = React.useState<number>(MarkerSizes[1].value)
+    const [height, setHeight] = React.useState<number>(FigureHeights[1].value)
 
     const { Studies } = state
 
@@ -133,7 +154,7 @@ export function VisualsView() {
         <>
             <div className="flex flex-row justify-between mb-2">
                 <div className="flex flex-col md:flex-row md:items-center md:space-x-2 space-y-2">
-                    <Label>Marker Type: </Label>
+                    <Label className="md:ml-4 mt-2">Marker Type: </Label>
                     <Select
                         value={shape}
                         onValueChange={(value) => setShape(value as SymbolType)}
@@ -179,6 +200,31 @@ export function VisualsView() {
                             </SelectGroup>
                         </SelectContent>
                     </Select>
+
+                    <Label className="md:ml-4">Figure Height: </Label>
+                    <Select
+                        value={height.toString()}
+                        onValueChange={(value) => setHeight(parseInt(value))}
+                    >
+                        <SelectTrigger className="w-[125px]">
+                            <SelectValue placeholder="Select height size" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectGroup>
+                                <SelectLabel>Heights</SelectLabel>
+                                {FigureHeights.map((size) => {
+                                    return (
+                                        <SelectItem
+                                            key={size.value.toString()}
+                                            value={size.value.toString()}
+                                        >
+                                            {size.label}
+                                        </SelectItem>
+                                    )
+                                })}
+                            </SelectGroup>
+                        </SelectContent>
+                    </Select>
                 </div>
                 <div className="flex md:items-center space-x-2">
                     <Label htmlFor="jitter-mode">Jitter Data</Label>
@@ -194,18 +240,21 @@ export function VisualsView() {
                 Data={recordsToVisualize}
                 shape={shape}
                 size={size}
+                height={height}
             />
 
             <MaintenanceGivenWindow
                 Data={recordsToVisualize}
                 shape={shape}
                 size={size}
+                height={height}
             />
 
             <GeneralizationGivenWindow
                 Data={recordsToVisualize}
                 shape={shape}
                 size={size}
+                height={height}
             />
         </>
     )

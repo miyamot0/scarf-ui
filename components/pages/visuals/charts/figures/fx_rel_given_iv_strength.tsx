@@ -43,10 +43,12 @@ export function VisualFunctionalRelationGivenIV({
     Data,
     shape,
     size,
+    height,
 }: {
     Data: CommonVisualOutput[]
     shape: SymbolType
     size: number
+    height: number
 }) {
     const [state, dispatch] = useReducerAtom(dbAtom, database_reducer)
     const ref = useRef(null)
@@ -81,7 +83,7 @@ export function VisualFunctionalRelationGivenIV({
     return (
         <ContextMenu>
             <ContextMenuTrigger>
-                <ResponsiveContainer width="100%" height={400}>
+                <ResponsiveContainer width="100%" height={height}>
                     <ScatterChart
                         ref={ref}
                         margin={{
