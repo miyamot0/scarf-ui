@@ -14,7 +14,11 @@ import { Button } from '@/components/ui/button'
 import { dbAtom } from '@/atoms/db_atom'
 import { database_reducer } from '@/atoms/reducers/reducer'
 import { useReducerAtom } from 'jotai/utils'
-import { QuestionObjectHolder, StudyObject } from '@/types/QuestionTypes'
+import {
+    QuestionObjectHolder,
+    QuestionType,
+    StudyObject,
+} from '@/types/QuestionTypes'
 import {
     Select,
     SelectContent,
@@ -114,6 +118,9 @@ export function StudyExternalValidityForm({ study }: { study?: StudyObject }) {
     }
 
     function manual_overrides(question: QuestionObjectHolder, value: string) {
+        console.log(question)
+        console.log(value)
+
         if (question.QuestionID === 'Social_Validity_1' && value === 'No') {
             form.setValue('Social_Validity_2', 'N/A')
             form.setValue('Social_Validity_3', 'N/A')
@@ -175,6 +182,15 @@ export function StudyExternalValidityForm({ study }: { study?: StudyObject }) {
                             (q) => q.QuestionID === question.QuestionID
                         )?.QuestionInstruction
 
+                    const questionType: string | undefined =
+                        question.QuestionInstruction ??
+                        ExternalValidityQuestions.find(
+                            (q) => q.QuestionID === question.QuestionID
+                        )?.QuestionType
+
+                    if (!questionType)
+                        throw new Error('QuestionType is undefined')
+
                     return (
                         <FormField
                             key={question.QuestionID}
@@ -202,7 +218,7 @@ export function StudyExternalValidityForm({ study }: { study?: StudyObject }) {
                                                 </SelectTrigger>
                                                 <SelectContent>
                                                     {GetSelectOptionsFromTag(
-                                                        question.QuestionType
+                                                        questionType as QuestionType
                                                     ).map((option) => {
                                                         return (
                                                             <SelectItem

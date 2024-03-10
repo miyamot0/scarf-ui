@@ -13,7 +13,11 @@ import {
 import { Button } from '@/components/ui/button'
 import { dbAtom } from '@/atoms/db_atom'
 import { useReducerAtom } from 'jotai/utils'
-import { QuestionObjectHolder, StudyObject } from '@/types/QuestionTypes'
+import {
+    QuestionObjectHolder,
+    QuestionType,
+    StudyObject,
+} from '@/types/QuestionTypes'
 import {
     Select,
     SelectContent,
@@ -123,6 +127,15 @@ export function StudyReportingForm({ study }: { study?: StudyObject }) {
                             (q) => q.QuestionID === question.QuestionID
                         )?.QuestionInstruction
 
+                    const questionType: string | undefined =
+                        question.QuestionInstruction ??
+                        ReportingQuestions.find(
+                            (q) => q.QuestionID === question.QuestionID
+                        )?.QuestionType
+
+                    if (!questionType)
+                        throw new Error('QuestionType is undefined')
+
                     return (
                         <FormField
                             key={question.QuestionID}
@@ -143,7 +156,7 @@ export function StudyReportingForm({ study }: { study?: StudyObject }) {
                                             </SelectTrigger>
                                             <SelectContent>
                                                 {GetSelectOptionsFromTag(
-                                                    question.QuestionType
+                                                    questionType as QuestionType
                                                 ).map((option) => {
                                                     return (
                                                         <SelectItem

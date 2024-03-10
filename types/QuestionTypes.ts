@@ -31,11 +31,11 @@ export type QuestionType =
     | 'ConditionChangeCharacterizationNA'
 
 export type QuestionObjectHolder = {
-    Category: QuestionCategory
+    Category?: QuestionCategory
     QuestionID: string
     QuestionStem?: string
     QuestionInstruction?: string
-    QuestionType: QuestionType
+    QuestionType?: QuestionType
     Response?: string
 }
 
@@ -74,6 +74,8 @@ export const InternalValidityQuestionDefault: TypeOfValidityObject = {
             ...question,
             QuestionInstruction: undefined,
             QuestionStem: undefined,
+            QuestionType: undefined,
+            Category: undefined,
         }
     }),
 }
@@ -85,6 +87,8 @@ export const ExternalValidityQuestionDefault: TypeOfValidityObject = {
             ...question,
             QuestionInstruction: undefined,
             QuestionStem: undefined,
+            QuestionType: undefined,
+            Category: undefined,
         }
     }),
 }
@@ -96,6 +100,8 @@ export const ReportingQuestionDefault: TypeOfValidityObject = {
             ...question,
             QuestionInstruction: undefined,
             QuestionStem: undefined,
+            QuestionType: undefined,
+            Category: undefined,
         }
     }),
 }
@@ -107,6 +113,8 @@ export const OutcomesQuestionDefault: TypeOfValidityObject = {
             ...question,
             QuestionInstruction: undefined,
             QuestionStem: undefined,
+            QuestionType: undefined,
+            Category: undefined,
         }
     }),
 }
