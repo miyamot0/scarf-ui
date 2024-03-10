@@ -15,8 +15,12 @@ const CustomTooltip = ({ active, payload, label }) => {
         return (
             <div className="bg-white border border-black p-2 rounded">
                 <p>{`Study: ${payload[0].payload.label}`}</p>
-                <p>{`Rigor of Generalization: ${payload[0].payload.x}`}</p>
-                <p>{`Generalized Outcome Strength: ${payload[1].value}`}</p>
+                <p>{`Rigor of Generalization: ${Math.round(
+                    payload[0].payload.x
+                )}`}</p>
+                <p>{`Generalized Outcome Strength: ${Math.round(
+                    payload[1].value
+                )}`}</p>
             </div>
         )
     }
@@ -133,11 +137,15 @@ export function GeneralizationGivenWindow({
                     name="Published Literature"
                     data={data_published}
                     fill="#59ACF2"
+                    stroke="black"
+                    opacity={0.8}
                 />
                 <Scatter
                     name="Gray Literature"
                     data={data_unpublished}
                     fill="#556270"
+                    stroke="black"
+                    opacity={0.8}
                 />
             </ScatterChart>
         </ResponsiveContainer>
