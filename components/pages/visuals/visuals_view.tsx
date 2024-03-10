@@ -60,6 +60,10 @@ const MarkerSizes = [
         value: 400,
         label: 'Large',
     },
+    {
+        value: 800,
+        label: 'Extra Large',
+    },
 ]
 
 export type MarkerSizingType = (typeof MarkerSizes)[0]
@@ -128,7 +132,7 @@ export function VisualsView() {
     return (
         <>
             <div className="flex flex-row justify-between mb-2">
-                <div className="flex items-center space-x-2">
+                <div className="flex flex-col md:flex-row md:items-center md:space-x-2 space-y-2">
                     <Label>Marker Type: </Label>
                     <Select
                         value={shape}
@@ -151,7 +155,7 @@ export function VisualsView() {
                         </SelectContent>
                     </Select>
 
-                    <Label className="ml-4">Marker Size: </Label>
+                    <Label className="md:ml-4">Marker Size: </Label>
                     <Select
                         value={size.toString()}
                         onValueChange={(value) => setSize(parseInt(value))}
@@ -176,7 +180,7 @@ export function VisualsView() {
                         </SelectContent>
                     </Select>
                 </div>
-                <div className="flex items-center space-x-2">
+                <div className="flex md:items-center space-x-2">
                     <Label htmlFor="jitter-mode">Jitter Data</Label>
                     <Switch
                         id="jitter-mode"

@@ -13,6 +13,8 @@ import {
     ContextMenu,
     ContextMenuContent,
     ContextMenuItem,
+    ContextMenuLabel,
+    ContextMenuSeparator,
     ContextMenuTrigger,
 } from '@/components/ui/context-menu'
 import { dbAtom } from '@/atoms/db_atom'
@@ -20,6 +22,7 @@ import { database_reducer } from '@/atoms/reducers/reducer'
 import { useReducerAtom } from 'jotai/utils'
 import { FigureOutputExport } from '@/lib/image_saver'
 import { useEffect, useRef } from 'react'
+import { ScatterChartIcon } from 'lucide-react'
 
 // @ts-ignore
 const CustomTooltip = ({ active, payload, label }) => {
@@ -166,6 +169,8 @@ export function VisualFunctionalRelationGivenIV({
                 </ResponsiveContainer>
             </ContextMenuTrigger>
             <ContextMenuContent>
+                <ContextMenuLabel>Figure Export</ContextMenuLabel>
+                <ContextMenuSeparator />
                 <ContextMenuItem
                     onClick={() =>
                         FigureOutputExport(
@@ -175,6 +180,7 @@ export function VisualFunctionalRelationGivenIV({
                         )
                     }
                 >
+                    <ScatterChartIcon className="w-5 h-5 mr-2" />
                     Save as SVG
                 </ContextMenuItem>
 
@@ -187,6 +193,7 @@ export function VisualFunctionalRelationGivenIV({
                         )
                     }
                 >
+                    <ScatterChartIcon className="w-5 h-5 mr-2" />
                     Save as WebP
                 </ContextMenuItem>
 
@@ -199,6 +206,7 @@ export function VisualFunctionalRelationGivenIV({
                         )
                     }
                 >
+                    <ScatterChartIcon className="w-5 h-5 mr-2" />
                     Save as PNG
                 </ContextMenuItem>
 
@@ -211,6 +219,7 @@ export function VisualFunctionalRelationGivenIV({
                         )
                     }
                 >
+                    <ScatterChartIcon className="w-5 h-5 mr-2" />
                     Save as JPEG
                 </ContextMenuItem>
             </ContextMenuContent>
