@@ -90,10 +90,10 @@ export type FigureSizingType = (typeof FigureHeights)[0]
 
 export function VisualsView() {
     const [state] = useReducerAtom(dbAtom, database_reducer)
-    const [jitter, setJitter] = React.useState(false)
+    const [jitter, setJitter] = React.useState(true)
     const [shape, setShape] = React.useState<SymbolType>('circle')
-    const [size, setSize] = React.useState<number>(MarkerSizes[1].value)
-    const [height, setHeight] = React.useState<number>(FigureHeights[1].value)
+    const [size, setSize] = React.useState<number>(MarkerSizes[0].value)
+    const [height, setHeight] = React.useState<number>(FigureHeights[0].value)
 
     const { Studies } = state
 
