@@ -1,4 +1,4 @@
-svg {
+img {
 background-color: #FFFFFF;
 }
 
