@@ -1,7 +1,3 @@
-img {
-background-color: #FFFFFF;
-}
-
 # SCARF-UI
 
 SCARF-UI is a simple, web-based widget to support the critical appraisals of studies conducted using single-case experimental designs (SCEDs) and visual analysis. The design and functionality of the tool models that of the SCARF toolkit produced by Dr. Jennifer Ledford and colleages, which is available [here](https://ebip.vkcsites.org/scarfv2/).
