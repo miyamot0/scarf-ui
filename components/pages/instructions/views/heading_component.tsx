@@ -1,3 +1,3 @@
 export const HeadingComponent = ({ Text }: { Text: string }) => {
-    return <h1 className="text-lg font-semibold">{Text}</h1>
+    return <h1 className="text-xl font-semibold">{Text}</h1>
 }

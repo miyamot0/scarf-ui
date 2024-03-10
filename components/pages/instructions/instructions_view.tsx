@@ -5,7 +5,7 @@ import { PeerReviewDataSection } from './sections/peer_inspection_review'
 
 export function InstructionsView() {
     return (
-        <div className="flex flex-col gap-y-4">
+        <div className="flex flex-col gap-y-5">
             <HeadingComponent Text="General Instructions" />
 
             <p>
@@ -19,10 +19,16 @@ export function InstructionsView() {
                 require at least five data points per condition.
             </p>
 
+            <hr />
+
             <SpecificActionsSection />
 
+            <hr />
+
             <ProgressReviewSection />
-            
+
+            <hr />
+
             <PeerReviewDataSection />
         </div>
     )

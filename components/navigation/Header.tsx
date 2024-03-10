@@ -12,32 +12,37 @@ export const Header = () => {
             <NavigationMenuList className="gap-x-4">
                 <DialogHeaderItem LinkText="Information">
                     <DialogHeader>
-                        <DialogTitle>SCARF Information</DialogTitle>
+                        <DialogTitle>SCARF-UI Web-app Information</DialogTitle>
                         <DialogDescription>
-                            Information and acknowledgements
+                            Information regarding the SCARF and SCARF-UI tools
                         </DialogDescription>
                     </DialogHeader>
                     <div className="flex flex-col gap-y-4">
                         <span>
-                            Information on the SCARF tool and its original
-                            design and purpose is available{' '}
+                            The SCARF-UI web-app is an extension of the original
+                            SCARF tool used to appraise single-case experimental
+                            designs (SCEDs) for published and published works.
+                        </span>
+                        <span>
+                            Information on the original SCARF tool and its
+                            design and purpose is available at{' '}
                             <Link
                                 className="text-blue-600"
                                 href={'https://ebip.vkcsites.org/scarfv2/'}
                             >
-                                here
-                            </Link>{' '}
-                            with support using spreadsheet software.
+                                https://ebip.vkcsites.org/scarfv2/
+                            </Link>
+                            , the personal website of Dr. Jennifer Ledford.
                         </span>
                     </div>
                 </DialogHeaderItem>
 
                 <DialogHeaderItem LinkText="Licenses">
                     <DialogHeader>
-                        <DialogTitle>Licenses</DialogTitle>
+                        <DialogTitle>Open Source Licenses</DialogTitle>
                         <DialogDescription>
-                            This web-app is made possible using various
-                            resources
+                            The SCARF-UI web-app incorporates the following
+                            tools
                         </DialogDescription>
                     </DialogHeader>
                     <div className="flex flex-col gap-y-4">
@@ -65,11 +70,23 @@ export const Header = () => {
                     <DialogHeader>
                         <DialogTitle>Source Code</DialogTitle>
                         <DialogDescription>
-                            Link to the source code necessary to build the SCARF
-                            tool
+                            Access the source code for the SCARF-UI tool
                         </DialogDescription>
                     </DialogHeader>
-                    <div className="flex flex-col gap-y-4">TODO</div>
+                    <div className="flex flex-col gap-y-4">
+                        <span>
+                            The source code necessary to inspect, build, or
+                            otherwise extend the SCARF-UI web app is provided
+                            publicly at{' '}
+                            <Link
+                                className="text-blue-600"
+                                href={'https://github.com/miyamot0/scarf-ui'}
+                            >
+                                https://github.com/miyamot0/scarf-ui
+                            </Link>{' '}
+                            under the permissive MIT license.
+                        </span>
+                    </div>
                 </DialogHeaderItem>
             </NavigationMenuList>
         </NavigationMenu>

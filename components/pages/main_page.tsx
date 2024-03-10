@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 import { StudyDetailsDialog } from '../dialogs/study_details_dialog'
 import { Card, CardContent } from '../ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs'
@@ -17,9 +17,6 @@ import { database_reducer } from '@/atoms/reducers/reducer'
 
 export function MainPage() {
     const [state, dispatch] = useReducerAtom(dbAtom, database_reducer)
-    const figureRef1 = useRef<SVGSVGElement>(null)
-    const figureRef2 = useRef<SVGSVGElement>(null)
-    const figureRef3 = useRef<SVGSVGElement>(null)
 
     useEffect(() => {
         dispatch({
