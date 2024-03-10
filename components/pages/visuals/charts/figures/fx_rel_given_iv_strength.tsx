@@ -9,6 +9,16 @@ import {
 } from 'recharts'
 import { CommonVisualOutput } from '../../visuals_view'
 import { SymbolType } from 'recharts/types/util/types'
+import {
+    ContextMenu,
+    ContextMenuContent,
+    ContextMenuItem,
+    ContextMenuTrigger,
+} from '@/components/ui/context-menu'
+import { saveReferenceToSVG } from '@/lib/image_saver'
+import { useCallback } from 'react'
+import FileSaver from 'file-saver'
+import { useCurrentPng } from 'recharts-to-png'
 
 // @ts-ignore
 const CustomTooltip = ({ active, payload, label }) => {
@@ -34,6 +44,19 @@ export function VisualFunctionalRelationGivenIV({
     shape: SymbolType
     size: number
 }) {
+    //const ref = useRef(null)
+    const [getPng, { ref }] = useCurrentPng()
+
+    const handlePNGDownload = useCallback(async () => {
+        const png = await getPng()
+
+        // Verify that png is not undefined
+        if (png) {
+            // Download with FileSaver
+            FileSaver.saveAs(png, 'SCARF_Functional_Relation_Given_IV.png')
+        }
+    }, [getPng])
+
     const data_published = Data.filter(
         (s: CommonVisualOutput) => s.Type === 'Journal'
     ).map((record) => ({
@@ -55,89 +78,111 @@ export function VisualFunctionalRelationGivenIV({
     )
 
     return (
-        <ResponsiveContainer width="100%" height={400}>
-            <ScatterChart
-                margin={{
-                    top: 20,
-                    right: 20,
-                    bottom: 20,
-                    left: 125,
-                }}
-            >
-                <XAxis
-                    type="number"
-                    dataKey="x"
-                    name="IV Indicators"
-                    tick={{ fill: 'black' }}
-                    tickLine={{ stroke: 'black' }}
-                    tickMargin={5}
-                    label={{
-                        value: 'Indicators of Internal Validity',
-                        position: 'middle',
-                        dy: 25,
-                        fill: 'black',
-                    }}
-                    axisLine={{ stroke: 'black' }}
-                    domain={['dataMin-0.5', 'dataMax+0.5']}
-                    ticks={[
-                        0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
-                    ]}
-                />
-                <YAxis
-                    type="number"
-                    dataKey="y"
-                    name="Strength"
-                    tick={{ fill: 'black' }}
-                    tickLine={{ stroke: 'black' }}
-                    tickMargin={5}
-                    label={{
-                        value: 'Functional Relation',
-                        position: 'middle',
-                        angle: -90,
-                        dx: -125,
-                        fill: 'black',
-                    }}
-                    axisLine={{ stroke: 'black' }}
-                    domain={['dataMin-0.5', 'dataMax+0.5']}
-                    ticks={[0, 1, 2, 3, 4]}
-                    tickFormatter={(value) => {
-                        switch (value) {
-                            case 0:
-                                return 'Counter-Therapeutic'
-                            case 1:
-                                return 'Null'
-                            case 2:
-                                return 'Inconsistent'
-                            case 3:
-                                return 'Weak'
-                            case 4:
-                                return 'Strong'
-                        }
-                        return ''
-                    }}
-                />
-                <ZAxis type="number" dataKey="z" range={[size, size]} />
-                <Tooltip
-                    // @ts-ignore
-                    content={<CustomTooltip />}
-                />
-                <Scatter
-                    name="Published Literature"
-                    data={data_published}
-                    fill="#59ACF2"
-                    stroke="black"
-                    shape={shape}
-                    opacity={0.8}
-                />
-                <Scatter
-                    name="Gray Literature"
-                    data={data_unpublished}
-                    fill="#556270"
-                    stroke="black"
-                    shape={shape}
-                    opacity={0.8}
-                />
-            </ScatterChart>
-        </ResponsiveContainer>
+        <ContextMenu>
+            <ContextMenuTrigger>
+                <ResponsiveContainer width="100%" height={400}>
+                    <ScatterChart
+                        ref={ref}
+                        margin={{
+                            top: 20,
+                            right: 20,
+                            bottom: 20,
+                            left: 125,
+                        }}
+                    >
+                        <XAxis
+                            type="number"
+                            dataKey="x"
+                            name="IV Indicators"
+                            tick={{ fill: 'black' }}
+                            tickLine={{ stroke: 'black' }}
+                            tickMargin={5}
+                            label={{
+                                value: 'Indicators of Internal Validity',
+                                position: 'middle',
+                                dy: 25,
+                                fill: 'black',
+                            }}
+                            axisLine={{ stroke: 'black' }}
+                            domain={['dataMin-0.5', 'dataMax+0.5']}
+                            ticks={[
+                                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
+                                14, 15,
+                            ]}
+                        />
+                        <YAxis
+                            type="number"
+                            dataKey="y"
+                            name="Strength"
+                            tick={{ fill: 'black' }}
+                            tickLine={{ stroke: 'black' }}
+                            tickMargin={5}
+                            label={{
+                                value: 'Functional Relation',
+                                position: 'middle',
+                                angle: -90,
+                                dx: -125,
+                                fill: 'black',
+                            }}
+                            axisLine={{ stroke: 'black' }}
+                            domain={['dataMin-0.5', 'dataMax+0.5']}
+                            ticks={[0, 1, 2, 3, 4]}
+                            tickFormatter={(value) => {
+                                switch (value) {
+                                    case 0:
+                                        return 'Counter-Therapeutic'
+                                    case 1:
+                                        return 'Null'
+                                    case 2:
+                                        return 'Inconsistent'
+                                    case 3:
+                                        return 'Weak'
+                                    case 4:
+                                        return 'Strong'
+                                }
+                                return ''
+                            }}
+                        />
+                        <ZAxis type="number" dataKey="z" range={[size, size]} />
+                        <Tooltip
+                            // @ts-ignore
+                            content={<CustomTooltip />}
+                        />
+                        <Scatter
+                            name="Published Literature"
+                            data={data_published}
+                            fill="#59ACF2"
+                            stroke="black"
+                            shape={shape}
+                            opacity={0.8}
+                        />
+                        <Scatter
+                            name="Gray Literature"
+                            data={data_unpublished}
+                            fill="#556270"
+                            stroke="black"
+                            shape={shape}
+                            opacity={0.8}
+                        />
+                    </ScatterChart>
+                </ResponsiveContainer>
+            </ContextMenuTrigger>
+            <ContextMenuContent>
+                <ContextMenuItem
+                    onClick={() =>
+                        saveReferenceToSVG(
+                            ref,
+                            'SCARF_Functional_Relation_Given_IV.svg'
+                        )
+                    }
+                >
+                    Save as SVG
+                </ContextMenuItem>
+
+                <ContextMenuItem onClick={handlePNGDownload}>
+                    Save as PNG
+                </ContextMenuItem>
+            </ContextMenuContent>
+        </ContextMenu>
     )
 }
