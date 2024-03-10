@@ -73,6 +73,9 @@
     body {
         @apply dark:bg-background text-foreground;
     }
+    a {
+        @apply text-primary font-semibold;
+    }
 }
 
 .grainy {

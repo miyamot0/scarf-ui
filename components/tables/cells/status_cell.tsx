@@ -11,12 +11,18 @@ export function StatusCell({ Study }: { Study: StudyObject }) {
 
     if (
         values.every((v) => v === 'Completed') &&
-        Study.PublicationType !== 'Unclassified'
+        Study.PublicationType !== 'Unclassified' &&
+        Study.StudyTag.trim() !== '' &&
+        Study.StudyAuthors.trim() !== '' &&
+        Study.StudyTitle.trim() !== '' &&
+        Study.StudyJournal.trim() !== '' &&
+        Study.StudyYear !== -1
     ) {
         return <Badge className="bg-green-500">Completed</Badge>
     }
 
     if (values.includes('Completed')) {
+        // Note: at leat one of the values is completed
         return <Badge className="bg-orange-500">In Progress</Badge>
     }
 

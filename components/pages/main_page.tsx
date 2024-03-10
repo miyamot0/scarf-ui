@@ -24,11 +24,8 @@ export function MainPage() {
     }, [dispatch])
 
     return (
-        <MaxWidthWrapper className="flex flex-col gap-y-4">
-            <div className="flex flex-row justify-between">
-                <div className=" flex flex-row w-fit gap-x-2"></div>
-            </div>
-            <Card>
+        <div className="flex flex-col gap-y-4">
+            <Card className="w-full">
                 <CardContent className="pt-6">
                     <Tabs
                         value={state.DisplayState}
@@ -97,6 +94,6 @@ export function MainPage() {
             <StudyExternalValidityDialog />
             <StudyReportingDialog />
             <StudyOutcomesDialog />
-        </MaxWidthWrapper>
+        </div>
     )
 }
