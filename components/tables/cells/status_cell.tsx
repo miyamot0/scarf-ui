@@ -18,13 +18,19 @@ export function StatusCell({ Study }: { Study: StudyObject }) {
         Study.StudyJournal.trim() !== '' &&
         Study.StudyYear !== -1
     ) {
-        return <Badge className="bg-green-500">Completed</Badge>
+        return (
+            <Badge className="bg-green-500 hover:bg-green-600">Completed</Badge>
+        )
     }
 
     if (values.includes('Completed')) {
         // Note: at leat one of the values is completed
-        return <Badge className="bg-orange-500">In Progress</Badge>
+        return (
+            <Badge className="bg-orange-500 hover:bg-orange-600">
+                In Progress
+            </Badge>
+        )
     }
 
-    return <Badge className="bg-red-500">Not Started</Badge>
+    return <Badge className="bg-red-500 hover:bg-red-600">Not Started</Badge>
 }

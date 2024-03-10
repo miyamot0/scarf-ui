@@ -8,6 +8,7 @@ import {
     ScatterChart,
 } from 'recharts'
 import { CommonVisualOutput } from '../../visuals_view'
+import { SymbolType } from 'recharts/types/util/types'
 
 // @ts-ignore
 const CustomTooltip = ({ active, payload, label }) => {
@@ -26,8 +27,12 @@ const CustomTooltip = ({ active, payload, label }) => {
 
 export function VisualFunctionalRelationGivenIV({
     Data,
+    shape,
+    size,
 }: {
     Data: CommonVisualOutput[]
+    shape: SymbolType
+    size: number
 }) {
     const data_published = Data.filter(
         (s: CommonVisualOutput) => s.Type === 'Journal'
@@ -36,7 +41,7 @@ export function VisualFunctionalRelationGivenIV({
         y: record.Outcome,
         id: record.ID,
         label: record.Tag,
-        z: 20,
+        z: size,
     }))
 
     const data_unpublished = Data.filter((s) => s.Type === 'Unpublished').map(
@@ -45,7 +50,7 @@ export function VisualFunctionalRelationGivenIV({
             y: record.Outcome,
             id: record.ID,
             label: record.Tag,
-            z: 20,
+            z: size,
         })
     )
 
@@ -111,7 +116,7 @@ export function VisualFunctionalRelationGivenIV({
                         return ''
                     }}
                 />
-                <ZAxis type="number" dataKey="z" range={[60, 400]} />
+                <ZAxis type="number" dataKey="z" range={[size, size]} />
                 <Tooltip
                     // @ts-ignore
                     content={<CustomTooltip />}
@@ -121,6 +126,7 @@ export function VisualFunctionalRelationGivenIV({
                     data={data_published}
                     fill="#59ACF2"
                     stroke="black"
+                    shape={shape}
                     opacity={0.8}
                 />
                 <Scatter
@@ -128,6 +134,7 @@ export function VisualFunctionalRelationGivenIV({
                     data={data_unpublished}
                     fill="#556270"
                     stroke="black"
+                    shape={shape}
                     opacity={0.8}
                 />
             </ScatterChart>

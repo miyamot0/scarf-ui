@@ -14,6 +14,16 @@ import { PublicationType } from '@/types/QuestionTypes'
 import { VisualFunctionalRelationGivenIV } from './charts/figures/fx_rel_given_iv_strength'
 import { MaintenanceGivenWindow } from './charts/figures/maintenance_given_window'
 import { GeneralizationGivenWindow } from './charts/figures/generalization_given_window'
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select'
+import { SymbolType } from 'recharts/types/util/types'
 
 function randomIntFromInterval(min: number, max: number) {
     return Math.floor(Math.random() * (max - min + 1) + min)
@@ -37,9 +47,28 @@ export type CommonVisualOutput = {
     Type: PublicationType
 }
 
+const MarkerSizes = [
+    {
+        value: 100,
+        label: 'Small',
+    },
+    {
+        value: 200,
+        label: 'Medium',
+    },
+    {
+        value: 400,
+        label: 'Large',
+    },
+]
+
+export type MarkerSizingType = (typeof MarkerSizes)[0]
+
 export function VisualsView() {
     const [state] = useReducerAtom(dbAtom, database_reducer)
     const [jitter, setJitter] = React.useState(false)
+    const [shape, setShape] = React.useState<SymbolType>('circle')
+    const [size, setSize] = React.useState<number>(MarkerSizes[1].value)
 
     const { Studies } = state
 
@@ -98,22 +127,82 @@ export function VisualsView() {
 
     return (
         <>
-            <div className="flex flex-row justify-end">
+            <div className="flex flex-row justify-between mb-2">
                 <div className="flex items-center space-x-2">
+                    <Label>Marker Type: </Label>
+                    <Select
+                        value={shape}
+                        onValueChange={(value) => setShape(value as SymbolType)}
+                    >
+                        <SelectTrigger className="w-[125px]">
+                            <SelectValue placeholder="Select marker type" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectGroup>
+                                <SelectLabel>Shapes</SelectLabel>
+                                <SelectItem value="circle">Circle</SelectItem>
+                                <SelectItem value="triangle">
+                                    Triangle
+                                </SelectItem>
+                                <SelectItem value="cross">Cross</SelectItem>
+                                <SelectItem value="diamond">Diamond</SelectItem>
+                                <SelectItem value="star">Star</SelectItem>
+                            </SelectGroup>
+                        </SelectContent>
+                    </Select>
+
+                    <Label className="ml-4">Marker Size: </Label>
+                    <Select
+                        value={size.toString()}
+                        onValueChange={(value) => setSize(parseInt(value))}
+                    >
+                        <SelectTrigger className="w-[125px]">
+                            <SelectValue placeholder="Select marker size" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectGroup>
+                                <SelectLabel>Sizes</SelectLabel>
+                                {MarkerSizes.map((size) => {
+                                    return (
+                                        <SelectItem
+                                            key={size.value.toString()}
+                                            value={size.value.toString()}
+                                        >
+                                            {size.label}
+                                        </SelectItem>
+                                    )
+                                })}
+                            </SelectGroup>
+                        </SelectContent>
+                    </Select>
+                </div>
+                <div className="flex items-center space-x-2">
+                    <Label htmlFor="jitter-mode">Jitter Data</Label>
                     <Switch
                         id="jitter-mode"
                         checked={jitter}
                         onCheckedChange={() => setJitter(!jitter)}
                     />
-                    <Label htmlFor="jitter-mode">Jitter Data</Label>
                 </div>
             </div>
 
-            <VisualFunctionalRelationGivenIV Data={recordsToVisualize} />
+            <VisualFunctionalRelationGivenIV
+                Data={recordsToVisualize}
+                shape={shape}
+                size={size}
+            />
 
-            <MaintenanceGivenWindow Data={recordsToVisualize} />
+            <MaintenanceGivenWindow
+                Data={recordsToVisualize}
+                shape={shape}
+                size={size}
+            />
 
-            <GeneralizationGivenWindow Data={recordsToVisualize} />
+            <GeneralizationGivenWindow
+                Data={recordsToVisualize}
+                shape={shape}
+                size={size}
+            />
         </>
     )
 }

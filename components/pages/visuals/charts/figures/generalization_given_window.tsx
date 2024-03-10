@@ -8,6 +8,7 @@ import {
     ScatterChart,
 } from 'recharts'
 import { CommonVisualOutput } from '../../visuals_view'
+import { SymbolType } from 'recharts/types/util/types'
 
 // @ts-ignore
 const CustomTooltip = ({ active, payload, label }) => {
@@ -30,8 +31,12 @@ const CustomTooltip = ({ active, payload, label }) => {
 
 export function GeneralizationGivenWindow({
     Data,
+    shape,
+    size,
 }: {
     Data: CommonVisualOutput[]
+    shape: SymbolType
+    size: number
 }) {
     const data_published = Data.filter(
         (s: CommonVisualOutput) => s.Type === 'Journal' && s.Generalized > 0
@@ -40,7 +45,7 @@ export function GeneralizationGivenWindow({
         y: record.Generalized,
         id: record.ID,
         label: record.Tag,
-        z: 20,
+        z: size,
     }))
 
     const data_unpublished = Data.filter(
@@ -50,7 +55,7 @@ export function GeneralizationGivenWindow({
         y: record.Outcome,
         id: record.ID,
         label: record.Tag,
-        z: 20,
+        z: size,
     }))
 
     return (
@@ -128,7 +133,7 @@ export function GeneralizationGivenWindow({
                         return ''
                     }}
                 />
-                <ZAxis type="number" dataKey="z" range={[60, 400]} />
+                <ZAxis type="number" dataKey="z" range={[size, size]} />
                 <Tooltip
                     // @ts-ignore
                     content={<CustomTooltip />}
@@ -137,6 +142,7 @@ export function GeneralizationGivenWindow({
                     name="Published Literature"
                     data={data_published}
                     fill="#59ACF2"
+                    shape={shape}
                     stroke="black"
                     opacity={0.8}
                 />
@@ -144,6 +150,7 @@ export function GeneralizationGivenWindow({
                     name="Gray Literature"
                     data={data_unpublished}
                     fill="#556270"
+                    shape={shape}
                     stroke="black"
                     opacity={0.8}
                 />
