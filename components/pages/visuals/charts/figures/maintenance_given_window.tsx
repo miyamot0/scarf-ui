@@ -15,10 +15,11 @@ import {
     ContextMenuItem,
     ContextMenuTrigger,
 } from '@/components/ui/context-menu'
-import { saveReferenceToSVG } from '@/lib/image_saver'
-import { useCallback } from 'react'
-import FileSaver from 'file-saver'
-import { useCurrentPng } from 'recharts-to-png'
+import { dbAtom } from '@/atoms/db_atom'
+import { database_reducer } from '@/atoms/reducers/reducer'
+import { useReducerAtom } from 'jotai/utils'
+import { createRef, use, useEffect, useRef } from 'react'
+import { FigureOutputExport } from '@/lib/image_saver'
 
 // @ts-ignore
 const CustomTooltip = ({ active, payload, label }) => {
@@ -48,17 +49,8 @@ export function MaintenanceGivenWindow({
     shape: SymbolType
     size: number
 }) {
-    const [getPng, { ref }] = useCurrentPng()
-
-    const handlePNGDownload = useCallback(async () => {
-        const png = await getPng()
-
-        // Verify that png is not undefined
-        if (png) {
-            // Download with FileSaver
-            FileSaver.saveAs(png, 'SCARF_Maintenance_Given_Rigor.png')
-        }
-    }, [getPng])
+    const [state, dispatch] = useReducerAtom(dbAtom, database_reducer)
+    const ref = useRef(null)
 
     const data_published = Data.filter(
         (s: CommonVisualOutput) => s.Type === 'Journal' && s.Maintained > 0
@@ -79,6 +71,13 @@ export function MaintenanceGivenWindow({
         label: record.Tag,
         z: size,
     }))
+
+    useEffect(() => {
+        dispatch({
+            type: 'load_ref',
+            payload: { number: 2, ref: ref },
+        })
+    }, [dispatch])
 
     return (
         <ContextMenu>
@@ -186,17 +185,50 @@ export function MaintenanceGivenWindow({
             <ContextMenuContent>
                 <ContextMenuItem
                     onClick={() =>
-                        saveReferenceToSVG(
-                            ref,
-                            'SCARF_Maintenance_Given_Rigor.svg'
+                        FigureOutputExport(
+                            'svg',
+                            'SCARF_Maintenance_Given_Rigor',
+                            state.FigureRef2
                         )
                     }
                 >
                     Save as SVG
                 </ContextMenuItem>
 
-                <ContextMenuItem onClick={handlePNGDownload}>
+                <ContextMenuItem
+                    onClick={() =>
+                        FigureOutputExport(
+                            'webp',
+                            'SCARF_Maintenance_Given_Rigor',
+                            state.FigureRef2
+                        )
+                    }
+                >
+                    Save as WebP
+                </ContextMenuItem>
+
+                <ContextMenuItem
+                    onClick={() =>
+                        FigureOutputExport(
+                            'png',
+                            'SCARF_Maintenance_Given_Rigor',
+                            state.FigureRef2
+                        )
+                    }
+                >
                     Save as PNG
+                </ContextMenuItem>
+
+                <ContextMenuItem
+                    onClick={() =>
+                        FigureOutputExport(
+                            'jpeg',
+                            'SCARF_Maintenance_Given_Rigor',
+                            state.FigureRef2
+                        )
+                    }
+                >
+                    Save as JPEG
                 </ContextMenuItem>
             </ContextMenuContent>
         </ContextMenu>

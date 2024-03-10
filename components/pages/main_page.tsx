@@ -1,9 +1,8 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { StudyDetailsDialog } from '../dialogs/study_details_dialog'
 import { Card, CardContent } from '../ui/card'
-import MaxWidthWrapper from '../ui/max_width_wrapper'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs'
 import { InstructionsView } from './instructions/instructions_view'
 import { StudiesView } from './studies/studies_view'
@@ -18,9 +17,14 @@ import { database_reducer } from '@/atoms/reducers/reducer'
 
 export function MainPage() {
     const [state, dispatch] = useReducerAtom(dbAtom, database_reducer)
+    const figureRef1 = useRef<SVGSVGElement>(null)
+    const figureRef2 = useRef<SVGSVGElement>(null)
+    const figureRef3 = useRef<SVGSVGElement>(null)
 
     useEffect(() => {
-        dispatch({ type: 'load_local' })
+        dispatch({
+            type: 'load_local',
+        })
     }, [dispatch])
 
     return (

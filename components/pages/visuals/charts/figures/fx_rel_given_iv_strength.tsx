@@ -15,10 +15,11 @@ import {
     ContextMenuItem,
     ContextMenuTrigger,
 } from '@/components/ui/context-menu'
-import { saveReferenceToSVG } from '@/lib/image_saver'
-import { useCallback } from 'react'
-import FileSaver from 'file-saver'
-import { useCurrentPng } from 'recharts-to-png'
+import { dbAtom } from '@/atoms/db_atom'
+import { database_reducer } from '@/atoms/reducers/reducer'
+import { useReducerAtom } from 'jotai/utils'
+import { FigureOutputExport } from '@/lib/image_saver'
+import { useEffect, useRef } from 'react'
 
 // @ts-ignore
 const CustomTooltip = ({ active, payload, label }) => {
@@ -44,18 +45,8 @@ export function VisualFunctionalRelationGivenIV({
     shape: SymbolType
     size: number
 }) {
-    //const ref = useRef(null)
-    const [getPng, { ref }] = useCurrentPng()
-
-    const handlePNGDownload = useCallback(async () => {
-        const png = await getPng()
-
-        // Verify that png is not undefined
-        if (png) {
-            // Download with FileSaver
-            FileSaver.saveAs(png, 'SCARF_Functional_Relation_Given_IV.png')
-        }
-    }, [getPng])
+    const [state, dispatch] = useReducerAtom(dbAtom, database_reducer)
+    const ref = useRef(null)
 
     const data_published = Data.filter(
         (s: CommonVisualOutput) => s.Type === 'Journal'
@@ -76,6 +67,13 @@ export function VisualFunctionalRelationGivenIV({
             z: size,
         })
     )
+
+    useEffect(() => {
+        dispatch({
+            type: 'load_ref',
+            payload: { number: 1, ref: ref },
+        })
+    }, [dispatch])
 
     return (
         <ContextMenu>
@@ -170,17 +168,50 @@ export function VisualFunctionalRelationGivenIV({
             <ContextMenuContent>
                 <ContextMenuItem
                     onClick={() =>
-                        saveReferenceToSVG(
-                            ref,
-                            'SCARF_Functional_Relation_Given_IV.svg'
+                        FigureOutputExport(
+                            'svg',
+                            'SCARF_Functional_Relation_Given_IV',
+                            state.FigureRef1
                         )
                     }
                 >
                     Save as SVG
                 </ContextMenuItem>
 
-                <ContextMenuItem onClick={handlePNGDownload}>
+                <ContextMenuItem
+                    onClick={() =>
+                        FigureOutputExport(
+                            'webp',
+                            'SCARF_Functional_Relation_Given_IV',
+                            state.FigureRef1
+                        )
+                    }
+                >
+                    Save as WebP
+                </ContextMenuItem>
+
+                <ContextMenuItem
+                    onClick={() =>
+                        FigureOutputExport(
+                            'png',
+                            'SCARF_Functional_Relation_Given_IV',
+                            state.FigureRef1
+                        )
+                    }
+                >
                     Save as PNG
+                </ContextMenuItem>
+
+                <ContextMenuItem
+                    onClick={() =>
+                        FigureOutputExport(
+                            'jpeg',
+                            'SCARF_Functional_Relation_Given_IV',
+                            state.FigureRef1
+                        )
+                    }
+                >
+                    Save as JPEG
                 </ContextMenuItem>
             </ContextMenuContent>
         </ContextMenu>

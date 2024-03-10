@@ -9,7 +9,7 @@ export const ProgressReviewSection = () => {
 
             <AestheticRow
                 Badge={
-                    <Badge className="whitespace-nowrap bg-red-600 mt-1 w-full flex justify-center">
+                    <Badge className="whitespace-nowrap bg-red-500 hover:bg-red-600 mt-1 w-full flex justify-center">
                         Not Started
                     </Badge>
                 }
@@ -18,7 +18,7 @@ export const ProgressReviewSection = () => {
 
             <AestheticRow
                 Badge={
-                    <Badge className="whitespace-nowrap bg-orange-600 mt-1 w-full flex justify-center">
+                    <Badge className="whitespace-nowrap bg-orange-500 hover:bg-orange-600 mt-1 w-full flex justify-center">
                         In Progress
                     </Badge>
                 }
@@ -27,7 +27,7 @@ export const ProgressReviewSection = () => {
 
             <AestheticRow
                 Badge={
-                    <Badge className="whitespace-nowrap bg-green-600 mt-1 w-full flex justify-center">
+                    <Badge className="whitespace-nowrap bg-green-500 hover:bg-green-600 mt-1 w-full flex justify-center">
                         Completed
                     </Badge>
                 }

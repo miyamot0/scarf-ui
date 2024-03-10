@@ -19,7 +19,10 @@ export const database_reducer = (
         case 'load_local':
             const value = localStorage.getItem(KEY_LOCAL_STORAGE)
 
-            if (value) return JSON.parse(value) as GlobalStateType
+            if (value)
+                return {
+                    ...(JSON.parse(value) as GlobalStateType),
+                }
 
             return state
 
@@ -88,6 +91,26 @@ export const database_reducer = (
                         ? { ...item, PublicationType: action.payload.category }
                         : item
                 ),
+            }
+        case 'load_ref':
+            switch (action.payload.number) {
+                case 1:
+                    return {
+                        ...state,
+                        FigureRef1: action.payload.ref,
+                    }
+                case 2:
+                    return {
+                        ...state,
+                        FigureRef2: action.payload.ref,
+                    }
+                case 3:
+                    return {
+                        ...state,
+                        FigureRef3: action.payload.ref,
+                    }
+                default:
+                    return state
             }
         default:
             return state

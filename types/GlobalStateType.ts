@@ -1,8 +1,12 @@
-import { DialogState, DisplayState } from './DisplayStateTypes'
+import { RefObject } from 'react'
+import { DialogStateType, DisplayStateType } from './DisplayStateTypes'
 import { StudyObject } from './QuestionTypes'
 
 export type GlobalStateType = {
-    DisplayState: DisplayState
-    DialogState: DialogState
+    DialogState: DialogStateType
+    DisplayState: DisplayStateType
     Studies: StudyObject[]
+    FigureRef1?: RefObject<SVGSVGElement>
+    FigureRef2?: RefObject<SVGSVGElement>
+    FigureRef3?: RefObject<SVGSVGElement>
 }

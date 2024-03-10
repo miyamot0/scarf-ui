@@ -1,14 +1,26 @@
-import type { DisplayState, DialogState } from '@/types/DisplayStateTypes'
+import type {
+    DisplayStateType,
+    DialogStateType,
+} from '@/types/DisplayStateTypes'
 import type { GlobalStateType } from '@/types/GlobalStateType'
 import type { StudyObject, PublicationType } from '@/types/QuestionTypes'
+import { RefObject } from 'react'
 
 export type DatabaseAction =
-    | { type: 'load_local' }
+    | {
+          type: 'load_local'
+      }
     | { type: 'load_external'; payload: { saved_state: GlobalStateType } }
     | { type: 'save_local' }
     | { type: 'add' }
-    | { type: 'update_display_state'; payload: { display_state: DisplayState } }
-    | { type: 'update_dialog_state'; payload: { dialog_state: DialogState } }
+    | {
+          type: 'update_display_state'
+          payload: { display_state: DisplayStateType }
+      }
+    | {
+          type: 'update_dialog_state'
+          payload: { dialog_state: DialogStateType }
+      }
     | {
           type: 'update_study'
           payload: { study_id: string; updatedData: StudyObject }
@@ -21,4 +33,8 @@ export type DatabaseAction =
     | {
           type: 'update_study_category'
           payload: { study_id: string; category: PublicationType }
+      }
+    | {
+          type: 'load_ref'
+          payload: { number: 1 | 2 | 3; ref: RefObject<SVGSVGElement> }
       }

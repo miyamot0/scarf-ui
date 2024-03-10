@@ -1,8 +1,12 @@
 import { StudyObject } from './QuestionTypes'
 
-export type DisplayState = 'instructions' | 'studies' | 'visuals' | 'metrics'
+export type DisplayStateType =
+    | 'instructions'
+    | 'studies'
+    | 'visuals'
+    | 'metrics'
 
-export type DialogState = {
+export type DialogStateType = {
     dialog_type:
         | undefined
         | 'study_details'

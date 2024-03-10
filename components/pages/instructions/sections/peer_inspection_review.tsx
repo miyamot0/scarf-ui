@@ -21,7 +21,7 @@ export const PeerReviewDataSection = () => {
 
             <AestheticRow
                 Badge={
-                    <Badge className="whitespace-nowrap bg-gray-600 mt-1 w-full flex justify-center">
+                    <Badge className="whitespace-nowrap bg-gray-500 hover:bg-gray-600 mt-1 w-full flex justify-center">
                         Unpublished
                     </Badge>
                 }
@@ -30,7 +30,7 @@ export const PeerReviewDataSection = () => {
 
             <AestheticRow
                 Badge={
-                    <Badge className="whitespace-nowrap bg-green-600 mt-1 w-full flex justify-center">
+                    <Badge className="whitespace-nowrap bg-green-500 hover:bg-green-600 mt-1 w-full flex justify-center">
                         Published
                     </Badge>
                 }

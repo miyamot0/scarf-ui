@@ -15,10 +15,11 @@ import {
     ContextMenuItem,
     ContextMenuTrigger,
 } from '@/components/ui/context-menu'
-import { saveReferenceToSVG } from '@/lib/image_saver'
-import { useCallback } from 'react'
-import FileSaver from 'file-saver'
-import { useCurrentPng } from 'recharts-to-png'
+import { dbAtom } from '@/atoms/db_atom'
+import { database_reducer } from '@/atoms/reducers/reducer'
+import { useReducerAtom } from 'jotai/utils'
+import { useEffect, useRef } from 'react'
+import { FigureOutputExport } from '@/lib/image_saver'
 
 // @ts-ignore
 const CustomTooltip = ({ active, payload, label }) => {
@@ -48,17 +49,8 @@ export function GeneralizationGivenWindow({
     shape: SymbolType
     size: number
 }) {
-    const [getPng, { ref }] = useCurrentPng()
-
-    const handlePNGDownload = useCallback(async () => {
-        const png = await getPng()
-
-        // Verify that png is not undefined
-        if (png) {
-            // Download with FileSaver
-            FileSaver.saveAs(png, 'SCARF_Generalization_Given_Duration.png')
-        }
-    }, [getPng])
+    const [state, dispatch] = useReducerAtom(dbAtom, database_reducer)
+    const ref = useRef(null)
 
     const data_published = Data.filter(
         (s: CommonVisualOutput) => s.Type === 'Journal' && s.Generalized > 0
@@ -79,6 +71,13 @@ export function GeneralizationGivenWindow({
         label: record.Tag,
         z: size,
     }))
+
+    useEffect(() => {
+        dispatch({
+            type: 'load_ref',
+            payload: { number: 3, ref: ref },
+        })
+    }, [dispatch])
 
     return (
         <ContextMenu>
@@ -185,17 +184,50 @@ export function GeneralizationGivenWindow({
             <ContextMenuContent>
                 <ContextMenuItem
                     onClick={() =>
-                        saveReferenceToSVG(
-                            ref,
-                            'SCARF_Generalization_Given_Duration.svg'
+                        FigureOutputExport(
+                            'svg',
+                            'SCARF_Generalization_Given_Duration',
+                            state.FigureRef3
                         )
                     }
                 >
                     Save as SVG
                 </ContextMenuItem>
 
-                <ContextMenuItem onClick={handlePNGDownload}>
+                <ContextMenuItem
+                    onClick={() =>
+                        FigureOutputExport(
+                            'webp',
+                            'SCARF_Generalization_Given_Duration',
+                            state.FigureRef3
+                        )
+                    }
+                >
+                    Save as WebP
+                </ContextMenuItem>
+
+                <ContextMenuItem
+                    onClick={() =>
+                        FigureOutputExport(
+                            'png',
+                            'SCARF_Generalization_Given_Duration',
+                            state.FigureRef3
+                        )
+                    }
+                >
                     Save as PNG
+                </ContextMenuItem>
+
+                <ContextMenuItem
+                    onClick={() =>
+                        FigureOutputExport(
+                            'jpeg',
+                            'SCARF_Generalization_Given_Duration',
+                            state.FigureRef3
+                        )
+                    }
+                >
+                    Save as JPEG
                 </ContextMenuItem>
             </ContextMenuContent>
         </ContextMenu>

@@ -7,5 +7,8 @@ export const dbAtom = atom<GlobalStateType>({
         study: undefined,
     },
     DisplayState: 'studies',
+    FigureRef1: undefined,
+    FigureRef2: undefined,
+    FigureRef3: undefined,
     Studies: [],
 })
