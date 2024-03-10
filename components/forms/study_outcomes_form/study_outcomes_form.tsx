@@ -4,6 +4,7 @@ import { z } from 'zod'
 import {
     Form,
     FormControl,
+    FormDescription,
     FormField,
     FormItem,
     FormLabel,
@@ -23,6 +24,7 @@ import {
 import { GetSelectOptionsFromTag } from '../inputs/select_options'
 import { StudyOutcomesSchema } from './study_outcomes_schema'
 import { database_reducer } from '@/atoms/reducers/reducer'
+import { OutcomesQuestions } from '@/assets/simplified_questions'
 
 export function StudyOutcomesForm({ study }: { study?: StudyObject }) {
     const [, dispatch] = useReducerAtom(dbAtom, database_reducer)
@@ -95,6 +97,18 @@ export function StudyOutcomesForm({ study }: { study?: StudyObject }) {
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                 {study?.Outcomes.Questions.map((question) => {
+                    const questionStem =
+                        question.QuestionStem ??
+                        OutcomesQuestions.find(
+                            (q) => q.QuestionID === question.QuestionID
+                        )?.QuestionStem
+
+                    const questionInstruction =
+                        question.QuestionInstruction ??
+                        OutcomesQuestions.find(
+                            (q) => q.QuestionID === question.QuestionID
+                        )?.QuestionInstruction
+
                     return (
                         <FormField
                             key={question.QuestionID}
@@ -103,9 +117,7 @@ export function StudyOutcomesForm({ study }: { study?: StudyObject }) {
                             name={question.QuestionID}
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>
-                                        {question.QuestionStem}
-                                    </FormLabel>
+                                    <FormLabel>{questionStem}</FormLabel>
                                     <FormControl>
                                         <Select
                                             onValueChange={(value) => {
@@ -138,6 +150,9 @@ export function StudyOutcomesForm({ study }: { study?: StudyObject }) {
                                         </Select>
                                     </FormControl>
 
+                                    <FormDescription>
+                                        {questionInstruction}
+                                    </FormDescription>
                                     <FormMessage />
                                 </FormItem>
                             )}

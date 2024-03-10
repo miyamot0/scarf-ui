@@ -4,6 +4,7 @@ import { z } from 'zod'
 import {
     Form,
     FormControl,
+    FormDescription,
     FormField,
     FormItem,
     FormLabel,
@@ -23,6 +24,7 @@ import {
 } from '@/components/ui/select'
 import { GetSelectOptionsFromTag } from '../inputs/select_options'
 import { StudyExternalValiditySchema } from './study_external_validity_schema'
+import { ExternalValidityQuestions } from '@/assets/simplified_questions'
 
 export function StudyExternalValidityForm({ study }: { study?: StudyObject }) {
     const [, dispatch] = useReducerAtom(dbAtom, database_reducer)
@@ -161,6 +163,18 @@ export function StudyExternalValidityForm({ study }: { study?: StudyObject }) {
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                 {study?.ExternalValidity.Questions.map((question) => {
+                    const questionStem =
+                        question.QuestionStem ??
+                        ExternalValidityQuestions.find(
+                            (q) => q.QuestionID === question.QuestionID
+                        )?.QuestionStem
+
+                    const questionInstruction =
+                        question.QuestionInstruction ??
+                        ExternalValidityQuestions.find(
+                            (q) => q.QuestionID === question.QuestionID
+                        )?.QuestionInstruction
+
                     return (
                         <FormField
                             key={question.QuestionID}
@@ -170,9 +184,7 @@ export function StudyExternalValidityForm({ study }: { study?: StudyObject }) {
                             render={({ field }) => {
                                 return (
                                     <FormItem>
-                                        <FormLabel>
-                                            {question.QuestionStem}
-                                        </FormLabel>
+                                        <FormLabel>{questionStem}</FormLabel>
                                         <FormControl>
                                             <Select
                                                 onValueChange={(value) => {
@@ -205,6 +217,9 @@ export function StudyExternalValidityForm({ study }: { study?: StudyObject }) {
                                             </Select>
                                         </FormControl>
 
+                                        <FormDescription>
+                                            {questionInstruction}
+                                        </FormDescription>
                                         <FormMessage />
                                     </FormItem>
                                 )

@@ -4,6 +4,7 @@ import { z } from 'zod'
 import {
     Form,
     FormControl,
+    FormDescription,
     FormField,
     FormItem,
     FormLabel,
@@ -23,6 +24,7 @@ import {
 import { GetSelectOptionsFromTag } from '../inputs/select_options'
 import { StudyReportingSchema } from './study_reporting_schema'
 import { database_reducer } from '@/atoms/reducers/reducer'
+import { ReportingQuestions } from '@/assets/simplified_questions'
 
 export function StudyReportingForm({ study }: { study?: StudyObject }) {
     const [, dispatch] = useReducerAtom(dbAtom, database_reducer)
@@ -109,6 +111,18 @@ export function StudyReportingForm({ study }: { study?: StudyObject }) {
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                 {study?.Reporting.Questions.map((question) => {
+                    const questionStem =
+                        question.QuestionStem ??
+                        ReportingQuestions.find(
+                            (q) => q.QuestionID === question.QuestionID
+                        )?.QuestionStem
+
+                    const questionInstruction =
+                        question.QuestionInstruction ??
+                        ReportingQuestions.find(
+                            (q) => q.QuestionID === question.QuestionID
+                        )?.QuestionInstruction
+
                     return (
                         <FormField
                             key={question.QuestionID}
@@ -117,9 +131,7 @@ export function StudyReportingForm({ study }: { study?: StudyObject }) {
                             name={question.QuestionID}
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>
-                                        {question.QuestionStem}
-                                    </FormLabel>
+                                    <FormLabel>{questionStem}</FormLabel>
                                     <FormControl>
                                         <Select
                                             onValueChange={field.onChange}
@@ -146,6 +158,9 @@ export function StudyReportingForm({ study }: { study?: StudyObject }) {
                                         </Select>
                                     </FormControl>
 
+                                    <FormDescription>
+                                        {questionInstruction}
+                                    </FormDescription>
                                     <FormMessage />
                                 </FormItem>
                             )}

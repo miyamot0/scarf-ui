@@ -4,6 +4,7 @@ import { z } from 'zod'
 import {
     Form,
     FormControl,
+    FormDescription,
     FormField,
     FormItem,
     FormLabel,
@@ -23,6 +24,8 @@ import {
     SelectValue,
 } from '@/components/ui/select'
 import { GetSelectOptionsFromTag } from '../inputs/select_options'
+import { Inter } from 'next/font/google'
+import { InternalValidityQuestions } from '@/assets/simplified_questions'
 
 export function StudyInternalValidityForm({ study }: { study?: StudyObject }) {
     const [, dispatch] = useReducerAtom(dbAtom, database_reducer)
@@ -118,6 +121,18 @@ export function StudyInternalValidityForm({ study }: { study?: StudyObject }) {
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                 {study?.InternalValidity.Questions.map((question) => {
+                    const questionStem =
+                        question.QuestionStem ??
+                        InternalValidityQuestions.find(
+                            (q) => q.QuestionID === question.QuestionID
+                        )?.QuestionStem
+
+                    const questionInstruction =
+                        question.QuestionInstruction ??
+                        InternalValidityQuestions.find(
+                            (q) => q.QuestionID === question.QuestionID
+                        )?.QuestionInstruction
+
                     return (
                         <FormField
                             key={question.QuestionID}
@@ -126,9 +141,7 @@ export function StudyInternalValidityForm({ study }: { study?: StudyObject }) {
                             name={question.QuestionID}
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>
-                                        {question.QuestionStem}
-                                    </FormLabel>
+                                    <FormLabel>{questionStem}</FormLabel>
                                     <FormControl>
                                         <Select
                                             onValueChange={field.onChange}
@@ -155,6 +168,9 @@ export function StudyInternalValidityForm({ study }: { study?: StudyObject }) {
                                         </Select>
                                     </FormControl>
 
+                                    <FormDescription>
+                                        {questionInstruction}
+                                    </FormDescription>
                                     <FormMessage />
                                 </FormItem>
                             )}

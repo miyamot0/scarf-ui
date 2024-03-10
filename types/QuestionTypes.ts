@@ -33,8 +33,8 @@ export type QuestionType =
 export type QuestionObjectHolder = {
     Category: QuestionCategory
     QuestionID: string
-    QuestionStem: string
-    QuestionInstruction: string
+    QuestionStem?: string
+    QuestionInstruction?: string
     QuestionType: QuestionType
     Response?: string
 }
@@ -69,20 +69,44 @@ export type TypeOfValidityObject = {
 
 export const InternalValidityQuestionDefault: TypeOfValidityObject = {
     Status: 'NotStarted',
-    Questions: InternalValidityQuestions,
+    Questions: InternalValidityQuestions.map((question) => {
+        return {
+            ...question,
+            QuestionInstruction: undefined,
+            QuestionStem: undefined,
+        }
+    }),
 }
 
 export const ExternalValidityQuestionDefault: TypeOfValidityObject = {
     Status: 'NotStarted',
-    Questions: ExternalValidityQuestions,
+    Questions: ExternalValidityQuestions.map((question) => {
+        return {
+            ...question,
+            QuestionInstruction: undefined,
+            QuestionStem: undefined,
+        }
+    }),
 }
 
 export const ReportingQuestionDefault: TypeOfValidityObject = {
     Status: 'NotStarted',
-    Questions: ReportingQuestions,
+    Questions: ReportingQuestions.map((question) => {
+        return {
+            ...question,
+            QuestionInstruction: undefined,
+            QuestionStem: undefined,
+        }
+    }),
 }
 
 export const OutcomesQuestionDefault: TypeOfValidityObject = {
     Status: 'NotStarted',
-    Questions: OutcomesQuestions,
+    Questions: OutcomesQuestions.map((question) => {
+        return {
+            ...question,
+            QuestionInstruction: undefined,
+            QuestionStem: undefined,
+        }
+    }),
 }
