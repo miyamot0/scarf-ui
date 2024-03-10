@@ -30,7 +30,7 @@ export function GeneralizationGivenWindow({
     Data: CommonVisualOutput[]
 }) {
     const data_published = Data.filter(
-        (s: CommonVisualOutput) => s.Type === 'Journal'
+        (s: CommonVisualOutput) => s.Type === 'Journal' && s.Generalized > 0
     ).map((record) => ({
         x: record.GeneralizationRigor,
         y: record.Generalized,
@@ -39,15 +39,15 @@ export function GeneralizationGivenWindow({
         z: 20,
     }))
 
-    const data_unpublished = Data.filter((s) => s.Type === 'Unpublished').map(
-        (record) => ({
-            x: record.GeneralizationRigor,
-            y: record.Outcome,
-            id: record.ID,
-            label: record.Tag,
-            z: 20,
-        })
-    )
+    const data_unpublished = Data.filter(
+        (s) => s.Type === 'Unpublished' && s.Generalized > 0
+    ).map((record) => ({
+        x: record.GeneralizationRigor,
+        y: record.Outcome,
+        id: record.ID,
+        label: record.Tag,
+        z: 20,
+    }))
 
     return (
         <ResponsiveContainer width="100%" height={400}>

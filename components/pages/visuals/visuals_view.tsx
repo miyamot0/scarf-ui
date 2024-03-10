@@ -96,26 +96,6 @@ export function VisualsView() {
         }
     })
 
-    const generalized_data_published = recordsToVisualize
-        .filter((s) => s.Type === 'Journal')
-        .map((record) => ({
-            x: record.GeneralizationRigor,
-            y: record.Generalized,
-            id: record.ID,
-            label: record.Tag,
-            z: 20,
-        }))
-
-    const generalized_data_unpublished = recordsToVisualize
-        .filter((s) => s.Type === 'Unpublished')
-        .map((record) => ({
-            x: record.GeneralizationRigor,
-            y: record.Outcome,
-            id: record.ID,
-            label: record.Tag,
-            z: 20,
-        }))
-
     return (
         <>
             <div className="flex flex-row justify-end">

@@ -67,8 +67,10 @@ export function GenerateStrengthRating(
                     return 2
                 case 'Null':
                     return 1
-                default:
+                case 'Countertherapeutic':
                     return 0
+                default:
+                    return -1
             }
         case 'Generalization':
             const generalized_outcomes = study.Outcomes.Questions.find(
@@ -86,8 +88,10 @@ export function GenerateStrengthRating(
                     return 2
                 case 'Null':
                     return 1
-                default:
+                case 'Countertherapeutic':
                     return 0
+                default:
+                    return -1
             }
     }
 }
