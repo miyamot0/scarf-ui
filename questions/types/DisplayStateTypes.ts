@@ -9,6 +9,7 @@ export type DisplayStateType =
 export type DialogStateType = {
     dialog_type:
         | undefined
+        | 'review_details'
         | 'study_details'
         | 'study_internal_validity'
         | 'study_external_validity'

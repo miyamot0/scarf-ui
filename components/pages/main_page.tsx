@@ -2,7 +2,13 @@
 
 import { useEffect } from 'react'
 import { StudyDetailsDialog } from '../dialogs/study_details_dialog'
-import { Card, CardContent } from '../ui/card'
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
+} from '../ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs'
 import { InstructionsView } from './instructions/instructions_view'
 import { StudiesView } from './studies/studies_view'
@@ -14,6 +20,9 @@ import { StudyReportingDialog } from '../dialogs/study_reporting_dialog'
 import { StudyOutcomesDialog } from '../dialogs/study_outcomes_dialog'
 import { VisualsView } from './visuals/visuals_view'
 import { database_reducer } from '@/atoms/reducers/reducer'
+import { Button } from '../ui/button'
+import { Settings2Icon } from 'lucide-react'
+import { ReviewDetailsDialog } from '../dialogs/review_details_dialog'
 
 export function MainPage() {
     const [state, dispatch] = useReducerAtom(dbAtom, database_reducer)
@@ -27,7 +36,36 @@ export function MainPage() {
     return (
         <div className="flex flex-col gap-y-4">
             <Card className="w-full">
-                <CardContent className="pt-6">
+                <CardHeader className="flex flex-row justify-between">
+                    <div className="flex flex-col">
+                        <CardTitle>{`Review: Name: ${
+                            state.ReviewName ?? 'UNNAMED'
+                        }`}</CardTitle>
+                        <CardDescription>{`Reviewer Type: ${
+                            state.ReviewType ?? 'Primary'
+                        }`}</CardDescription>
+                    </div>
+                    <div>
+                        <Button
+                            size={'sm'}
+                            variant={'outline'}
+                            onClick={() => {
+                                dispatch({
+                                    type: 'update_dialog_state',
+                                    payload: {
+                                        dialog_state: {
+                                            dialog_type: 'review_details',
+                                            study: undefined,
+                                        },
+                                    },
+                                })
+                            }}
+                        >
+                            <Settings2Icon size={18} />
+                        </Button>
+                    </div>
+                </CardHeader>
+                <CardContent>
                     <Tabs
                         value={state.DisplayState}
                         className="w-full flex flex-col gap-y-4"
@@ -90,6 +128,7 @@ export function MainPage() {
             </Card>
 
             {/* Dialogs */}
+            <ReviewDetailsDialog />
             <StudyDetailsDialog />
             <StudyInternalValidityDialog />
             <StudyExternalValidityDialog />

@@ -92,6 +92,16 @@ export const database_reducer = (
                         : item
                 ),
             }
+        case 'update_review':
+            return {
+                ...state,
+                DialogState: {
+                    dialog_type: undefined,
+                    study: undefined,
+                },
+                ReviewName: action.payload.review_name,
+                ReviewType: action.payload.review_type,
+            }
         case 'load_ref':
             switch (action.payload.number) {
                 case 1:

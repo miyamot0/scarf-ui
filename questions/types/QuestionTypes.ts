@@ -24,7 +24,7 @@ export type QuestionType =
     | 'ConditionChangeCharacterizationNA'
 
 export type QuestionObjectHolder = {
-    Category?: string //QuestionCategory
+    Category?: QuestionCategory
     QuestionID: string
     QuestionStem?: string
     QuestionInstruction?: string
