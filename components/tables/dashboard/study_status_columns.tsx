@@ -3,7 +3,7 @@ import { ColumnDef } from '@tanstack/react-table'
 import { Checkbox } from '../../ui/checkbox'
 import { DataTableColumnHeader } from '../general/study_column_header'
 import { ActionCell } from './cells/action_cell'
-import { StatusCell } from './cells/status_cell'
+import { StatusCell } from '../general/status_cell'
 
 export const study_columns: ColumnDef<StudyObject>[] = [
     {

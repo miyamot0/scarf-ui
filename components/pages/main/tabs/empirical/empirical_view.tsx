@@ -2,13 +2,10 @@ import { dbAtom } from '@/atoms/db_atom'
 import { StudyEmpiricalDataTable } from '@/components/tables/empirical/study_empirical_table'
 import { study_columns } from '@/components/tables/empirical/study_empirical_columns'
 import { HeadingComponent } from '../instructions/views/heading_component'
-import { useMemo } from 'react'
-import { useAtomValue } from 'jotai'
+import { useAtom } from 'jotai'
 
 export function EmpiricalTabView() {
-    const state = useAtomValue(dbAtom)
-
-    const memoizedData = useMemo(() => state.Studies, [state.Studies])
+    const [state] = useAtom(dbAtom)
 
     return (
         <div className="flex flex-col gap-y-4">

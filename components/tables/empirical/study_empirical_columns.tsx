@@ -7,6 +7,8 @@ import {
     OutcomesQuestionDefault,
     ReportingQuestionDefault,
 } from '@/questions/questions_defaults'
+import { StatusCell } from '../general/status_cell'
+import { ArchivedCell } from '../general/archive_cell'
 
 const empirical_cols_1 = InternalValidityQuestionDefault.Questions.map(
     (question) => {
@@ -27,6 +29,8 @@ const empirical_cols_1 = InternalValidityQuestionDefault.Questions.map(
                     }
                 </span>
             ),
+            enableHiding: false,
+            enableSorting: false,
         }
     }
 )
@@ -50,6 +54,8 @@ const empirical_cols_2 = ExternalValidityQuestionDefault.Questions.map(
                     }
                 </span>
             ),
+            enableHiding: false,
+            enableSorting: false,
         }
     }
 )
@@ -72,6 +78,8 @@ const empirical_cols_3 = ReportingQuestionDefault.Questions.map((question) => {
                 }
             </span>
         ),
+        enableHiding: false,
+        enableSorting: false,
     }
 })
 
@@ -93,6 +101,8 @@ const empirical_cols_4 = OutcomesQuestionDefault.Questions.map((question) => {
                 }
             </span>
         ),
+        enableHiding: false,
+        enableSorting: false,
     }
 })
 
@@ -101,6 +111,28 @@ export const study_columns: ColumnDef<StudyObject>[] = [
         accessorKey: 'StudyID',
         header: ({ column }) => (
             <DataTableColumnHeader column={column} title="ID" />
+        ),
+    },
+    {
+        accessorKey: 'StudyStatus',
+        header: 'Status',
+        enableHiding: false,
+        enableSorting: false,
+        cell: ({ row }) => (
+            <div className="min-w-[100px]">
+                <StatusCell Study={row.original} />
+            </div>
+        ),
+    },
+    {
+        accessorKey: 'PublicationType',
+        header: 'Peer Reviewed',
+        enableHiding: false,
+        enableSorting: false,
+        cell: ({ row }) => (
+            <div className="min-w-[150px]">
+                <ArchivedCell Study={row.original} />
+            </div>
         ),
     },
     {
