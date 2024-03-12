@@ -26,6 +26,7 @@ import { ReviewDetailsDialog } from '../../dialogs/review_details_dialog'
 import { cn } from '@/lib/utils'
 import { LoadingSpinner } from '@/components/ui/loading-spinner'
 import { Hero } from './views/hero'
+import { EmpiricalTabView } from './tabs/empirical/empirical_view'
 
 export function MainPage() {
     const [state, dispatch] = useReducerAtom(dbAtom, database_reducer)
@@ -120,7 +121,24 @@ export function MainPage() {
                                         })
                                     }}
                                 >
-                                    Studies
+                                    Code Studies
+                                </TabsTrigger>
+                                <TabsTrigger
+                                    value="empirical"
+                                    className="w-full"
+                                    onClick={() => {
+                                        if (state.DisplayState === 'empirical')
+                                            return
+
+                                        dispatch({
+                                            type: 'update_display_state',
+                                            payload: {
+                                                display_state: 'empirical',
+                                            },
+                                        })
+                                    }}
+                                >
+                                    Inspect Dataset
                                 </TabsTrigger>
                                 <TabsTrigger
                                     value="visuals"
@@ -137,7 +155,7 @@ export function MainPage() {
                                         })
                                     }}
                                 >
-                                    Visuals
+                                    Visualize Data
                                 </TabsTrigger>
                             </TabsList>
                             <TabsContent value="instructions">
@@ -145,6 +163,9 @@ export function MainPage() {
                             </TabsContent>
                             <TabsContent value="studies">
                                 <StudiesView />
+                            </TabsContent>
+                            <TabsContent value="empirical">
+                                <EmpiricalTabView />
                             </TabsContent>
                             <TabsContent value="visuals">
                                 <VisualsView />

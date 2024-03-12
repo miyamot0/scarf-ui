@@ -5,6 +5,7 @@ export type DisplayStateType =
     | 'studies'
     | 'visuals'
     | 'metrics'
+    | 'empirical'
 
 export type DialogStateType = {
     dialog_type:
