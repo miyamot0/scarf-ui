@@ -24,12 +24,13 @@ export type QuestionType =
     | 'ConditionChangeCharacterizationNA'
 
 export type QuestionObjectHolder = {
-    Category?: QuestionCategory
+    Category?: string //QuestionCategory
     QuestionID: string
     QuestionStem?: string
     QuestionInstruction?: string
     QuestionType?: QuestionType
     Response?: string
+    Locale: 'en-us'
 }
 
 export type ResponseStatus = 'NotStarted' | 'InProgress' | 'Completed'
