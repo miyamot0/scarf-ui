@@ -84,7 +84,7 @@ export function MaintenanceGivenWindow({
             type: 'load_ref',
             payload: { number: 2, ref: ref },
         })
-    }, [dispatch])
+    }, [dispatch, state.FigureRef2])
 
     return (
         <ContextMenu>

@@ -84,7 +84,7 @@ export function GeneralizationGivenWindow({
             type: 'load_ref',
             payload: { number: 3, ref: ref },
         })
-    }, [dispatch])
+    }, [dispatch, state.FigureRef3])
 
     return (
         <ContextMenu>

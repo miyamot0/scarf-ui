@@ -42,6 +42,13 @@ Interested parties are encouraged to reach out the Drs. Gilroy and Ledford for o
 
 ## Changelog
 
+### Version 0.2.0
+
+-   Edits for clarity and continuity
+-   Option for generating file for the Reliability coder (Note: must have common ID's to ensure they match)
+-   Fixes for concurrency
+-   New Toast library
+
 ### Version 0.1.2
 
 -   Distinguish review (i.e., name for project) and coder status (i.e., Primary vs. Reli)
