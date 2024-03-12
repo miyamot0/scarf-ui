@@ -1,5 +1,4 @@
 import { dbAtom } from '@/atoms/db_atom'
-import { useReducerAtom } from 'jotai/utils'
 import React from 'react'
 import { Switch } from '@/components/ui/switch'
 import { Label } from '@/components/ui/label'
@@ -9,7 +8,6 @@ import {
     GenerateMaintenanceWindow,
     GenerateStrengthRating,
 } from './helpers/scarf_scoring'
-import { database_reducer } from '@/atoms/reducers/reducer'
 import { PublicationType } from '@/questions/types/QuestionTypes'
 import { VisualFunctionalRelationGivenIV } from './figures/fx_rel_given_iv_strength'
 import { MaintenanceGivenWindow } from './figures/maintenance_given_window'

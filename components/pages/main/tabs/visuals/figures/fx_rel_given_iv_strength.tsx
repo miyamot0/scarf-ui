@@ -54,7 +54,7 @@ export function VisualFunctionalRelationGivenIV({
     const ref = useRef(null)
 
     const data_published = Data.filter(
-        (s: CommonVisualOutput) => s.Type === 'Journal'
+        (s: CommonVisualOutput) => s.Type === 'Journal' && s.Outcome >= 0
     ).map((record) => ({
         x: record.IV,
         y: record.Outcome,
@@ -63,15 +63,15 @@ export function VisualFunctionalRelationGivenIV({
         z: size,
     }))
 
-    const data_unpublished = Data.filter((s) => s.Type === 'Unpublished').map(
-        (record) => ({
-            x: record.IV,
-            y: record.Outcome,
-            id: record.ID,
-            label: record.Tag,
-            z: size,
-        })
-    )
+    const data_unpublished = Data.filter(
+        (s) => s.Type === 'Unpublished' && s.Outcome >= 0
+    ).map((record) => ({
+        x: record.IV,
+        y: record.Outcome,
+        id: record.ID,
+        label: record.Tag,
+        z: size,
+    }))
 
     useEffect(() => {
         if (state.FigureRef1) return

@@ -48,8 +48,10 @@ export function GenerateStrengthRating(
                     return 2
                 case 'Null':
                     return 1
-                default:
+                case 'Countertherapeutic':
                     return 0
+                default:
+                    return -1
             }
         case 'Maintenance':
             const maintained_outcomes = study.Outcomes.Questions.find(
@@ -113,7 +115,7 @@ export function GenerateMaintenanceWindow(study: StudyObject) {
         case 'Immediately after Cessation':
             return 0
         default:
-            return 0
+            return -1
     }
 }
 

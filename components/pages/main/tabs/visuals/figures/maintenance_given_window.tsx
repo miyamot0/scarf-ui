@@ -58,7 +58,7 @@ export function MaintenanceGivenWindow({
     const ref = useRef(null)
 
     const data_published = Data.filter(
-        (s: CommonVisualOutput) => s.Type === 'Journal' && s.Maintained > 0
+        (s: CommonVisualOutput) => s.Type === 'Journal' && s.Maintained >= 0
     ).map((record) => ({
         x: record.MaintenanceWindow,
         y: record.Maintained,
@@ -68,7 +68,7 @@ export function MaintenanceGivenWindow({
     }))
 
     const data_unpublished = Data.filter(
-        (s) => s.Type === 'Unpublished' && s.Maintained > 0
+        (s) => s.Type === 'Unpublished' && s.Maintained >= 0
     ).map((record) => ({
         x: record.MaintenanceWindow,
         y: record.Outcome,
