@@ -7,7 +7,7 @@ import {
     Scatter,
     ScatterChart,
 } from 'recharts'
-import { CommonVisualOutput } from '../../visuals_view'
+import { CommonVisualOutput } from '../visuals_view'
 import { SymbolType } from 'recharts/types/util/types'
 import {
     ContextMenu,
@@ -20,8 +20,8 @@ import {
 import { dbAtom } from '@/atoms/db_atom'
 import { database_reducer } from '@/atoms/reducers/reducer'
 import { useReducerAtom } from 'jotai/utils'
-import { createRef, use, useEffect, useRef } from 'react'
 import { FigureOutputExport } from '@/lib/image_saver'
+import { useEffect, useRef } from 'react'
 import { ScatterChartIcon } from 'lucide-react'
 
 // @ts-ignore
@@ -30,12 +30,8 @@ const CustomTooltip = ({ active, payload, label }) => {
         return (
             <div className="bg-white border border-black p-2 rounded">
                 <p>{`Study: ${payload[0].payload.label}`}</p>
-                <p>{`Period of Maintenance: ${Math.round(
-                    payload[0].payload.x
-                )}`}</p>
-                <p>{`Maintained Outcome Strength: ${Math.round(
-                    payload[1].value
-                )}`}</p>
+                <p>{`Indicators of IV: ${Math.round(payload[0].payload.x)}`}</p>
+                <p>{`Strength of Relation: ${Math.round(payload[1].value)}`}</p>
             </div>
         )
     }
@@ -43,7 +39,7 @@ const CustomTooltip = ({ active, payload, label }) => {
     return null
 }
 
-export function MaintenanceGivenWindow({
+export function VisualFunctionalRelationGivenIV({
     Data,
     shape,
     size,
@@ -58,29 +54,29 @@ export function MaintenanceGivenWindow({
     const ref = useRef(null)
 
     const data_published = Data.filter(
-        (s: CommonVisualOutput) => s.Type === 'Journal' && s.Maintained > 0
+        (s: CommonVisualOutput) => s.Type === 'Journal'
     ).map((record) => ({
-        x: record.MaintenanceWindow,
-        y: record.Maintained,
-        id: record.ID,
-        label: record.Tag,
-        z: size,
-    }))
-
-    const data_unpublished = Data.filter(
-        (s) => s.Type === 'Unpublished' && s.Maintained > 0
-    ).map((record) => ({
-        x: record.MaintenanceWindow,
+        x: record.IV,
         y: record.Outcome,
         id: record.ID,
         label: record.Tag,
         z: size,
     }))
 
+    const data_unpublished = Data.filter((s) => s.Type === 'Unpublished').map(
+        (record) => ({
+            x: record.IV,
+            y: record.Outcome,
+            id: record.ID,
+            label: record.Tag,
+            z: size,
+        })
+    )
+
     useEffect(() => {
         dispatch({
             type: 'load_ref',
-            payload: { number: 2, ref: ref },
+            payload: { number: 1, ref: ref },
         })
     }, [dispatch])
 
@@ -106,29 +102,17 @@ export function MaintenanceGivenWindow({
                             tickLine={{ stroke: 'black' }}
                             tickMargin={5}
                             label={{
-                                value: 'Period of Maintenance',
+                                value: 'Indicators of Internal Validity',
                                 position: 'middle',
                                 dy: 25,
                                 fill: 'black',
                             }}
-                            domain={['dataMin-0.5', 'dataMax+0.5']}
                             axisLine={{ stroke: 'black' }}
-                            ticks={[0, 1, 2, 3, 4]}
-                            tickFormatter={(value) => {
-                                switch (value) {
-                                    case 0:
-                                        return 'Immediate/Unclear'
-                                    case 1:
-                                        return '>= 1 Week'
-                                    case 2:
-                                        return '>= 2 Weeks'
-                                    case 3:
-                                        return '>= 1 Month'
-                                    default:
-                                        return 'Immediate/Unclear'
-                                }
-                                return ''
-                            }}
+                            domain={['dataMin-0.5', 'dataMax+0.5']}
+                            ticks={[
+                                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
+                                14, 15,
+                            ]}
                         />
                         <YAxis
                             type="number"
@@ -138,15 +122,14 @@ export function MaintenanceGivenWindow({
                             tickLine={{ stroke: 'black' }}
                             tickMargin={5}
                             label={{
-                                value: 'Maintenance',
+                                value: 'Functional Relation',
                                 position: 'middle',
                                 angle: -90,
                                 dx: -125,
                                 fill: 'black',
                             }}
-                            color="black"
-                            domain={['dataMin-0.5', 'dataMax+0.5']}
                             axisLine={{ stroke: 'black' }}
+                            domain={['dataMin-0.5', 'dataMax+0.5']}
                             ticks={[0, 1, 2, 3, 4]}
                             tickFormatter={(value) => {
                                 switch (value) {
@@ -173,16 +156,16 @@ export function MaintenanceGivenWindow({
                             name="Published Literature"
                             data={data_published}
                             fill="#59ACF2"
-                            shape={shape}
                             stroke="black"
+                            shape={shape}
                             opacity={0.8}
                         />
                         <Scatter
                             name="Gray Literature"
                             data={data_unpublished}
                             fill="#556270"
-                            shape={shape}
                             stroke="black"
+                            shape={shape}
                             opacity={0.8}
                         />
                     </ScatterChart>
@@ -195,8 +178,8 @@ export function MaintenanceGivenWindow({
                     onClick={() =>
                         FigureOutputExport(
                             'svg',
-                            'SCARF_Maintenance_Given_Rigor',
-                            state.FigureRef2
+                            'SCARF_Functional_Relation_Given_IV',
+                            state.FigureRef1
                         )
                     }
                 >
@@ -208,8 +191,8 @@ export function MaintenanceGivenWindow({
                     onClick={() =>
                         FigureOutputExport(
                             'webp',
-                            'SCARF_Maintenance_Given_Rigor',
-                            state.FigureRef2
+                            'SCARF_Functional_Relation_Given_IV',
+                            state.FigureRef1
                         )
                     }
                 >
@@ -221,8 +204,8 @@ export function MaintenanceGivenWindow({
                     onClick={() =>
                         FigureOutputExport(
                             'png',
-                            'SCARF_Maintenance_Given_Rigor',
-                            state.FigureRef2
+                            'SCARF_Functional_Relation_Given_IV',
+                            state.FigureRef1
                         )
                     }
                 >
@@ -234,8 +217,8 @@ export function MaintenanceGivenWindow({
                     onClick={() =>
                         FigureOutputExport(
                             'jpeg',
-                            'SCARF_Maintenance_Given_Rigor',
-                            state.FigureRef2
+                            'SCARF_Functional_Relation_Given_IV',
+                            state.FigureRef1
                         )
                     }
                 >

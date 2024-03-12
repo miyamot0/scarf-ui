@@ -11,9 +11,9 @@ import {
 } from './helpers/scarf_scoring'
 import { database_reducer } from '@/atoms/reducers/reducer'
 import { PublicationType } from '@/questions/types/QuestionTypes'
-import { VisualFunctionalRelationGivenIV } from './charts/figures/fx_rel_given_iv_strength'
-import { MaintenanceGivenWindow } from './charts/figures/maintenance_given_window'
-import { GeneralizationGivenWindow } from './charts/figures/generalization_given_window'
+import { VisualFunctionalRelationGivenIV } from './figures/fx_rel_given_iv_strength'
+import { MaintenanceGivenWindow } from './figures/maintenance_given_window'
+import { GeneralizationGivenWindow } from './figures/generalization_given_window'
 import {
     Select,
     SelectContent,

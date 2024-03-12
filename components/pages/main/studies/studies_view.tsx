@@ -3,8 +3,8 @@ import { useToast } from '@/components/ui/use-toast'
 import { FilePlus2Icon } from 'lucide-react'
 import { useReducerAtom } from 'jotai/utils'
 import { dbAtom } from '@/atoms/db_atom'
-import { study_columns } from '@/components/tables/study_status_columns'
-import { StudyStatusDataTable } from '@/components/tables/study_status_table'
+import { study_columns } from '@/components/tables/dashboard/study_status_columns'
+import { StudyStatusDataTable } from '@/components/tables/dashboard/study_status_table'
 import { database_reducer } from '@/atoms/reducers/reducer'
 
 export function StudiesView() {

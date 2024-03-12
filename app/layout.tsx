@@ -4,6 +4,9 @@ import './globals.css'
 import { cn } from '@/lib/utils'
 import { Toaster } from '@/components/ui/toaster'
 import { ThemeProvider } from '@/components/themes/theme_provider'
+import MaxWidthWrapper from '@/components/ui/max_width_wrapper'
+import { Footer } from '@/components/navigation/Footer'
+import { Header } from '@/components/navigation/Header'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -46,8 +49,12 @@ export default function RootLayout({
                     enableSystem
                     disableTransitionOnChange
                 >
-                    {children}
-                    <Toaster />
+                    <MaxWidthWrapper className="flex flex-col gap-y-6">
+                        <Header />
+                        {children}
+                        <Footer />
+                        <Toaster />
+                    </MaxWidthWrapper>
                 </ThemeProvider>
             </body>
         </html>

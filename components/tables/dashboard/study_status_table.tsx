@@ -20,9 +20,9 @@ import {
     TableHeader,
     TableRow,
 } from '@/components/ui/table'
-import { Button } from '../ui/button'
+import { Button } from '../../ui/button'
 import React from 'react'
-import { Input } from '../ui/input'
+import { Input } from '../../ui/input'
 import { DataTablePagination } from './study_status_table_pagination'
 import { DataTableViewOptions } from './study_status_table_column_toggle'
 import {
@@ -33,7 +33,7 @@ import {
 } from 'lucide-react'
 import { useReducerAtom } from 'jotai/utils'
 import { dbAtom } from '@/atoms/db_atom'
-import { useToast } from '../ui/use-toast'
+import { useToast } from '../../ui/use-toast'
 import { StudyObject } from '@/questions/types/QuestionTypes'
 import { database_reducer } from '@/atoms/reducers/reducer'
 

@@ -7,7 +7,7 @@ import {
     Scatter,
     ScatterChart,
 } from 'recharts'
-import { CommonVisualOutput } from '../../visuals_view'
+import { CommonVisualOutput } from '../visuals_view'
 import { SymbolType } from 'recharts/types/util/types'
 import {
     ContextMenu,
@@ -20,7 +20,7 @@ import {
 import { dbAtom } from '@/atoms/db_atom'
 import { database_reducer } from '@/atoms/reducers/reducer'
 import { useReducerAtom } from 'jotai/utils'
-import { useEffect, useRef } from 'react'
+import { createRef, use, useEffect, useRef } from 'react'
 import { FigureOutputExport } from '@/lib/image_saver'
 import { ScatterChartIcon } from 'lucide-react'
 
@@ -30,10 +30,10 @@ const CustomTooltip = ({ active, payload, label }) => {
         return (
             <div className="bg-white border border-black p-2 rounded">
                 <p>{`Study: ${payload[0].payload.label}`}</p>
-                <p>{`Rigor of Generalization: ${Math.round(
+                <p>{`Period of Maintenance: ${Math.round(
                     payload[0].payload.x
                 )}`}</p>
-                <p>{`Generalized Outcome Strength: ${Math.round(
+                <p>{`Maintained Outcome Strength: ${Math.round(
                     payload[1].value
                 )}`}</p>
             </div>
@@ -43,7 +43,7 @@ const CustomTooltip = ({ active, payload, label }) => {
     return null
 }
 
-export function GeneralizationGivenWindow({
+export function MaintenanceGivenWindow({
     Data,
     shape,
     size,
@@ -58,19 +58,19 @@ export function GeneralizationGivenWindow({
     const ref = useRef(null)
 
     const data_published = Data.filter(
-        (s: CommonVisualOutput) => s.Type === 'Journal' && s.Generalized > 0
+        (s: CommonVisualOutput) => s.Type === 'Journal' && s.Maintained > 0
     ).map((record) => ({
-        x: record.GeneralizationRigor,
-        y: record.Generalized,
+        x: record.MaintenanceWindow,
+        y: record.Maintained,
         id: record.ID,
         label: record.Tag,
         z: size,
     }))
 
     const data_unpublished = Data.filter(
-        (s) => s.Type === 'Unpublished' && s.Generalized > 0
+        (s) => s.Type === 'Unpublished' && s.Maintained > 0
     ).map((record) => ({
-        x: record.GeneralizationRigor,
+        x: record.MaintenanceWindow,
         y: record.Outcome,
         id: record.ID,
         label: record.Tag,
@@ -80,7 +80,7 @@ export function GeneralizationGivenWindow({
     useEffect(() => {
         dispatch({
             type: 'load_ref',
-            payload: { number: 3, ref: ref },
+            payload: { number: 2, ref: ref },
         })
     }, [dispatch])
 
@@ -106,26 +106,26 @@ export function GeneralizationGivenWindow({
                             tickLine={{ stroke: 'black' }}
                             tickMargin={5}
                             label={{
-                                value: 'Rigor of Generalization Measurement',
+                                value: 'Period of Maintenance',
                                 position: 'middle',
                                 dy: 25,
                                 fill: 'black',
                             }}
                             domain={['dataMin-0.5', 'dataMax+0.5']}
                             axisLine={{ stroke: 'black' }}
-                            ticks={[0, 1, 2, 3]}
+                            ticks={[0, 1, 2, 3, 4]}
                             tickFormatter={(value) => {
                                 switch (value) {
                                     case 0:
-                                        return 'Post Only'
+                                        return 'Immediate/Unclear'
                                     case 1:
-                                        return 'Pre/Post'
+                                        return '>= 1 Week'
                                     case 2:
-                                        return 'Intermittent'
+                                        return '>= 2 Weeks'
                                     case 3:
-                                        return 'Single Case Data'
+                                        return '>= 1 Month'
                                     default:
-                                        return 'Post Only'
+                                        return 'Immediate/Unclear'
                                 }
                                 return ''
                             }}
@@ -138,12 +138,13 @@ export function GeneralizationGivenWindow({
                             tickLine={{ stroke: 'black' }}
                             tickMargin={5}
                             label={{
-                                value: 'Generalization',
+                                value: 'Maintenance',
                                 position: 'middle',
                                 angle: -90,
                                 dx: -125,
                                 fill: 'black',
                             }}
+                            color="black"
                             domain={['dataMin-0.5', 'dataMax+0.5']}
                             axisLine={{ stroke: 'black' }}
                             ticks={[0, 1, 2, 3, 4]}
@@ -194,8 +195,8 @@ export function GeneralizationGivenWindow({
                     onClick={() =>
                         FigureOutputExport(
                             'svg',
-                            'SCARF_Generalization_Given_Duration',
-                            state.FigureRef3
+                            'SCARF_Maintenance_Given_Rigor',
+                            state.FigureRef2
                         )
                     }
                 >
@@ -207,8 +208,8 @@ export function GeneralizationGivenWindow({
                     onClick={() =>
                         FigureOutputExport(
                             'webp',
-                            'SCARF_Generalization_Given_Duration',
-                            state.FigureRef3
+                            'SCARF_Maintenance_Given_Rigor',
+                            state.FigureRef2
                         )
                     }
                 >
@@ -220,8 +221,8 @@ export function GeneralizationGivenWindow({
                     onClick={() =>
                         FigureOutputExport(
                             'png',
-                            'SCARF_Generalization_Given_Duration',
-                            state.FigureRef3
+                            'SCARF_Maintenance_Given_Rigor',
+                            state.FigureRef2
                         )
                     }
                 >
@@ -233,8 +234,8 @@ export function GeneralizationGivenWindow({
                     onClick={() =>
                         FigureOutputExport(
                             'jpeg',
-                            'SCARF_Generalization_Given_Duration',
-                            state.FigureRef3
+                            'SCARF_Maintenance_Given_Rigor',
+                            state.FigureRef2
                         )
                     }
                 >

@@ -1,6 +1,6 @@
 import { StudyObject } from '@/questions/types/QuestionTypes'
 import { ColumnDef } from '@tanstack/react-table'
-import { Checkbox } from '../ui/checkbox'
+import { Checkbox } from '../../ui/checkbox'
 import { DataTableColumnHeader } from './study_status_column_header'
 import { ActionCell } from './cells/action_cell'
 import { StatusCell } from './cells/status_cell'

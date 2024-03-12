@@ -7,7 +7,7 @@ import {
     Scatter,
     ScatterChart,
 } from 'recharts'
-import { CommonVisualOutput } from '../../visuals_view'
+import { CommonVisualOutput } from '../visuals_view'
 import { SymbolType } from 'recharts/types/util/types'
 import {
     ContextMenu,
@@ -20,8 +20,8 @@ import {
 import { dbAtom } from '@/atoms/db_atom'
 import { database_reducer } from '@/atoms/reducers/reducer'
 import { useReducerAtom } from 'jotai/utils'
-import { FigureOutputExport } from '@/lib/image_saver'
 import { useEffect, useRef } from 'react'
+import { FigureOutputExport } from '@/lib/image_saver'
 import { ScatterChartIcon } from 'lucide-react'
 
 // @ts-ignore
@@ -30,8 +30,12 @@ const CustomTooltip = ({ active, payload, label }) => {
         return (
             <div className="bg-white border border-black p-2 rounded">
                 <p>{`Study: ${payload[0].payload.label}`}</p>
-                <p>{`Indicators of IV: ${Math.round(payload[0].payload.x)}`}</p>
-                <p>{`Strength of Relation: ${Math.round(payload[1].value)}`}</p>
+                <p>{`Rigor of Generalization: ${Math.round(
+                    payload[0].payload.x
+                )}`}</p>
+                <p>{`Generalized Outcome Strength: ${Math.round(
+                    payload[1].value
+                )}`}</p>
             </div>
         )
     }
@@ -39,7 +43,7 @@ const CustomTooltip = ({ active, payload, label }) => {
     return null
 }
 
-export function VisualFunctionalRelationGivenIV({
+export function GeneralizationGivenWindow({
     Data,
     shape,
     size,
@@ -54,29 +58,29 @@ export function VisualFunctionalRelationGivenIV({
     const ref = useRef(null)
 
     const data_published = Data.filter(
-        (s: CommonVisualOutput) => s.Type === 'Journal'
+        (s: CommonVisualOutput) => s.Type === 'Journal' && s.Generalized > 0
     ).map((record) => ({
-        x: record.IV,
+        x: record.GeneralizationRigor,
+        y: record.Generalized,
+        id: record.ID,
+        label: record.Tag,
+        z: size,
+    }))
+
+    const data_unpublished = Data.filter(
+        (s) => s.Type === 'Unpublished' && s.Generalized > 0
+    ).map((record) => ({
+        x: record.GeneralizationRigor,
         y: record.Outcome,
         id: record.ID,
         label: record.Tag,
         z: size,
     }))
 
-    const data_unpublished = Data.filter((s) => s.Type === 'Unpublished').map(
-        (record) => ({
-            x: record.IV,
-            y: record.Outcome,
-            id: record.ID,
-            label: record.Tag,
-            z: size,
-        })
-    )
-
     useEffect(() => {
         dispatch({
             type: 'load_ref',
-            payload: { number: 1, ref: ref },
+            payload: { number: 3, ref: ref },
         })
     }, [dispatch])
 
@@ -102,17 +106,29 @@ export function VisualFunctionalRelationGivenIV({
                             tickLine={{ stroke: 'black' }}
                             tickMargin={5}
                             label={{
-                                value: 'Indicators of Internal Validity',
+                                value: 'Rigor of Generalization Measurement',
                                 position: 'middle',
                                 dy: 25,
                                 fill: 'black',
                             }}
-                            axisLine={{ stroke: 'black' }}
                             domain={['dataMin-0.5', 'dataMax+0.5']}
-                            ticks={[
-                                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
-                                14, 15,
-                            ]}
+                            axisLine={{ stroke: 'black' }}
+                            ticks={[0, 1, 2, 3]}
+                            tickFormatter={(value) => {
+                                switch (value) {
+                                    case 0:
+                                        return 'Post Only'
+                                    case 1:
+                                        return 'Pre/Post'
+                                    case 2:
+                                        return 'Intermittent'
+                                    case 3:
+                                        return 'Single Case Data'
+                                    default:
+                                        return 'Post Only'
+                                }
+                                return ''
+                            }}
                         />
                         <YAxis
                             type="number"
@@ -122,14 +138,14 @@ export function VisualFunctionalRelationGivenIV({
                             tickLine={{ stroke: 'black' }}
                             tickMargin={5}
                             label={{
-                                value: 'Functional Relation',
+                                value: 'Generalization',
                                 position: 'middle',
                                 angle: -90,
                                 dx: -125,
                                 fill: 'black',
                             }}
-                            axisLine={{ stroke: 'black' }}
                             domain={['dataMin-0.5', 'dataMax+0.5']}
+                            axisLine={{ stroke: 'black' }}
                             ticks={[0, 1, 2, 3, 4]}
                             tickFormatter={(value) => {
                                 switch (value) {
@@ -156,16 +172,16 @@ export function VisualFunctionalRelationGivenIV({
                             name="Published Literature"
                             data={data_published}
                             fill="#59ACF2"
-                            stroke="black"
                             shape={shape}
+                            stroke="black"
                             opacity={0.8}
                         />
                         <Scatter
                             name="Gray Literature"
                             data={data_unpublished}
                             fill="#556270"
-                            stroke="black"
                             shape={shape}
+                            stroke="black"
                             opacity={0.8}
                         />
                     </ScatterChart>
@@ -178,8 +194,8 @@ export function VisualFunctionalRelationGivenIV({
                     onClick={() =>
                         FigureOutputExport(
                             'svg',
-                            'SCARF_Functional_Relation_Given_IV',
-                            state.FigureRef1
+                            'SCARF_Generalization_Given_Duration',
+                            state.FigureRef3
                         )
                     }
                 >
@@ -191,8 +207,8 @@ export function VisualFunctionalRelationGivenIV({
                     onClick={() =>
                         FigureOutputExport(
                             'webp',
-                            'SCARF_Functional_Relation_Given_IV',
-                            state.FigureRef1
+                            'SCARF_Generalization_Given_Duration',
+                            state.FigureRef3
                         )
                     }
                 >
@@ -204,8 +220,8 @@ export function VisualFunctionalRelationGivenIV({
                     onClick={() =>
                         FigureOutputExport(
                             'png',
-                            'SCARF_Functional_Relation_Given_IV',
-                            state.FigureRef1
+                            'SCARF_Generalization_Given_Duration',
+                            state.FigureRef3
                         )
                     }
                 >
@@ -217,8 +233,8 @@ export function VisualFunctionalRelationGivenIV({
                     onClick={() =>
                         FigureOutputExport(
                             'jpeg',
-                            'SCARF_Functional_Relation_Given_IV',
-                            state.FigureRef1
+                            'SCARF_Generalization_Given_Duration',
+                            state.FigureRef3
                         )
                     }
                 >
