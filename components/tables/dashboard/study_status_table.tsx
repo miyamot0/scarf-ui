@@ -25,12 +25,7 @@ import React from 'react'
 import { Input } from '../../ui/input'
 import { DataTablePagination } from '../general/study_table_pagination'
 import { DataTableViewOptions } from '../general/study_table_column_toggle'
-import {
-    DeleteIcon,
-    HardDriveDownloadIcon,
-    HardDriveUploadIcon,
-    SaveIcon,
-} from 'lucide-react'
+import { DeleteIcon } from 'lucide-react'
 import { useReducerAtom } from 'jotai/utils'
 import { dbAtom } from '@/atoms/db_atom'
 import { useToast } from '../../ui/use-toast'
@@ -55,22 +50,7 @@ export function StudyStatusDataTable<TData, TValue>({
             StudyID: false,
         })
     const [rowSelection, setRowSelection] = React.useState({})
-    const [state, dispatch] = useReducerAtom(dbAtom, database_reducer)
-    const refFileInput = React.useRef<HTMLInputElement>(null)
-
-    function saveTxtToFile(fileName: string, textData: string) {
-        const blobData = new Blob([textData], { type: 'text/plain' })
-        const urlToBlob = window.URL.createObjectURL(blobData)
-
-        const a = document.createElement('a')
-        a.style.setProperty('display', 'none')
-        document.body.appendChild(a)
-        a.href = urlToBlob
-        a.download = fileName
-        a.click()
-        window.URL.revokeObjectURL(urlToBlob)
-        a.remove()
-    }
+    const [, dispatch] = useReducerAtom(dbAtom, database_reducer)
 
     const table = useReactTable<StudyObject>({
         data,
@@ -139,77 +119,6 @@ export function StudyStatusDataTable<TData, TValue>({
                             Delete Selected
                         </Button>
                     )}
-
-                    <Button
-                        variant="outline"
-                        size="sm"
-                        className="ml-auto hidden h-8 lg:flex"
-                        onClick={() => {
-                            dispatch({ type: 'save_local' })
-
-                            toast({
-                                title: 'Saved',
-                                description: 'Your data has been saved.',
-                                duration: 2000,
-                            })
-                        }}
-                    >
-                        <SaveIcon size={18} className="mr-2" />
-                        Save
-                    </Button>
-
-                    <Button
-                        variant="outline"
-                        size="sm"
-                        className="ml-auto hidden h-8 lg:flex"
-                        onClick={() => {
-                            if (refFileInput.current) {
-                                refFileInput.current.click()
-                            }
-                        }}
-                    >
-                        <HardDriveUploadIcon size={18} className="mr-2" />
-                        Import
-                    </Button>
-                    <input
-                        type="file"
-                        ref={refFileInput}
-                        className="hidden"
-                        onChange={(e) => {
-                            if (!e.target.files) return
-
-                            const file = e.target.files[0]
-                            const reader = new FileReader()
-
-                            reader.onload = (e) => {
-                                if (!e.target) return
-
-                                const content = e.target.result
-
-                                dispatch({
-                                    type: 'load_external',
-                                    payload: {
-                                        saved_state: JSON.parse(
-                                            content as string
-                                        ),
-                                    },
-                                })
-                            }
-                            reader.readAsText(file)
-                        }}
-                    />
-                    <Button
-                        variant="outline"
-                        size="sm"
-                        className="ml-auto hidden h-8 lg:flex"
-                        onClick={() => {
-                            const data = JSON.stringify(state)
-                            saveTxtToFile('scarf-web-ui.json', data)
-                        }}
-                    >
-                        <HardDriveDownloadIcon size={18} className="mr-2" />
-                        Export
-                    </Button>
 
                     <DataTableViewOptions table={table} />
                 </div>

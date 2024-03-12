@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { StudyDetailsDialog } from '../../dialogs/study_details_dialog'
 import {
     Card,
@@ -21,15 +21,28 @@ import { StudyOutcomesDialog } from '../../dialogs/study_outcomes_dialog'
 import { VisualsView } from './tabs/visuals/visuals_view'
 import { database_reducer } from '@/atoms/reducers/reducer'
 import { Button } from '../../ui/button'
-import { Settings2Icon } from 'lucide-react'
+import {
+    HardDriveDownloadIcon,
+    HardDriveUploadIcon,
+    SaveIcon,
+    Settings2Icon,
+} from 'lucide-react'
 import { ReviewDetailsDialog } from '../../dialogs/review_details_dialog'
 import { cn } from '@/lib/utils'
 import { LoadingSpinner } from '@/components/ui/loading-spinner'
 import { Hero } from './views/hero'
 import { EmpiricalTabView } from './tabs/empirical/empirical_view'
+import { toast } from 'sonner'
+import { TooltipWrapper } from '@/components/wrappers/tooltip_wrapper'
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipTrigger,
+} from '@/components/ui/tooltip'
 
 export function MainPage() {
     const [state, dispatch] = useReducerAtom(dbAtom, database_reducer)
+    const refFileInput = useRef<HTMLInputElement>(null)
     const [loading, setIsLoading] = useState(true)
 
     useEffect(() => {
@@ -39,6 +52,20 @@ export function MainPage() {
 
         setIsLoading(false)
     }, [dispatch])
+
+    function saveTxtToFile(fileName: string, textData: string) {
+        const blobData = new Blob([textData], { type: 'text/plain' })
+        const urlToBlob = window.URL.createObjectURL(blobData)
+
+        const a = document.createElement('a')
+        a.style.setProperty('display', 'none')
+        document.body.appendChild(a)
+        a.href = urlToBlob
+        a.download = fileName
+        a.click()
+        window.URL.revokeObjectURL(urlToBlob)
+        a.remove()
+    }
 
     return (
         <>
@@ -55,24 +82,127 @@ export function MainPage() {
                                 state.ReviewType ?? 'Primary'
                             }`}</CardDescription>
                         </div>
-                        <div>
-                            <Button
-                                size={'sm'}
-                                variant={'outline'}
-                                onClick={() => {
+                        <input
+                            type="file"
+                            ref={refFileInput}
+                            className="hidden"
+                            onChange={(e) => {
+                                if (!e.target.files) return
+
+                                const file = e.target.files[0]
+                                const reader = new FileReader()
+
+                                reader.onload = (e) => {
+                                    if (!e.target) return
+
+                                    const content = e.target.result
+
                                     dispatch({
-                                        type: 'update_dialog_state',
+                                        type: 'load_external',
                                         payload: {
-                                            dialog_state: {
-                                                dialog_type: 'review_details',
-                                                study: undefined,
-                                            },
+                                            saved_state: JSON.parse(
+                                                content as string
+                                            ),
                                         },
                                     })
-                                }}
-                            >
-                                <Settings2Icon size={18} />
-                            </Button>
+                                }
+                                reader.readAsText(file)
+                            }}
+                        />
+                        <div className="flex flex-row gap-x-2">
+                            <Tooltip>
+                                <TooltipTrigger asChild>
+                                    <Button
+                                        size={'sm'}
+                                        variant={'outline'}
+                                        className=""
+                                        onClick={() => {
+                                            dispatch({ type: 'save_local' })
+
+                                            toast('Saved', {
+                                                description:
+                                                    'Your data has been saved.',
+                                                duration: 2000,
+                                                dismissible: true,
+                                            })
+                                        }}
+                                    >
+                                        <SaveIcon size={18} />
+                                    </Button>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                    <p>Save current data to browser storage.</p>
+                                </TooltipContent>
+                            </Tooltip>
+
+                            <Tooltip>
+                                <TooltipTrigger asChild>
+                                    <Button
+                                        variant="outline"
+                                        size="sm"
+                                        onClick={() => {
+                                            if (refFileInput.current) {
+                                                refFileInput.current.click()
+                                            }
+                                        }}
+                                    >
+                                        <HardDriveUploadIcon size={18} />
+                                    </Button>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                    <p>Load/Import an external project file.</p>
+                                </TooltipContent>
+                            </Tooltip>
+
+                            <Tooltip>
+                                <TooltipTrigger asChild>
+                                    <Button
+                                        variant="outline"
+                                        size="sm"
+                                        onClick={() => {
+                                            const data = JSON.stringify(state)
+                                            saveTxtToFile(
+                                                'scarf-web-ui.json',
+                                                data
+                                            )
+                                        }}
+                                    >
+                                        <HardDriveDownloadIcon size={18} />
+                                    </Button>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                    <p>
+                                        Backup the current data to an external
+                                        file.
+                                    </p>
+                                </TooltipContent>
+                            </Tooltip>
+
+                            <Tooltip>
+                                <TooltipTrigger asChild>
+                                    <Button
+                                        size={'sm'}
+                                        variant={'outline'}
+                                        onClick={() => {
+                                            dispatch({
+                                                type: 'update_dialog_state',
+                                                payload: {
+                                                    dialog_state: {
+                                                        dialog_type:
+                                                            'review_details',
+                                                        study: undefined,
+                                                    },
+                                                },
+                                            })
+                                        }}
+                                    >
+                                        <Settings2Icon size={18} />
+                                    </Button>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                    <p>Edit project name and/or coder role.</p>
+                                </TooltipContent>
+                            </Tooltip>
                         </div>
                     </CardHeader>
                     <CardContent>

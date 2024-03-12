@@ -2,11 +2,12 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import { cn } from '@/lib/utils'
-import { Toaster } from '@/components/ui/toaster'
+import { Toaster } from '@/components/ui/sonner'
 import { ThemeProvider } from '@/components/themes/theme_provider'
 import MaxWidthWrapper from '@/components/ui/max_width_wrapper'
 import { Footer } from '@/components/navigation/Footer'
 import { Header } from '@/components/navigation/Header'
+import { TooltipProvider } from '@/components/ui/tooltip'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -49,12 +50,14 @@ export default function RootLayout({
                     enableSystem
                     disableTransitionOnChange
                 >
-                    <MaxWidthWrapper className="flex flex-col gap-y-6">
-                        <Header />
-                        {children}
-                        <Footer />
-                        <Toaster />
-                    </MaxWidthWrapper>
+                    <TooltipProvider>
+                        <MaxWidthWrapper className="flex flex-col gap-y-6">
+                            <Header />
+                            {children}
+                            <Footer />
+                            <Toaster />
+                        </MaxWidthWrapper>
+                    </TooltipProvider>
                 </ThemeProvider>
             </body>
         </html>
