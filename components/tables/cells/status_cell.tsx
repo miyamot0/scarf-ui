@@ -23,7 +23,14 @@ export function StatusCell({ Study }: { Study: StudyObject }) {
         )
     }
 
-    if (values.includes('Completed')) {
+    if (
+        values.includes('Completed') ||
+        Study.StudyTag.trim() !== '' ||
+        Study.StudyAuthors.trim() !== '' ||
+        Study.StudyTitle.trim() !== '' ||
+        Study.StudyJournal.trim() !== '' ||
+        Study.StudyYear !== -1
+    ) {
         // Note: at leat one of the values is completed
         return (
             <Badge className="bg-orange-500 hover:bg-orange-600">
