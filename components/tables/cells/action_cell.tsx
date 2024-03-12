@@ -1,4 +1,4 @@
-import { StudyObject } from '@/types/QuestionTypes'
+import { StudyObject } from '@/questions/types/QuestionTypes'
 import { Edit, MoreHorizontal } from 'lucide-react'
 import {
     DropdownMenu,

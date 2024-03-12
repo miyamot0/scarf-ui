@@ -1,4 +1,4 @@
-import { QuestionType } from '@/types/QuestionTypes'
+import { QuestionType } from '@/questions/types/QuestionTypes'
 
 export const OptionsYesNo = ['Yes', 'No'] as const
 export const OptionsYesNoPartial = ['Yes', 'No', 'Partial'] as const

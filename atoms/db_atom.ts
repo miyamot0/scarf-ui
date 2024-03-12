@@ -1,5 +1,5 @@
 import { atom } from 'jotai'
-import { GlobalStateType } from '@/types/GlobalStateType'
+import { GlobalStateType } from '@/questions/types/GlobalStateType'
 
 export const dbAtom = atom<GlobalStateType>({
     DialogState: {

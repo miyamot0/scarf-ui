@@ -1,9 +1,12 @@
 import type {
     DisplayStateType,
     DialogStateType,
-} from '@/types/DisplayStateTypes'
-import type { GlobalStateType } from '@/types/GlobalStateType'
-import type { StudyObject, PublicationType } from '@/types/QuestionTypes'
+} from '@/questions/types/DisplayStateTypes'
+import type { GlobalStateType } from '@/questions/types/GlobalStateType'
+import type {
+    StudyObject,
+    PublicationType,
+} from '@/questions/types/QuestionTypes'
 import { RefObject } from 'react'
 
 export type DatabaseAction =

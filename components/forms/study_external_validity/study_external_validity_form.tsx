@@ -18,7 +18,7 @@ import {
     QuestionObjectHolder,
     QuestionType,
     StudyObject,
-} from '@/types/QuestionTypes'
+} from '@/questions/types/QuestionTypes'
 import {
     Select,
     SelectContent,
@@ -28,7 +28,7 @@ import {
 } from '@/components/ui/select'
 import { GetSelectOptionsFromTag } from '../inputs/select_options'
 import { StudyExternalValiditySchema } from './study_external_validity_schema'
-import { ExternalValidityQuestions } from '@/assets/simplified_questions'
+import { ExternalValidityQuestions } from '@/questions/simplified_questions'
 
 export function StudyExternalValidityForm({ study }: { study?: StudyObject }) {
     const [, dispatch] = useReducerAtom(dbAtom, database_reducer)

@@ -1,4 +1,4 @@
-import { StudyObject } from '@/types/QuestionTypes'
+import { StudyObject } from '@/questions/types/QuestionTypes'
 import { ColumnDef } from '@tanstack/react-table'
 import { Checkbox } from '../ui/checkbox'
 import { DataTableColumnHeader } from './study_status_column_header'

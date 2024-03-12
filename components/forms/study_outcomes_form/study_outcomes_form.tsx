@@ -17,7 +17,7 @@ import {
     QuestionObjectHolder,
     QuestionType,
     StudyObject,
-} from '@/types/QuestionTypes'
+} from '@/questions/types/QuestionTypes'
 import {
     Select,
     SelectContent,
@@ -28,7 +28,7 @@ import {
 import { GetSelectOptionsFromTag } from '../inputs/select_options'
 import { StudyOutcomesSchema } from './study_outcomes_schema'
 import { database_reducer } from '@/atoms/reducers/reducer'
-import { OutcomesQuestions } from '@/assets/simplified_questions'
+import { OutcomesQuestions } from '@/questions/simplified_questions'
 
 export function StudyOutcomesForm({ study }: { study?: StudyObject }) {
     const [, dispatch] = useReducerAtom(dbAtom, database_reducer)

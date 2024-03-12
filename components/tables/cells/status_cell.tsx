@@ -1,4 +1,4 @@
-import { StudyObject } from '@/types/QuestionTypes'
+import { StudyObject } from '@/questions/types/QuestionTypes'
 import { Badge } from '@/components/ui/badge'
 
 export function StatusCell({ Study }: { Study: StudyObject }) {

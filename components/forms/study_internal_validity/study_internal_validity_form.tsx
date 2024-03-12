@@ -18,7 +18,7 @@ import {
     QuestionObjectHolder,
     QuestionType,
     StudyObject,
-} from '@/types/QuestionTypes'
+} from '@/questions/types/QuestionTypes'
 import { StudyInternalValiditySchema } from './study_internal_validity_schema'
 import {
     Select,
@@ -29,7 +29,7 @@ import {
 } from '@/components/ui/select'
 import { GetSelectOptionsFromTag } from '../inputs/select_options'
 import { Inter } from 'next/font/google'
-import { InternalValidityQuestions } from '@/assets/simplified_questions'
+import { InternalValidityQuestions } from '@/questions/simplified_questions'
 
 export function StudyInternalValidityForm({ study }: { study?: StudyObject }) {
     const [, dispatch] = useReducerAtom(dbAtom, database_reducer)

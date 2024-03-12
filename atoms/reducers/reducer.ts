@@ -1,13 +1,13 @@
-import type { GlobalStateType } from '@/types/GlobalStateType'
+import type { GlobalStateType } from '@/questions/types/GlobalStateType'
 import {
-    StudyObject,
     InternalValidityQuestionDefault,
     ExternalValidityQuestionDefault,
     ReportingQuestionDefault,
     OutcomesQuestionDefault,
-} from '@/types/QuestionTypes'
+} from '@/questions/questions_defaults'
 import type { DatabaseAction } from './reducer_types'
 import { v4 as uuidv4 } from 'uuid'
+import { StudyObject } from '@/questions/types/QuestionTypes'
 
 const KEY_LOCAL_STORAGE = 'scarf-web-ui'
 

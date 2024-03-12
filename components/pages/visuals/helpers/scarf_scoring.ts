@@ -1,4 +1,4 @@
-import { StudyObject } from '@/types/QuestionTypes'
+import { StudyObject } from '@/questions/types/QuestionTypes'
 
 export function CalculateOutcomeScore(
     approach: 'Internal Validity' | 'External Validity' | 'Reporting',
