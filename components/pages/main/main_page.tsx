@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { StudyDetailsDialog } from '../../dialogs/study_details_dialog'
 import {
     Card,
@@ -23,14 +23,19 @@ import { database_reducer } from '@/atoms/reducers/reducer'
 import { Button } from '../../ui/button'
 import { Settings2Icon } from 'lucide-react'
 import { ReviewDetailsDialog } from '../../dialogs/review_details_dialog'
+import { cn } from '@/lib/utils'
+import { LoadingSpinner } from '@/components/ui/loading-spinner'
 
 export function MainPage() {
     const [state, dispatch] = useReducerAtom(dbAtom, database_reducer)
+    const [loading, setIsLoading] = useState(true)
 
     useEffect(() => {
         dispatch({
             type: 'load_local',
         })
+
+        setIsLoading(false)
     }, [dispatch])
 
     return (
@@ -73,9 +78,14 @@ export function MainPage() {
                         </div>
                     </CardHeader>
                     <CardContent>
+                        {loading && <LoadingSpinner className="mx-auto" />}
+
                         <Tabs
                             value={state.DisplayState}
-                            className="w-full flex flex-col gap-y-4"
+                            className={cn(
+                                'w-full flex flex-col gap-y-4',
+                                loading ? 'hidden' : ''
+                            )}
                         >
                             <TabsList className="w-full flex flex-row">
                                 <TabsTrigger
