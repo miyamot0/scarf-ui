@@ -1,7 +1,6 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
-import { useToast } from '@/components/ui/use-toast'
 import {
     EditIcon,
     FilePlus2Icon,
@@ -14,9 +13,9 @@ import { study_columns } from '@/components/tables/dashboard/study_status_column
 import { StudyStatusDataTable } from '@/components/tables/dashboard/study_status_table'
 import { database_reducer } from '@/atoms/reducers/reducer'
 import { HeadingComponent } from '../instructions/views/heading_component'
+import { toast } from 'sonner'
 
 export function StudiesView() {
-    const { toast } = useToast()
     const [state, dispatch] = useReducerAtom(dbAtom, database_reducer)
 
     return (
@@ -53,7 +52,7 @@ export function StudiesView() {
                     className="inline border border-input bg-background hover:bg-accent hover:text-accent-foreground h-7 rounded-md px-1 py-1 w-8"
                 />{' '}
                 button available on the respective table row. The completeness
-                of a specific study record will be indicated in the 'Status'
+                of a specific study record will be indicated in the Status
                 column.
             </p>
 
@@ -70,9 +69,10 @@ export function StudiesView() {
                 onClick={() => {
                     dispatch({ type: 'add' })
 
-                    toast({
-                        title: 'Study Added to Dataset.',
+                    toast('Study Appended to Dataset', {
+                        description: 'See the main table to begin coding.',
                         duration: 2000,
+                        dismissible: true,
                     })
                 }}
             >

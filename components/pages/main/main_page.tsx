@@ -125,7 +125,7 @@ export function MainPage() {
                                         })
                                     }}
                                 >
-                                    Inspect Dataset
+                                    Inspect Coding
                                 </TabsTrigger>
                                 <TabsTrigger
                                     value="visuals"
@@ -142,7 +142,7 @@ export function MainPage() {
                                         })
                                     }}
                                 >
-                                    Visualize Data
+                                    Visualize Coding
                                 </TabsTrigger>
                             </TabsList>
                             <TabsContent value="instructions">

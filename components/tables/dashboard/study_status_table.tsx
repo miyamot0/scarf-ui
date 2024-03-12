@@ -28,9 +28,9 @@ import { DataTableViewOptions } from '../general/study_table_column_toggle'
 import { DeleteIcon } from 'lucide-react'
 import { useReducerAtom } from 'jotai/utils'
 import { dbAtom } from '@/atoms/db_atom'
-import { useToast } from '../../ui/use-toast'
 import { StudyObject } from '@/questions/types/QuestionTypes'
 import { database_reducer } from '@/atoms/reducers/reducer'
+import { toast } from 'sonner'
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -42,7 +42,6 @@ export function StudyStatusDataTable<TData, TValue>({
     data,
 }: DataTableProps<StudyObject, TValue>) {
     const [sorting, setSorting] = React.useState<SortingState>([])
-    const { toast } = useToast()
     const [columnFilters, setColumnFilters] =
         React.useState<ColumnFiltersState>([])
     const [columnVisibility, setColumnVisibility] =
@@ -107,11 +106,11 @@ export function StudyStatusDataTable<TData, TValue>({
                                     payload: { study_ids: selected_ids },
                                 })
 
-                                toast({
-                                    title: 'Item(s) Removed.',
+                                toast('Dataset Updated.', {
                                     description:
-                                        'Data has been removed from data set.',
+                                        'Specific record(s) have been removed.',
                                     duration: 2000,
+                                    dismissible: true,
                                 })
                             }}
                         >

@@ -18,6 +18,7 @@ import { dbAtom } from '@/atoms/db_atom'
 import { useReducerAtom } from 'jotai/utils'
 import { database_reducer } from '@/atoms/reducers/reducer'
 import { Button } from '@/components/ui/button'
+import { toast } from 'sonner'
 
 export function ActionCell({ Study }: { Study: StudyObject }) {
     const [, dispatch] = useReducerAtom(dbAtom, database_reducer)
@@ -73,6 +74,13 @@ export function ActionCell({ Study }: { Study: StudyObject }) {
                                                 category: 'Unclassified',
                                             },
                                         })
+
+                                        toast('Study Data Updated.', {
+                                            description:
+                                                'Inspect the main table to review current progress.',
+                                            duration: 2000,
+                                            dismissible: true,
+                                        })
                                     }}
                                 >
                                     Unclassified
@@ -89,6 +97,13 @@ export function ActionCell({ Study }: { Study: StudyObject }) {
                                                 category: 'Journal',
                                             },
                                         })
+
+                                        toast('Study Data Updated.', {
+                                            description:
+                                                'Inspect the main table to review current progress.',
+                                            duration: 2000,
+                                            dismissible: true,
+                                        })
                                     }}
                                 >
                                     Published Article
@@ -104,6 +119,13 @@ export function ActionCell({ Study }: { Study: StudyObject }) {
                                                 study_id: Study.StudyID,
                                                 category: 'Unpublished',
                                             },
+                                        })
+
+                                        toast('Study Data Updated.', {
+                                            description:
+                                                'Inspect the main table to review current progress.',
+                                            duration: 2000,
+                                            dismissible: true,
                                         })
                                     }}
                                 >

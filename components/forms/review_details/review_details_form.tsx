@@ -24,6 +24,7 @@ import {
     SelectValue,
 } from '@/components/ui/select'
 import { Review_Types } from '@/types/ReviewTypes'
+import { toast } from 'sonner'
 
 export function ReviewDetailsForm() {
     const [state, dispatch] = useReducerAtom(dbAtom, database_reducer)
@@ -43,6 +44,12 @@ export function ReviewDetailsForm() {
                 review_name: values.title,
                 review_type: values.type,
             },
+        })
+
+        toast('Updated Review Information', {
+            description: 'Your data has been saved.',
+            duration: 2000,
+            dismissible: true,
         })
     }
 

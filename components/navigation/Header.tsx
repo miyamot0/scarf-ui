@@ -10,9 +10,8 @@ import { ThemeToggle } from '../themes/theme_toggle'
 
 export const Header = () => {
     return (
-        <NavigationMenu className="w-full justify-end max-w-full">
+        <NavigationMenu className="w-full justify-between max-w-full">
             <NavigationMenuList className="gap-x-4 ">
-                <ThemeToggle />
                 <DialogHeaderItem
                     LinkText="Information"
                     Image={<InfoIcon size={20} />}
@@ -101,6 +100,8 @@ export const Header = () => {
                     </div>
                 </DialogHeaderItem>
             </NavigationMenuList>
+
+            <ThemeToggle />
         </NavigationMenu>
     )
 }

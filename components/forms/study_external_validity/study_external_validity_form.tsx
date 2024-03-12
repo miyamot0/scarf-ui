@@ -29,6 +29,7 @@ import {
 import { GetSelectOptionsFromTag } from '../inputs/select_options'
 import { StudyExternalValiditySchema } from './study_external_validity_schema'
 import { ExternalValidityQuestions } from '@/questions/simplified_questions'
+import { toast } from 'sonner'
 
 export function StudyExternalValidityForm({ study }: { study?: StudyObject }) {
     const [, dispatch] = useReducerAtom(dbAtom, database_reducer)
@@ -114,6 +115,12 @@ export function StudyExternalValidityForm({ study }: { study?: StudyObject }) {
         dispatch({
             type: 'update_study',
             payload: { study_id: study.StudyID, updatedData: updated_study },
+        })
+
+        toast('Study Data Updated.', {
+            description: 'Inspect the main table to review current progress.',
+            duration: 2000,
+            dismissible: true,
         })
     }
 

@@ -29,6 +29,7 @@ import { GetSelectOptionsFromTag } from '../inputs/select_options'
 import { StudyReportingSchema } from './study_reporting_schema'
 import { database_reducer } from '@/atoms/reducers/reducer'
 import { ReportingQuestions } from '@/questions/simplified_questions'
+import { toast } from 'sonner'
 
 export function StudyReportingForm({ study }: { study?: StudyObject }) {
     const [, dispatch] = useReducerAtom(dbAtom, database_reducer)
@@ -108,6 +109,12 @@ export function StudyReportingForm({ study }: { study?: StudyObject }) {
         dispatch({
             type: 'update_study',
             payload: { study_id: study.StudyID, updatedData: updated_study },
+        })
+
+        toast('Study Data Updated.', {
+            description: 'Inspect the main table to review current progress.',
+            duration: 2000,
+            dismissible: true,
         })
     }
 

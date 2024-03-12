@@ -80,7 +80,7 @@ export function VisualFunctionalRelationGivenIV({
             type: 'load_ref',
             payload: { number: 1, ref: ref },
         })
-    }, [])
+    }, [dispatch])
 
     return (
         <ContextMenu>
