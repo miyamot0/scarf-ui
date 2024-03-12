@@ -85,6 +85,7 @@ export function VisualFunctionalRelationGivenIV({
             <ContextMenuTrigger>
                 <ResponsiveContainer width="100%" height={height}>
                     <ScatterChart
+                        style={{ background: 'white' }}
                         ref={ref}
                         margin={{
                             top: 20,

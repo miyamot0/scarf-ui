@@ -89,6 +89,7 @@ export function MaintenanceGivenWindow({
             <ContextMenuTrigger>
                 <ResponsiveContainer width="100%" height={height}>
                     <ScatterChart
+                        style={{ background: 'white' }}
                         ref={ref}
                         margin={{
                             top: 20,
