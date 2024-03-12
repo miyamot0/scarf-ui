@@ -74,11 +74,13 @@ export function VisualFunctionalRelationGivenIV({
     )
 
     useEffect(() => {
+        if (state.FigureRef1) return
+
         dispatch({
             type: 'load_ref',
             payload: { number: 1, ref: ref },
         })
-    }, [dispatch])
+    }, [])
 
     return (
         <ContextMenu>

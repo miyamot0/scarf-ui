@@ -78,11 +78,13 @@ export function GeneralizationGivenWindow({
     }))
 
     useEffect(() => {
+        if (state.FigureRef3) return
+
         dispatch({
             type: 'load_ref',
             payload: { number: 3, ref: ref },
         })
-    }, [dispatch])
+    }, [])
 
     return (
         <ContextMenu>

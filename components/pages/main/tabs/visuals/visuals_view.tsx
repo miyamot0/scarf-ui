@@ -24,6 +24,7 @@ import {
     SelectValue,
 } from '@/components/ui/select'
 import { SymbolType } from 'recharts/types/util/types'
+import { useAtomValue } from 'jotai'
 
 function randomIntFromInterval(min: number, max: number) {
     return Math.floor(Math.random() * (max - min + 1) + min)
@@ -89,15 +90,15 @@ export type MarkerSizingType = (typeof MarkerSizes)[0]
 export type FigureSizingType = (typeof FigureHeights)[0]
 
 export function VisualsView() {
-    const [state] = useReducerAtom(dbAtom, database_reducer)
+    const state = useAtomValue(dbAtom)
     const [jitter, setJitter] = React.useState(true)
     const [shape, setShape] = React.useState<SymbolType>('circle')
     const [size, setSize] = React.useState<number>(MarkerSizes[0].value)
     const [height, setHeight] = React.useState<number>(FigureHeights[0].value)
 
-    const { Studies } = state
+    const memoizedData = React.useMemo(() => state.Studies, [state.Studies])
 
-    const recordsToVisualize = Studies.map((study) => {
+    const recordsToVisualize = memoizedData.map((study) => {
         const score_internal_validity = CalculateOutcomeScore(
             'Internal Validity',
             study
@@ -151,7 +152,7 @@ export function VisualsView() {
     })
 
     return (
-        <>
+        <div className="flex flex-col gap-y-4">
             <div className="flex flex-row justify-between mb-2">
                 <div className="flex flex-col md:flex-row items-center md:space-x-2 space-y-2 md:space-y-0 my-auto">
                     <Label className="md:ml-4">Marker Type: </Label>
@@ -256,6 +257,6 @@ export function VisualsView() {
                 size={size}
                 height={height}
             />
-        </>
+        </div>
     )
 }

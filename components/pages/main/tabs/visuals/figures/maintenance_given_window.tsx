@@ -78,11 +78,13 @@ export function MaintenanceGivenWindow({
     }))
 
     useEffect(() => {
+        if (state.FigureRef2) return
+
         dispatch({
             type: 'load_ref',
             payload: { number: 2, ref: ref },
         })
-    }, [dispatch])
+    }, [])
 
     return (
         <ContextMenu>

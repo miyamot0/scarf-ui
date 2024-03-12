@@ -5,7 +5,7 @@ import { PeerReviewDataSection } from './sections/peer_inspection_review'
 
 export function InstructionsView() {
     return (
-        <div className="flex flex-col gap-y-5">
+        <div className="flex flex-col gap-y-4">
             <HeadingComponent Text="General Instructions" />
 
             <p>
