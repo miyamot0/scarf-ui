@@ -6,10 +6,11 @@ import { NavigationMenu, NavigationMenuList } from '../ui/navigation-menu'
 import { DialogHeaderItem } from './views/dialog_header_item'
 import Link from 'next/link'
 import { Code2Icon, GithubIcon, InfoIcon } from 'lucide-react'
+import { ThemeToggle } from '../themes/theme_toggle'
 
 export const Header = () => {
     return (
-        <NavigationMenu className="w-full justify-end max-w-full">
+        <NavigationMenu className="w-full justify-between max-w-full">
             <NavigationMenuList className="gap-x-4 ">
                 <DialogHeaderItem
                     LinkText="Information"
@@ -99,6 +100,8 @@ export const Header = () => {
                     </div>
                 </DialogHeaderItem>
             </NavigationMenuList>
+
+            <ThemeToggle />
         </NavigationMenu>
     )
 }

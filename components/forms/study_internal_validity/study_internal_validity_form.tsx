@@ -18,7 +18,7 @@ import {
     QuestionObjectHolder,
     QuestionType,
     StudyObject,
-} from '@/types/QuestionTypes'
+} from '@/questions/types/QuestionTypes'
 import { StudyInternalValiditySchema } from './study_internal_validity_schema'
 import {
     Select,
@@ -28,8 +28,8 @@ import {
     SelectValue,
 } from '@/components/ui/select'
 import { GetSelectOptionsFromTag } from '../inputs/select_options'
-import { Inter } from 'next/font/google'
-import { InternalValidityQuestions } from '@/assets/simplified_questions'
+import { InternalValidityQuestions } from '@/questions/simplified_questions'
+import { toast } from 'sonner'
 
 export function StudyInternalValidityForm({ study }: { study?: StudyObject }) {
     const [, dispatch] = useReducerAtom(dbAtom, database_reducer)
@@ -118,6 +118,12 @@ export function StudyInternalValidityForm({ study }: { study?: StudyObject }) {
         dispatch({
             type: 'update_study',
             payload: { study_id: study.StudyID, updatedData: updated_study },
+        })
+
+        toast('Study Data Updated.', {
+            description: 'Inspect the main table to review current progress.',
+            duration: 2000,
+            dismissible: true,
         })
     }
 

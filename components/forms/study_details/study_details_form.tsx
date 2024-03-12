@@ -15,8 +15,9 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { dbAtom } from '@/atoms/db_atom'
 import { useReducerAtom } from 'jotai/utils'
-import { StudyObject } from '@/types/QuestionTypes'
+import { StudyObject } from '@/questions/types/QuestionTypes'
 import { database_reducer } from '@/atoms/reducers/reducer'
+import { toast } from 'sonner'
 
 export function StudyDetailsForm({ study }: { study?: StudyObject }) {
     const [, dispatch] = useReducerAtom(dbAtom, database_reducer)
@@ -46,6 +47,12 @@ export function StudyDetailsForm({ study }: { study?: StudyObject }) {
         dispatch({
             type: 'update_study',
             payload: { study_id: study.StudyID, updatedData: updated_study },
+        })
+
+        toast('Study Data Updated.', {
+            description: 'Inspect the main table to review current progress.',
+            duration: 2000,
+            dismissible: true,
         })
     }
 

@@ -40,6 +40,22 @@ Pull requests will be occasionally reviewed, but are rarely to be considered unl
 
 Interested parties are encouraged to reach out the Drs. Gilroy and Ledford for opportunities to support/contribute to the SCARF project.
 
+## Changelog
+
+### Version 0.2.0
+
+-   Edits for clarity and continuity
+-   Option for generating file for the Reliability coder (Note: must have common ID's to ensure they match)
+-   Fixes for concurrency
+-   New Toast library
+
+### Version 0.1.2
+
+-   Distinguish review (i.e., name for project) and coder status (i.e., Primary vs. Reli)
+-   Fix backgrounds for vector images to be white by default
+-   Light/dark mode
+-   Support for later 18n via question imports
+
 ## License
 
 Shawn Gilroy, Louisiana State University (2024) [MIT](https://choosealicense.com/licenses/mit/)

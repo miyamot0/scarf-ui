@@ -1,8 +1,8 @@
 import { RefObject } from 'react'
 
-export type ImageFormatTypes = 'svg' | 'png' | 'jpeg' | 'webp'
+type ImageFormatTypes = 'svg' | 'png' | 'jpeg' | 'webp'
 
-export type ImageOutputOptionsRequest = {
+type ImageOutputOptionsRequest = {
     format: ImageFormatTypes
     dpi?: number
     svg: string
@@ -44,7 +44,6 @@ export function FigureOutputExport(
 
         const image = new Image()
         image.onload = () => {
-            console.log('Image loaded')
             const canvas = document.createElement('canvas')
             canvas.width = component.clientWidth
             canvas.height = component.clientHeight

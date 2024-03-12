@@ -1,9 +1,13 @@
 import type {
     DisplayStateType,
     DialogStateType,
-} from '@/types/DisplayStateTypes'
-import type { GlobalStateType } from '@/types/GlobalStateType'
-import type { StudyObject, PublicationType } from '@/types/QuestionTypes'
+} from '@/questions/types/DisplayStateTypes'
+import type { GlobalStateType } from '@/questions/types/GlobalStateType'
+import type {
+    StudyObject,
+    PublicationType,
+} from '@/questions/types/QuestionTypes'
+import { ReviewTypes } from '@/types/ReviewTypes'
 import { RefObject } from 'react'
 
 export type DatabaseAction =
@@ -37,4 +41,8 @@ export type DatabaseAction =
     | {
           type: 'load_ref'
           payload: { number: 1 | 2 | 3; ref: RefObject<SVGSVGElement> }
+      }
+    | {
+          type: 'update_review'
+          payload: { review_name: string; review_type: ReviewTypes }
       }
