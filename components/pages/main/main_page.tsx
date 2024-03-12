@@ -88,42 +88,54 @@ export function MainPage() {
                                 <TabsTrigger
                                     value="instructions"
                                     className="w-full"
-                                    onClick={() =>
+                                    onClick={() => {
+                                        if (
+                                            state.DisplayState ===
+                                            'instructions'
+                                        )
+                                            return
+
                                         dispatch({
                                             type: 'update_display_state',
                                             payload: {
                                                 display_state: 'instructions',
                                             },
                                         })
-                                    }
+                                    }}
                                 >
                                     Instructions
                                 </TabsTrigger>
                                 <TabsTrigger
                                     value="studies"
                                     className="w-full"
-                                    onClick={() =>
+                                    onClick={() => {
+                                        if (state.DisplayState === 'studies')
+                                            return
+
                                         dispatch({
                                             type: 'update_display_state',
                                             payload: {
                                                 display_state: 'studies',
                                             },
                                         })
-                                    }
+                                    }}
                                 >
                                     Studies
                                 </TabsTrigger>
                                 <TabsTrigger
                                     value="visuals"
                                     className="w-full"
-                                    onClick={() =>
+                                    onClick={() => {
+                                        if (state.DisplayState === 'visuals')
+                                            return
+
                                         dispatch({
                                             type: 'update_display_state',
                                             payload: {
                                                 display_state: 'visuals',
                                             },
                                         })
-                                    }
+                                    }}
                                 >
                                     Visuals
                                 </TabsTrigger>
