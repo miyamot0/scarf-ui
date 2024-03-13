@@ -2,16 +2,33 @@
 
 import { simplified_licenses } from '@/assets/simplified_licenses'
 import { DialogDescription, DialogHeader, DialogTitle } from '../ui/dialog'
-import { NavigationMenu, NavigationMenuList } from '../ui/navigation-menu'
+import {
+    NavigationMenu,
+    NavigationMenuLink,
+    NavigationMenuList,
+    navigationMenuTriggerStyle,
+} from '../ui/navigation-menu'
 import { DialogHeaderItem } from './views/dialog_header_item'
 import Link from 'next/link'
-import { Code2Icon, GithubIcon, InfoIcon } from 'lucide-react'
+import { Code2Icon, GithubIcon, InfoIcon, UserSearchIcon } from 'lucide-react'
 import { ThemeToggle } from '../themes/theme_toggle'
+import { cn } from '@/lib/utils'
 
 export const Header = () => {
     return (
         <NavigationMenu className="w-full justify-between max-w-full">
             <NavigationMenuList className="gap-x-4 ">
+                <NavigationMenuLink
+                    href="/reliability"
+                    className={cn(
+                        navigationMenuTriggerStyle(),
+                        'flex flex-row gap-x-2 border shadow'
+                    )}
+                >
+                    <UserSearchIcon size={20} />
+                    Reliability
+                </NavigationMenuLink>
+
                 <DialogHeaderItem
                     LinkText="Information"
                     Image={<InfoIcon size={20} />}
