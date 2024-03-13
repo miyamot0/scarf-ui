@@ -26,6 +26,7 @@ import { LoadingSpinner } from '@/components/ui/loading-spinner'
 import { Hero } from './views/hero'
 import { EmpiricalTabView } from './tabs/empirical/empirical_view'
 import { ButtonBar } from './views/button_bar'
+import { StudyImportDialog } from '@/components/dialogs/study_import_dialog'
 
 export function MainPage() {
     const [state, dispatch] = useReducerAtom(dbAtom, database_reducer)
@@ -162,6 +163,7 @@ export function MainPage() {
                 </Card>
 
                 {/* Dialogs */}
+                <StudyImportDialog />
                 <ReviewDetailsDialog />
                 <StudyDetailsDialog />
                 <StudyInternalValidityDialog />
