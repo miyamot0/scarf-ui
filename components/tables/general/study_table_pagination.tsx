@@ -13,17 +13,25 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select'
+import { cn } from '@/lib/utils'
 
 interface DataTablePaginationProps<TData> {
     table: Table<TData>
+    disableCount?: boolean
 }
 
 export function DataTablePagination<TData>({
     table,
+    disableCount,
 }: DataTablePaginationProps<TData>) {
     return (
         <div className="flex items-center justify-between px-2">
-            <div className="flex-1 text-sm text-muted-foreground">
+            <div
+                className={cn(
+                    'flex-1 text-sm text-muted-foreground',
+                    disableCount ? 'text-transparent' : ''
+                )}
+            >
                 {table.getFilteredSelectedRowModel().rows.length} of{' '}
                 {table.getFilteredRowModel().rows.length} row(s) selected.
             </div>
