@@ -78,6 +78,10 @@
     }
 }
 
+.heading_level_1 {
+    @apply text-lg font-semibold underline;
+}
+
 .Spreadsheet,
 table {
     width: 100%;
