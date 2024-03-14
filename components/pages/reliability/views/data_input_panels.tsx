@@ -91,3 +91,5 @@ export const DataInputPanelWithRef = forwardRef<
         </Card>
     )
 })
+
+DataInputPanelWithRef.displayName = 'DataInputPanelWithRef'

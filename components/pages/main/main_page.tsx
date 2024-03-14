@@ -92,7 +92,7 @@ export function MainPage() {
                                         })
                                     }}
                                 >
-                                    Instructions
+                                    Coding Instructions
                                 </TabsTrigger>
                                 <TabsTrigger
                                     value="studies"
@@ -109,7 +109,7 @@ export function MainPage() {
                                         })
                                     }}
                                 >
-                                    Code Studies
+                                    Study Coding
                                 </TabsTrigger>
                                 <TabsTrigger
                                     value="empirical"
@@ -126,7 +126,7 @@ export function MainPage() {
                                         })
                                     }}
                                 >
-                                    Inspect Coding
+                                    Data Inspection
                                 </TabsTrigger>
                                 <TabsTrigger
                                     value="visuals"

@@ -53,7 +53,7 @@ export const Header = () => {
                     )}
                 >
                     <ListChecksIcon size={20} />
-                    Tutorial
+                    Instructions
                 </NavigationMenuLink>
 
                 <NavigationMenuLink
