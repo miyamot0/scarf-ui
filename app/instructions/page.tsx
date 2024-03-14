@@ -1,7 +1,5 @@
+import { TutorialPage } from '@/components/pages/tutorial/tutorial_page'
+
 export default async function Page() {
-    return (
-        <div>
-            <h1>Page</h1>
-        </div>
-    )
+    return <TutorialPage />
 }
