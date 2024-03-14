@@ -1,7 +1,5 @@
-import type {
-    DisplayStateType,
-    DialogStateType,
-} from '@/questions/types/DisplayStateTypes'
+import { DialogStateType } from '@/questions/types/DialogStateTypes'
+import type { DisplayStateType } from '@/questions/types/DisplayStateTypes'
 import type { GlobalStateType } from '@/questions/types/GlobalStateType'
 import type {
     StudyObject,
@@ -45,4 +43,8 @@ export type DatabaseAction =
     | {
           type: 'update_review'
           payload: { review_name: string; review_type: ReviewTypes }
+      }
+    | {
+          type: 'bulk_import_studies'
+          payload: { studies: StudyObject[] }
       }

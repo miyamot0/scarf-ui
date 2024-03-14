@@ -1,7 +1,8 @@
 import { RefObject } from 'react'
-import { DialogStateType, DisplayStateType } from './DisplayStateTypes'
+import { DisplayStateType } from './DisplayStateTypes'
 import { StudyObject } from './QuestionTypes'
 import { ReviewTypes } from '../../types/ReviewTypes'
+import { DialogStateType } from './DialogStateTypes'
 
 export type GlobalStateType = {
     DialogState: DialogStateType

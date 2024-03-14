@@ -26,6 +26,7 @@ import { LoadingSpinner } from '@/components/ui/loading-spinner'
 import { Hero } from './views/hero'
 import { EmpiricalTabView } from './tabs/empirical/empirical_view'
 import { ButtonBar } from './views/button_bar'
+import { StudyImportDialog } from '@/components/dialogs/study_import_dialog'
 
 export function MainPage() {
     const [state, dispatch] = useReducerAtom(dbAtom, database_reducer)
@@ -91,7 +92,7 @@ export function MainPage() {
                                         })
                                     }}
                                 >
-                                    Instructions
+                                    Coding Instructions
                                 </TabsTrigger>
                                 <TabsTrigger
                                     value="studies"
@@ -108,7 +109,7 @@ export function MainPage() {
                                         })
                                     }}
                                 >
-                                    Code Studies
+                                    Study Coding
                                 </TabsTrigger>
                                 <TabsTrigger
                                     value="empirical"
@@ -125,7 +126,7 @@ export function MainPage() {
                                         })
                                     }}
                                 >
-                                    Inspect Coding
+                                    Data Inspection
                                 </TabsTrigger>
                                 <TabsTrigger
                                     value="visuals"
@@ -162,6 +163,7 @@ export function MainPage() {
                 </Card>
 
                 {/* Dialogs */}
+                <StudyImportDialog />
                 <ReviewDetailsDialog />
                 <StudyDetailsDialog />
                 <StudyInternalValidityDialog />

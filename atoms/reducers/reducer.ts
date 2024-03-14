@@ -53,6 +53,15 @@ export const database_reducer = (
                 ...state,
                 Studies: [...state.Studies, new_study],
             }
+        case 'bulk_import_studies':
+            return {
+                ...state,
+                DialogState: {
+                    dialog_type: undefined,
+                    study: undefined,
+                },
+                Studies: [...state.Studies, ...action.payload.studies],
+            }
         case 'remove':
             return {
                 ...state,

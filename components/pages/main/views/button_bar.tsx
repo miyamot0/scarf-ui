@@ -9,6 +9,7 @@ import { GlobalStateType } from '@/questions/types/GlobalStateType'
 import {
     HardDriveDownloadIcon,
     HardDriveUploadIcon,
+    ListPlusIcon,
     SaveIcon,
     Settings2Icon,
     UserSearchIcon,
@@ -214,6 +215,31 @@ export function ButtonBar({
                 </TooltipTrigger>
                 <TooltipContent>
                     <p>Export current dataset for use by Reliability coder.</p>
+                </TooltipContent>
+            </Tooltip>
+
+            <Tooltip>
+                <TooltipTrigger asChild>
+                    <Button
+                        size={'sm'}
+                        variant={'outline'}
+                        onClick={() => {
+                            dispatch({
+                                type: 'update_dialog_state',
+                                payload: {
+                                    dialog_state: {
+                                        dialog_type: 'study_import',
+                                        study: undefined,
+                                    },
+                                },
+                            })
+                        }}
+                    >
+                        <ListPlusIcon size={18} />
+                    </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                    <p>Bulk import studies from existing spreadsheet.</p>
                 </TooltipContent>
             </Tooltip>
 

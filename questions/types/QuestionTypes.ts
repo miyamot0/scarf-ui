@@ -56,6 +56,11 @@ export type StudyObject = {
     PublicationType: PublicationType
 }
 
+export type StudyObjectPair = {
+    primary: StudyObject
+    reliability?: StudyObject
+}
+
 export type TypeOfValidityObject = {
     Status: ResponseStatus
     Questions: QuestionObjectHolder[]

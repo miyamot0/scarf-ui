@@ -42,6 +42,12 @@ Interested parties are encouraged to reach out the Drs. Gilroy and Ledford for o
 
 ## Changelog
 
+### Version 0.3.0
+
+-   Add in tutorial/instructions page
+-   Add in reliability calculation tool
+-   Add in table for revealing disagreements
+
 ### Version 0.2.0
 
 -   Edits for clarity and continuity
