@@ -1,8 +1,34 @@
 // image_saver.test.ts
-import { FigureOutputExport } from '../image_saver'
 import { JSDOM } from 'jsdom'
+import { ExtractRelevantImage, FigureOutputExportNew } from '../image_saver'
+import { RefObject } from 'react'
 
-describe('FigureOutputExport', () => {
+describe('ExtractRelevantImage', () => {
+    it('should return the first image element found', () => {
+        const dom = new JSDOM(
+            '<!DOCTYPE html><body><div class="recharts-responsive-container"><svg class="recharts-surface"></svg></div></body></html>',
+            {
+                contentType: 'text/html',
+                includeNodeLocations: true,
+            }
+        )
+
+        const body = dom.window.document.querySelector('body')!
+        const container = body.querySelector('.recharts-responsive-container')!
+
+        const container_mut = container as HTMLDivElement
+
+        const ref = {
+            current: container_mut,
+        } as RefObject<HTMLDivElement>
+
+        const result = ExtractRelevantImage(ref)
+        expect(result).not.toBe(undefined)
+        expect(result).not.toBe(null)
+    })
+})
+
+describe('FigureOutputExportNew', () => {
     let container: SVGSVGElement
     let svgElement: SVGSVGElement
     let ref: React.RefObject<SVGSVGElement>
@@ -29,18 +55,73 @@ describe('FigureOutputExport', () => {
         jest.clearAllMocks()
     })
 
-    it('should throw an error if SVG element is not found', () => {
-        //@ts-expect-error
-        ref.current = null
-        expect(() => FigureOutputExport('svg', 'test', ref)).toThrow(
-            'SVG Element not found'
+    it('should throw an error if Ref is no good', () => {
+        const dom = new JSDOM(
+            '<!DOCTYPE html><body><div class="recharts-responsive-container"><svg class="recharts-surface"></svg></div></body></html>',
+            {
+                contentType: 'text/html',
+                includeNodeLocations: true,
+            }
         )
+
+        const body = dom.window.document.querySelector('body')!
+        const container = body.querySelector('.recharts-responsive-container')!
+
+        const container_mut = container as HTMLDivElement
+
+        const ref = {
+            current: null,
+        } as RefObject<HTMLDivElement>
+
+        expect(() =>
+            FigureOutputExportNew('svg', 'test', ExtractRelevantImage(ref))
+        ).toThrow('Ref is null')
     })
 
-    it.skip('should create a link element and trigger a click event if SVG element is found', () => {
-        // TODO: Figure out how to test this
-        FigureOutputExport('svg', 'test', ref)
-        const linkElement = container.querySelector('a')
-        expect(linkElement).not.toBeNull()
+    it('should throw an error if SVG element is not found', () => {
+        const dom = new JSDOM(
+            '<!DOCTYPE html><body><div class="recharts-responsive-container"></div></body></html>',
+            {
+                contentType: 'text/html',
+                includeNodeLocations: true,
+            }
+        )
+
+        const body = dom.window.document.querySelector('body')!
+        const container = body.querySelector('.recharts-responsive-container')!
+
+        const container_mut = container as HTMLDivElement
+
+        const ref = {
+            current: container_mut,
+        } as RefObject<HTMLDivElement>
+
+        expect(() =>
+            FigureOutputExportNew('svg', 'test', ExtractRelevantImage(ref))
+        ).toThrow('SVG Element not found')
+    })
+
+    it('should create a link element and trigger a click event if SVG element is found', () => {
+        const dom = new JSDOM(
+            '<!DOCTYPE html><body><div class="recharts-responsive-container"><svg class="recharts-surface"></svg></div></body></html>',
+            {
+                contentType: 'text/html',
+                includeNodeLocations: true,
+            }
+        )
+
+        const body = dom.window.document.querySelector('body')!
+        const container = body.querySelector('.recharts-responsive-container')!
+
+        const container_mut = container as HTMLDivElement
+
+        const ref = {
+            current: container_mut,
+        } as RefObject<HTMLDivElement>
+
+        FigureOutputExportNew('svg', 'test', ExtractRelevantImage(ref))
+        FigureOutputExportNew('png', 'test', ExtractRelevantImage(ref))
+        FigureOutputExportNew('webp', 'test', ExtractRelevantImage(ref))
+        FigureOutputExportNew('jpeg', 'test', ExtractRelevantImage(ref))
     })
 })

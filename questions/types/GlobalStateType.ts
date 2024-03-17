@@ -13,4 +13,5 @@ export type GlobalStateType = {
     FigureRef3?: RefObject<SVGSVGElement>
     ReviewName?: string
     ReviewType?: ReviewTypes
+    Loaded?: boolean
 }

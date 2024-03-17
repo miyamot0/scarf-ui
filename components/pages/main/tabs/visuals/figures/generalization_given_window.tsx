@@ -17,11 +17,8 @@ import {
     ContextMenuSeparator,
     ContextMenuTrigger,
 } from '@/components/ui/context-menu'
-import { dbAtom } from '@/atoms/db_atom'
-import { database_reducer } from '@/atoms/reducers/reducer'
-import { useReducerAtom } from 'jotai/utils'
-import { useEffect, useRef } from 'react'
-import { FigureOutputExport } from '@/lib/image_saver'
+import { useRef } from 'react'
+import { ExtractRelevantImage, FigureOutputExportNew } from '@/lib/image_saver'
 import { ScatterChartIcon } from 'lucide-react'
 
 // @ts-ignore
@@ -54,8 +51,7 @@ export function GeneralizationGivenWindow({
     size: number
     height: number
 }) {
-    const [state, dispatch] = useReducerAtom(dbAtom, database_reducer)
-    const ref = useRef(null)
+    const ref = useRef<HTMLDivElement>(null)
 
     const data_published = Data.filter(
         (s: CommonVisualOutput) => s.Type === 'Journal' && s.Generalized >= 0
@@ -77,22 +73,12 @@ export function GeneralizationGivenWindow({
         z: size,
     }))
 
-    useEffect(() => {
-        if (state.FigureRef3) return
-
-        dispatch({
-            type: 'load_ref',
-            payload: { number: 3, ref: ref },
-        })
-    }, [dispatch, state.FigureRef3])
-
     return (
         <ContextMenu>
             <ContextMenuTrigger>
-                <ResponsiveContainer width="100%" height={height}>
+                <ResponsiveContainer width="100%" height={height} ref={ref}>
                     <ScatterChart
                         style={{ background: 'white' }}
-                        ref={ref}
                         margin={{
                             top: 20,
                             right: 20,
@@ -194,10 +180,10 @@ export function GeneralizationGivenWindow({
                 <ContextMenuSeparator />
                 <ContextMenuItem
                     onClick={() =>
-                        FigureOutputExport(
+                        FigureOutputExportNew(
                             'svg',
                             'SCARF_Generalization_Given_Duration',
-                            state.FigureRef3
+                            ExtractRelevantImage(ref)
                         )
                     }
                 >
@@ -207,10 +193,10 @@ export function GeneralizationGivenWindow({
 
                 <ContextMenuItem
                     onClick={() =>
-                        FigureOutputExport(
+                        FigureOutputExportNew(
                             'webp',
                             'SCARF_Generalization_Given_Duration',
-                            state.FigureRef3
+                            ExtractRelevantImage(ref)
                         )
                     }
                 >
@@ -220,10 +206,10 @@ export function GeneralizationGivenWindow({
 
                 <ContextMenuItem
                     onClick={() =>
-                        FigureOutputExport(
+                        FigureOutputExportNew(
                             'png',
                             'SCARF_Generalization_Given_Duration',
-                            state.FigureRef3
+                            ExtractRelevantImage(ref)
                         )
                     }
                 >
@@ -233,10 +219,10 @@ export function GeneralizationGivenWindow({
 
                 <ContextMenuItem
                     onClick={() =>
-                        FigureOutputExport(
+                        FigureOutputExportNew(
                             'jpeg',
                             'SCARF_Generalization_Given_Duration',
-                            state.FigureRef3
+                            ExtractRelevantImage(ref)
                         )
                     }
                 >

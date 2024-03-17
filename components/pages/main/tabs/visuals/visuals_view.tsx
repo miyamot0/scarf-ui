@@ -22,7 +22,7 @@ import {
     SelectValue,
 } from '@/components/ui/select'
 import { SymbolType } from 'recharts/types/util/types'
-import { useAtom, useAtomValue } from 'jotai'
+import { useAtom } from 'jotai'
 
 function randomIntFromInterval(min: number, max: number) {
     return Math.floor(Math.random() * (max - min + 1) + min)

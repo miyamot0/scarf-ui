@@ -2,22 +2,14 @@ var fs = require('fs')
 const pack = require('../package.json')
 const coverage = require('../coverage/coverage-summary.json')
 
-const readme_read_path = './__readme__/README.md'
-const readme_write_path = './README.md'
+const PATH_README_TEMPLATE = './__readme__/README.md'
+const PATH_README_OUTPUT = './README.md'
 
-const License_tag = '{{ License }}'
-const MIT_license =
-    '![Static Badge](https://img.shields.io/badge/License-MIT-green?style=flat)'
+const TAG_LICENSE = '{{ License }}'
+const TAG_VERSION = '{{ Version }}'
+const TAG_COVERAGE = '{{ Coverage }}'
 
-const Version_tag = '{{ Version }}'
-const Version = (version: string) =>
-    `![Static Badge](https://img.shields.io/badge/Version-${version}-blue?style=flat)`
-
-const Coverage_tag = '{{ Coverage }}'
-const Coverage = () => {
-    const { lines } = coverage.total
-    const percentage = lines.pct
-
+const assign_color = (percentage: number) => {
     let color = 'red'
 
     if (percentage > 80) {
@@ -26,12 +18,26 @@ const Coverage = () => {
         color = 'green'
     }
 
-    return `![Static Badge](https://img.shields.io/badge/Coverage-${percentage}-${color}?style=flat)`
+    return color
+}
+
+function GenerateMITLicenseBadge() {
+    return '![Static Badge](https://img.shields.io/badge/License-MIT-green?style=flat)'
+}
+
+function GeneratePackageVersionBadge() {
+    return `![Static Badge](https://img.shields.io/badge/Version-${pack.version}-blue?style=flat)`
+}
+
+function GenerateCoverageBadge() {
+    let color = assign_color(coverage.total.lines.pct)
+
+    return `![Static Badge](https://img.shields.io/badge/Coverage-${coverage.total.lines.pct}-${color}?style=flat)`
 }
 
 function readTemplatedREADME(): string {
     const result = fs.readFileSync(
-        readme_read_path,
+        PATH_README_TEMPLATE,
         'utf8',
         function (err: any, data: string) {
             if (err) throw err
@@ -43,20 +49,19 @@ function readTemplatedREADME(): string {
     return result
 }
 
-function writeData() {
-    console.log('Current working directory:', process.cwd())
+function writeUpdatedREADMEData() {
+    console.log('Building Updated Readme...')
 
     let md_data = readTemplatedREADME()
-    md_data = md_data.replace(Version_tag, Version(pack.version))
-    md_data = md_data.replace(License_tag, MIT_license)
-    md_data = md_data.replace(Coverage_tag, Coverage())
+    md_data = md_data.replace(TAG_VERSION, GeneratePackageVersionBadge())
+    md_data = md_data.replace(TAG_LICENSE, GenerateMITLicenseBadge())
+    md_data = md_data.replace(TAG_COVERAGE, GenerateCoverageBadge())
 
-    console.log(md_data)
-    fs.writeFileSync(readme_write_path, md_data, function (err: any) {
+    fs.writeFileSync(PATH_README_OUTPUT, md_data, function (err: any) {
         if (err) throw err
-
-        console.log('Readme updated!')
     })
+
+    console.log('Readme updated!')
 }
 
-writeData()
+writeUpdatedREADMEData()

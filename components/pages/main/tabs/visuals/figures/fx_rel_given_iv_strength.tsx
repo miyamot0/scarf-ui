@@ -17,11 +17,8 @@ import {
     ContextMenuSeparator,
     ContextMenuTrigger,
 } from '@/components/ui/context-menu'
-import { dbAtom } from '@/atoms/db_atom'
-import { database_reducer } from '@/atoms/reducers/reducer'
-import { useReducerAtom } from 'jotai/utils'
-import { FigureOutputExport } from '@/lib/image_saver'
-import { useEffect, useRef } from 'react'
+import { ExtractRelevantImage, FigureOutputExportNew } from '@/lib/image_saver'
+import { useRef } from 'react'
 import { ScatterChartIcon } from 'lucide-react'
 
 // @ts-ignore
@@ -50,8 +47,7 @@ export function VisualFunctionalRelationGivenIV({
     size: number
     height: number
 }) {
-    const [state, dispatch] = useReducerAtom(dbAtom, database_reducer)
-    const ref = useRef(null)
+    const ref = useRef<HTMLDivElement>(null)
 
     const data_published = Data.filter(
         (s: CommonVisualOutput) => s.Type === 'Journal' && s.Outcome >= 0
@@ -73,22 +69,12 @@ export function VisualFunctionalRelationGivenIV({
         z: size,
     }))
 
-    useEffect(() => {
-        if (state.FigureRef1) return
-
-        dispatch({
-            type: 'load_ref',
-            payload: { number: 1, ref: ref },
-        })
-    }, [dispatch, state.FigureRef1])
-
     return (
         <ContextMenu>
             <ContextMenuTrigger>
-                <ResponsiveContainer width="100%" height={height}>
+                <ResponsiveContainer width="100%" height={height} ref={ref}>
                     <ScatterChart
                         style={{ background: 'white' }}
-                        ref={ref}
                         margin={{
                             top: 20,
                             right: 20,
@@ -177,13 +163,13 @@ export function VisualFunctionalRelationGivenIV({
                 <ContextMenuLabel>Figure Export</ContextMenuLabel>
                 <ContextMenuSeparator />
                 <ContextMenuItem
-                    onClick={() =>
-                        FigureOutputExport(
+                    onClick={() => {
+                        FigureOutputExportNew(
                             'svg',
                             'SCARF_Functional_Relation_Given_IV',
-                            state.FigureRef1
+                            ExtractRelevantImage(ref)
                         )
-                    }
+                    }}
                 >
                     <ScatterChartIcon className="w-5 h-5 mr-2" />
                     Save as SVG
@@ -191,10 +177,10 @@ export function VisualFunctionalRelationGivenIV({
 
                 <ContextMenuItem
                     onClick={() =>
-                        FigureOutputExport(
+                        FigureOutputExportNew(
                             'webp',
                             'SCARF_Functional_Relation_Given_IV',
-                            state.FigureRef1
+                            ExtractRelevantImage(ref)
                         )
                     }
                 >
@@ -204,10 +190,10 @@ export function VisualFunctionalRelationGivenIV({
 
                 <ContextMenuItem
                     onClick={() =>
-                        FigureOutputExport(
+                        FigureOutputExportNew(
                             'png',
                             'SCARF_Functional_Relation_Given_IV',
-                            state.FigureRef1
+                            ExtractRelevantImage(ref)
                         )
                     }
                 >
@@ -217,10 +203,10 @@ export function VisualFunctionalRelationGivenIV({
 
                 <ContextMenuItem
                     onClick={() =>
-                        FigureOutputExport(
+                        FigureOutputExportNew(
                             'jpeg',
                             'SCARF_Functional_Relation_Given_IV',
-                            state.FigureRef1
+                            ExtractRelevantImage(ref)
                         )
                     }
                 >

@@ -22,6 +22,7 @@ export const database_reducer = (
             if (value)
                 return {
                     ...(JSON.parse(value) as GlobalStateType),
+                    Loaded: true,
                 }
 
             return state

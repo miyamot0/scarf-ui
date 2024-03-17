@@ -17,11 +17,8 @@ import {
     ContextMenuSeparator,
     ContextMenuTrigger,
 } from '@/components/ui/context-menu'
-import { dbAtom } from '@/atoms/db_atom'
-import { database_reducer } from '@/atoms/reducers/reducer'
-import { useReducerAtom } from 'jotai/utils'
-import { createRef, use, useEffect, useRef } from 'react'
-import { FigureOutputExport } from '@/lib/image_saver'
+import { useRef } from 'react'
+import { ExtractRelevantImage, FigureOutputExportNew } from '@/lib/image_saver'
 import { ScatterChartIcon } from 'lucide-react'
 
 // @ts-ignore
@@ -43,6 +40,8 @@ const CustomTooltip = ({ active, payload, label }) => {
     return null
 }
 
+
+
 export function MaintenanceGivenWindow({
     Data,
     shape,
@@ -54,8 +53,7 @@ export function MaintenanceGivenWindow({
     size: number
     height: number
 }) {
-    const [state, dispatch] = useReducerAtom(dbAtom, database_reducer)
-    const ref = useRef(null)
+    const ref = useRef<HTMLDivElement>(null)
 
     const data_published = Data.filter(
         (s: CommonVisualOutput) => s.Type === 'Journal' && s.Maintained >= 0
@@ -77,22 +75,12 @@ export function MaintenanceGivenWindow({
         z: size,
     }))
 
-    useEffect(() => {
-        if (state.FigureRef2) return
-
-        dispatch({
-            type: 'load_ref',
-            payload: { number: 2, ref: ref },
-        })
-    }, [dispatch, state.FigureRef2])
-
     return (
         <ContextMenu>
             <ContextMenuTrigger>
-                <ResponsiveContainer width="100%" height={height}>
+                <ResponsiveContainer width="100%" height={height} ref={ref}>
                     <ScatterChart
                         style={{ background: 'white' }}
-                        ref={ref}
                         margin={{
                             top: 20,
                             right: 20,
@@ -195,10 +183,10 @@ export function MaintenanceGivenWindow({
                 <ContextMenuSeparator />
                 <ContextMenuItem
                     onClick={() =>
-                        FigureOutputExport(
+                        FigureOutputExportNew(
                             'svg',
                             'SCARF_Maintenance_Given_Rigor',
-                            state.FigureRef2
+                            ExtractRelevantImage(ref)
                         )
                     }
                 >
@@ -208,10 +196,10 @@ export function MaintenanceGivenWindow({
 
                 <ContextMenuItem
                     onClick={() =>
-                        FigureOutputExport(
+                        FigureOutputExportNew(
                             'webp',
                             'SCARF_Maintenance_Given_Rigor',
-                            state.FigureRef2
+                            ExtractRelevantImage(ref)
                         )
                     }
                 >
@@ -221,10 +209,10 @@ export function MaintenanceGivenWindow({
 
                 <ContextMenuItem
                     onClick={() =>
-                        FigureOutputExport(
+                        FigureOutputExportNew(
                             'png',
                             'SCARF_Maintenance_Given_Rigor',
-                            state.FigureRef2
+                            ExtractRelevantImage(ref)
                         )
                     }
                 >
@@ -234,10 +222,10 @@ export function MaintenanceGivenWindow({
 
                 <ContextMenuItem
                     onClick={() =>
-                        FigureOutputExport(
+                        FigureOutputExportNew(
                             'jpeg',
                             'SCARF_Maintenance_Given_Rigor',
-                            state.FigureRef2
+                            ExtractRelevantImage(ref)
                         )
                     }
                 >

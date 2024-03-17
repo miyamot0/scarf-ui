@@ -11,6 +11,7 @@ export const DefaultStartingValue: GlobalStateType = {
     FigureRef2: undefined,
     FigureRef3: undefined,
     Studies: [],
+    Loaded: undefined,
 }
 
 export const DefaultStartingValueExpanded = {
