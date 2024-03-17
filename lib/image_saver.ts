@@ -2,12 +2,6 @@ import { RefObject } from 'react'
 
 type ImageFormatTypes = 'svg' | 'png' | 'jpeg' | 'webp'
 
-type ImageOutputOptionsRequest = {
-    format: ImageFormatTypes
-    dpi?: number
-    svg: string
-}
-
 function download(href: string, name: string) {
     var link = document.createElement('a')
     link.download = name
@@ -25,6 +19,8 @@ export function FigureOutputExport(
 ) {
     let svg = figureRef?.current
     if (!svg) throw new Error('SVG Element not found')
+
+    console.log(svg)
 
     // @ts-ignore
     const component = svg.container.querySelector('svg')

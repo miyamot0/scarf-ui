@@ -1,7 +1,7 @@
 import { atom } from 'jotai'
 import { GlobalStateType } from '@/questions/types/GlobalStateType'
 
-export const dbAtom = atom<GlobalStateType>({
+export const DefaultStartingValue: GlobalStateType = {
     DialogState: {
         dialog_type: undefined,
         study: undefined,
@@ -11,4 +11,6 @@ export const dbAtom = atom<GlobalStateType>({
     FigureRef2: undefined,
     FigureRef3: undefined,
     Studies: [],
-})
+}
+
+export const dbAtom = atom<GlobalStateType>(DefaultStartingValue)

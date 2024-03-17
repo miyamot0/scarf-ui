@@ -35,10 +35,36 @@ export const CompareResponsesInAreas = (
     }
 }
 
+type CalculateAgreementReturn = {
+    TotalCount: number
+    TotalTotal: number
+    TotalPercent: number
+    IV: {
+        Count: number
+        Total: number
+        Percent: number
+    }
+    EV: {
+        Count: number
+        Total: number
+        Percent: number
+    }
+    Reporting: {
+        Count: number
+        Total: number
+        Percent: number
+    }
+    Outcomes: {
+        Count: number
+        Total: number
+        Percent: number
+    }
+}
+
 export const CalculateAgreement = (
     primary: StudyObject[],
     reli: StudyObject[]
-) => {
+): CalculateAgreementReturn => {
     let iv_count = 0
     let iv_total = 0
     let ev_count = 0

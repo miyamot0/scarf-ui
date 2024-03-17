@@ -32,7 +32,7 @@ export function ReviewDetailsForm() {
     const form = useForm<z.infer<typeof ReviewDetailsSchema>>({
         resolver: zodResolver(ReviewDetailsSchema),
         defaultValues: {
-            title: state?.ReviewName,
+            title: state?.ReviewName ?? '',
             type: state?.ReviewType ?? 'Primary',
         },
     })
