@@ -8,4 +8,5 @@ const nextConfig = {
 export default MillionCompiler.next({
     rsc: true, // if used in the app router mode
     profiler: true,
+    exclude: ['node_modules', '.next', 'public'],
 })(nextConfig)

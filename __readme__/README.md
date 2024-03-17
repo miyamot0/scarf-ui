@@ -1,6 +1,6 @@
-![Static Badge](https://img.shields.io/badge/License-MIT-green?style=flat)
-![Static Badge](https://img.shields.io/badge/Version-0.3.0-blue?style=flat)
-![Static Badge](https://img.shields.io/badge/Coverage-85.04-yellow?style=flat)
+{{ License }}
+{{ Version }}
+{{ Coverage }}
 
 # SCARF-UI
 

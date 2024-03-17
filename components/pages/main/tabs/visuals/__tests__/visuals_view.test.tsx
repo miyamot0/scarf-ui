@@ -1,22 +1,20 @@
 // instructions_view.test.tsx
 
 import { render, screen } from '@testing-library/react'
-import { Provider } from 'jotai'
 import { TooltipProvider } from '@/components/ui/tooltip'
-import { DefaultStartingValue } from '@/atoms/db_atom'
 import { VisualsView } from '../visuals_view'
-
-jest.doMock('jotai', () => ({
-    useAtom: jest.fn().mockReturnValue([DefaultStartingValue]),
-}))
+import { DefaultStartingValueExpanded, dbAtom } from '@/atoms/db_atom'
+import { JotaiTestProvider } from '@/__testing__/JotaiTestProvider'
 
 describe('VisualsView', () => {
     beforeEach(() => {
         render(
             <TooltipProvider>
-                <Provider>
+                <JotaiTestProvider
+                    initialValues={[[dbAtom, DefaultStartingValueExpanded]]}
+                >
                     <VisualsView />
-                </Provider>
+                </JotaiTestProvider>
             </TooltipProvider>
         )
     })

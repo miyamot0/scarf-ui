@@ -16,7 +16,6 @@ import {
     NavigationMenuList,
     navigationMenuTriggerStyle,
 } from '../ui/navigation-menu'
-import { DialogHeaderItem } from './views/dialog_header_item'
 import Link from 'next/link'
 import {
     Code2Icon,

@@ -22,7 +22,7 @@ import {
     SelectValue,
 } from '@/components/ui/select'
 import { SymbolType } from 'recharts/types/util/types'
-import { useAtomValue } from 'jotai'
+import { useAtom, useAtomValue } from 'jotai'
 
 function randomIntFromInterval(min: number, max: number) {
     return Math.floor(Math.random() * (max - min + 1) + min)
@@ -88,13 +88,15 @@ export type MarkerSizingType = (typeof MarkerSizes)[0]
 export type FigureSizingType = (typeof FigureHeights)[0]
 
 export function VisualsView() {
-    const state = useAtomValue(dbAtom)
+    const [state] = useAtom(dbAtom)
     const [jitter, setJitter] = React.useState(true)
     const [shape, setShape] = React.useState<SymbolType>('circle')
     const [size, setSize] = React.useState<number>(MarkerSizes[0].value)
     const [height, setHeight] = React.useState<number>(FigureHeights[0].value)
 
     const memoizedData = React.useMemo(() => state.Studies, [state.Studies])
+
+    console.log(state)
 
     const recordsToVisualize = memoizedData.map((study) => {
         const score_internal_validity = CalculateOutcomeScore(
