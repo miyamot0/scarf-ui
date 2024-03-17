@@ -3,7 +3,6 @@
 
 import '@testing-library/jest-dom'
 import '@testing-library/jest-dom/extend-expect'
-import { DefaultStartingValue } from '@/atoms/db_atom'
 import { TextEncoder, TextDecoder } from 'util'
 
 global.TextEncoder = TextEncoder
@@ -17,10 +16,5 @@ window.ResizeObserver =
         unobserve: jest.fn(),
     }))
 
-/**
-jest.mock('jotai/utils', () => ({
-    useReducerAtom: jest
-        .fn()
-        .mockReturnValue([DefaultStartingValue, jest.fn()]),
-}))
- */
+window.URL.createObjectURL = function () {}
+window.URL.revokeObjectURL = function () {}

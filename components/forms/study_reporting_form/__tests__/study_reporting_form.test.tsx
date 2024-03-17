@@ -1,14 +1,12 @@
 // study_details_form.test.tsx
-import {
-    render,
-    fireEvent,
-    waitFor,
-    getAllByRole,
-} from '@testing-library/react'
+import { render, fireEvent } from '@testing-library/react'
 import { act } from 'react-dom/test-utils'
 import { TooltipProvider } from '@/components/ui/tooltip'
-import { Provider } from 'jotai'
-import { DefaultStartingValue } from '@/atoms/db_atom'
+import {
+    DefaultStartingValue,
+    DefaultStartingValueExpanded,
+    dbAtom,
+} from '@/atoms/db_atom'
 import { StudyObject } from '@/questions/types/QuestionTypes'
 import {
     ExternalValidityQuestionDefault,
@@ -17,6 +15,7 @@ import {
     ReportingQuestionDefault,
 } from '@/questions/questions_defaults'
 import { StudyReportingForm } from '../study_reporting_form'
+import { JotaiTestProvider } from '@/__testing__/JotaiTestProvider'
 
 jest.doMock('jotai/utils', () => ({
     useReducerAtom: jest
@@ -44,11 +43,13 @@ describe('StudyReportingForm', () => {
             PublicationType: 'Unclassified',
         }
 
-        const { getByLabelText, getByRole, getAllByRole, container } = render(
+        const { getAllByRole, container } = render(
             <TooltipProvider>
-                <Provider>
+                <JotaiTestProvider
+                    initialValues={[[dbAtom, DefaultStartingValueExpanded]]}
+                >
                     <StudyReportingForm study={testStudy} />
-                </Provider>
+                </JotaiTestProvider>
             </TooltipProvider>
         )
 

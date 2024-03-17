@@ -1,22 +1,20 @@
 // empirical_view.test.tsx
 
 import { render, screen } from '@testing-library/react'
-import { Provider } from 'jotai'
 import { EmpiricalTabView } from '../empirical_view'
 import { TooltipProvider } from '@/components/ui/tooltip'
-import { DefaultStartingValue } from '@/atoms/db_atom'
-
-jest.doMock('jotai', () => ({
-    useAtom: jest.fn().mockReturnValue([DefaultStartingValue]),
-}))
+import { DefaultStartingValueExpanded, dbAtom } from '@/atoms/db_atom'
+import { JotaiTestProvider } from '@/__testing__/JotaiTestProvider'
 
 describe('EmpiricalTabView', () => {
     beforeEach(() => {
         render(
             <TooltipProvider>
-                <Provider>
+                <JotaiTestProvider
+                    initialValues={[[dbAtom, DefaultStartingValueExpanded]]}
+                >
                     <EmpiricalTabView />
-                </Provider>
+                </JotaiTestProvider>
             </TooltipProvider>
         )
     })

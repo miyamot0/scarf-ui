@@ -127,8 +127,6 @@ export function StudyInternalValidityForm({ study }: { study?: StudyObject }) {
         })
     }
 
-    console.log(form.formState.errors)
-
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">

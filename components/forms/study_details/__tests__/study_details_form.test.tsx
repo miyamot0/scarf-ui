@@ -1,17 +1,12 @@
 // study_details_form.test.tsx
-import { render, fireEvent, waitFor } from '@testing-library/react'
+import { render, fireEvent } from '@testing-library/react'
 import { act } from 'react-dom/test-utils'
 import { TooltipProvider } from '@/components/ui/tooltip'
 import { Provider } from 'jotai'
 import { StudyDetailsForm } from '../study_details_form'
-import { DefaultStartingValue } from '@/atoms/db_atom'
 import { StudyObject } from '@/questions/types/QuestionTypes'
-
-jest.doMock('jotai/utils', () => ({
-    useReducerAtom: jest
-        .fn()
-        .mockReturnValue([DefaultStartingValue, jest.fn()]),
-}))
+import { JotaiTestProvider } from '@/__testing__/JotaiTestProvider'
+import { DefaultStartingValueExpanded, dbAtom } from '@/atoms/db_atom'
 
 describe('StudyDetailsForm', () => {
     afterEach(() => {
@@ -20,11 +15,13 @@ describe('StudyDetailsForm', () => {
 
     it.skip('calls onSubmit when the form is submitted, should bomb because no id present', async () => {
         const { getByLabelText, getByRole } = render(
-            <TooltipProvider>
+            <JotaiTestProvider
+                initialValues={[[dbAtom, DefaultStartingValueExpanded]]}
+            >
                 <Provider>
                     <StudyDetailsForm />
                 </Provider>
-            </TooltipProvider>
+            </JotaiTestProvider>
         )
 
         fireEvent.change(getByLabelText('Study Code'), {

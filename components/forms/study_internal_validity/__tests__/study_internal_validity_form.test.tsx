@@ -8,7 +8,11 @@ import {
 import { act } from 'react-dom/test-utils'
 import { TooltipProvider } from '@/components/ui/tooltip'
 import { Provider } from 'jotai'
-import { DefaultStartingValue } from '@/atoms/db_atom'
+import {
+    DefaultStartingValue,
+    DefaultStartingValueExpanded,
+    dbAtom,
+} from '@/atoms/db_atom'
 import { StudyObject } from '@/questions/types/QuestionTypes'
 import {
     ExternalValidityQuestionDefault,
@@ -17,6 +21,7 @@ import {
     ReportingQuestionDefault,
 } from '@/questions/questions_defaults'
 import { StudyInternalValidityForm } from '../study_internal_validity_form'
+import { JotaiTestProvider } from '@/__testing__/JotaiTestProvider'
 
 jest.doMock('jotai/utils', () => ({
     useReducerAtom: jest
@@ -46,9 +51,11 @@ describe('StudyInternalValidityForm', () => {
 
         const { getByLabelText, getByRole, getAllByRole, container } = render(
             <TooltipProvider>
-                <Provider>
+                <JotaiTestProvider
+                    initialValues={[[dbAtom, DefaultStartingValueExpanded]]}
+                >
                     <StudyInternalValidityForm study={testStudy} />
-                </Provider>
+                </JotaiTestProvider>
             </TooltipProvider>
         )
 

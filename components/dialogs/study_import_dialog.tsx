@@ -58,7 +58,6 @@ export function StudyImportDialog() {
                     values[3].length > 0 ? values[3] : undefined
                 const StudyYear = values[4].length > 0 ? values[4] : undefined
 
-                console.log(values)
                 if (
                     !StudyTag ||
                     !StudyAuthors ||

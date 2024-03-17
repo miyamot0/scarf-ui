@@ -20,8 +20,6 @@ export function FigureOutputExport(
     let svg = figureRef?.current
     if (!svg) throw new Error('SVG Element not found')
 
-    console.log(svg)
-
     // @ts-ignore
     const component = svg.container.querySelector('svg')
     if (!component) throw new Error('SVG Element not found')

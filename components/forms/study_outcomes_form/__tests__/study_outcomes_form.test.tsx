@@ -8,7 +8,11 @@ import {
 import { act } from 'react-dom/test-utils'
 import { TooltipProvider } from '@/components/ui/tooltip'
 import { Provider } from 'jotai'
-import { DefaultStartingValue } from '@/atoms/db_atom'
+import {
+    DefaultStartingValue,
+    DefaultStartingValueExpanded,
+    dbAtom,
+} from '@/atoms/db_atom'
 import { StudyObject } from '@/questions/types/QuestionTypes'
 import {
     ExternalValidityQuestionDefault,
@@ -17,6 +21,7 @@ import {
     ReportingQuestionDefault,
 } from '@/questions/questions_defaults'
 import { StudyOutcomesForm } from '../study_outcomes_form'
+import { JotaiTestProvider } from '@/__testing__/JotaiTestProvider'
 
 jest.doMock('jotai/utils', () => ({
     useReducerAtom: jest
@@ -44,11 +49,13 @@ describe('StudyOutcomesForm', () => {
             PublicationType: 'Unclassified',
         }
 
-        const { getByLabelText, getByRole, getAllByRole, container } = render(
+        const { getAllByRole, container } = render(
             <TooltipProvider>
-                <Provider>
+                <JotaiTestProvider
+                    initialValues={[[dbAtom, DefaultStartingValueExpanded]]}
+                >
                     <StudyOutcomesForm study={testStudy} />
-                </Provider>
+                </JotaiTestProvider>
             </TooltipProvider>
         )
 

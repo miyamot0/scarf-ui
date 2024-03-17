@@ -96,8 +96,6 @@ export function VisualsView() {
 
     const memoizedData = React.useMemo(() => state.Studies, [state.Studies])
 
-    console.log(state)
-
     const recordsToVisualize = memoizedData.map((study) => {
         const score_internal_validity = CalculateOutcomeScore(
             'Internal Validity',
