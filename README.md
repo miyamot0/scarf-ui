@@ -1,6 +1,6 @@
 ![Static Badge](https://img.shields.io/badge/License-MIT-green?style=flat)
-![Static Badge](https://img.shields.io/badge/Version-0.3.0-blue?style=flat)
-![Static Badge](https://img.shields.io/badge/Coverage-90.77-yellow?style=flat)
+![Static Badge](https://img.shields.io/badge/Version-0.3.1-blue?style=flat)
+![Static Badge](https://img.shields.io/badge/Coverage-90.54-yellow?style=flat)
 
 # SCARF-UI
 
@@ -45,6 +45,12 @@ Pull requests will be occasionally reviewed, but are rarely to be considered unl
 Interested parties are encouraged to reach out the Drs. Gilroy and Ledford for opportunities to support/contribute to the SCARF project.
 
 ## Changelog
+
+### Version 0.3.x
+
+-   Tests (mostly)
+-   Speedups for VDOM nightmare
+-   Move to cookie storage for theming (hydration headaches)
 
 ### Version 0.3.0
 
