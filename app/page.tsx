@@ -1,5 +1,5 @@
-import { MainPage } from '@/components/pages/main/main_page'
+import { MainPageShim } from '@/components/pages/main/main_page'
 
 export default function Home() {
-    return <MainPage />
+    return <MainPageShim />
 }

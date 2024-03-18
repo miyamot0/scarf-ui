@@ -63,6 +63,14 @@ import { Provider } from 'jotai'
 import { GlobalStateType } from '@/questions/types/GlobalStateType'
 import { useExistingData } from '@/components/hooks/useExistingData'
 
+export function MainPageShim() {
+    return (
+        <Provider>
+            <MainPage />
+        </Provider>
+    )
+}
+
 export function MainPage() {
     const { data, error, isLoading } = useExistingData()
     const [state, dispatch] = useReducerAtom(dbAtom, database_reducer)

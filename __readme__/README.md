@@ -46,6 +46,12 @@ Interested parties are encouraged to reach out the Drs. Gilroy and Ledford for o
 
 ## Changelog
 
+### Version 0.3.x
+
+-   Tests (mostly)
+-   Speedups for VDOM nightmare
+-   Move to cookie storage for theming (hydration headaches)
+
 ### Version 0.3.0
 
 -   Add in tutorial/instructions page

@@ -1,6 +1,6 @@
 {
   "name": "scarf-ui",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -49,7 +49,6 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@million/lint": "^0.0.73",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^14.2.1",
     "@testing-library/react-hooks": "^8.0.1",
