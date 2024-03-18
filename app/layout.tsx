@@ -1,13 +1,13 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { cn } from '@/lib/utils'
-import './globals.css'
 import { Toaster } from '@/components/ui/sonner'
-import { ThemeProvider } from '@/components/themes/theme_provider'
 import MaxWidthWrapper from '@/components/ui/max_width_wrapper'
 import { Footer } from '@/components/navigation/Footer'
 import { Header } from '@/components/navigation/Header'
 import { TooltipProvider } from '@/components/ui/tooltip'
+import './globals.css'
+import { getTheme } from '@/components/themes/theming'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -16,13 +16,15 @@ export const metadata: Metadata = {
     description: 'Created by Shawn Gilroy',
 }
 
-export default function RootLayout({
+export default async function RootLayout({
     children,
 }: Readonly<{
     children: React.ReactNode
 }>) {
+    const theme = await getTheme()
+
     return (
-        <html lang="en" className="my-4 light:grainy">
+        <html lang="en" className={cn(theme, 'my-4 light:grainy')}>
             <head>
                 <link
                     rel="apple-touch-icon"
@@ -44,21 +46,14 @@ export default function RootLayout({
                 <link rel="manifest" href="/site.webmanifest" />
             </head>
             <body className={cn(inter.className, 'antialiased')}>
-                <ThemeProvider
-                    attribute="class"
-                    defaultTheme="system"
-                    enableSystem
-                    disableTransitionOnChange
-                >
-                    <TooltipProvider>
-                        <MaxWidthWrapper className="flex flex-col gap-y-6">
-                            <Header />
-                            {children}
-                            <Footer />
-                            <Toaster />
-                        </MaxWidthWrapper>
-                    </TooltipProvider>
-                </ThemeProvider>
+                <TooltipProvider>
+                    <MaxWidthWrapper className="flex flex-col gap-y-6">
+                        <Header theme={theme} />
+                        {children}
+                        <Footer />
+                        <Toaster />
+                    </MaxWidthWrapper>
+                </TooltipProvider>
             </body>
         </html>
     )

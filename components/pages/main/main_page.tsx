@@ -45,8 +45,8 @@ const EmpiricalTabView = dynamic(
     }
 )
 
-import { dbAtom } from '@/atoms/db_atom'
-import { useReducerAtom } from 'jotai/utils'
+import { DefaultStartingValue, dbAtom } from '@/atoms/db_atom'
+import { useHydrateAtoms, useReducerAtom } from 'jotai/utils'
 import { StudyInternalValidityDialog } from '../../dialogs/study_internal_validity_dialog'
 import { StudyExternalValidityDialog } from '../../dialogs/study_external_validity_dialog'
 import { StudyReportingDialog } from '../../dialogs/study_reporting_dialog'
@@ -59,27 +59,35 @@ import { Hero } from './views/hero'
 import { ButtonBar } from './views/button_bar'
 import { StudyImportDialog } from '@/components/dialogs/study_import_dialog'
 import dynamic from 'next/dynamic'
+import { Provider } from 'jotai'
+import { GlobalStateType } from '@/questions/types/GlobalStateType'
+import { useExistingData } from '@/components/hooks/useExistingData'
 
 export function MainPage() {
+    const { data, error, isLoading } = useExistingData()
     const [state, dispatch] = useReducerAtom(dbAtom, database_reducer)
     const refFileInput = useRef<HTMLInputElement>(null)
 
     useEffect(() => {
+        if (isLoading) return
+
         dispatch({
-            type: 'load_local',
+            type: 'load_external',
+            payload: {
+                saved_state: data,
+            },
         })
-    }, [dispatch])
+    }, [dispatch, data, isLoading])
 
     return (
         <>
             <Hero />
-
             <div className="flex flex-col gap-y-4">
                 <Card className="w-full">
                     <CardHeader className="flex flex-row justify-between">
                         <div className="flex flex-col">
                             <CardTitle>{`Review: Name: ${
-                                state.ReviewName ?? 'UNNAMED'
+                                isLoading ? '' : state.ReviewName ?? 'UNNAMED'
                             }`}</CardTitle>
                             <CardDescription>{`Reviewer Type: ${
                                 state.ReviewType ?? 'Primary'
@@ -93,13 +101,13 @@ export function MainPage() {
                         />
                     </CardHeader>
                     <CardContent>
-                        {state.Loaded ?? <LoadingSpinner className="mx-auto" />}
+                        {isLoading ?? <LoadingSpinner className="mx-auto" />}
 
                         <Tabs
                             value={state.DisplayState}
                             className={cn(
-                                'w-full flex flex-col gap-y-4',
-                                !state.Loaded ? 'hidden' : ''
+                                'w-full flex flex-col gap-y-4'
+                                //isLoading ? 'hidden' : ''
                             )}
                         >
                             <TabsList className="w-full flex flex-row">

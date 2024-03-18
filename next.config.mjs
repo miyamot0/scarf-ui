@@ -1,12 +1,17 @@
-import MillionCompiler from '@million/lint'
+import million from 'million/compiler'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     reactStrictMode: true,
 }
 
-export default MillionCompiler.next({
-    rsc: true, // if used in the app router mode
-    profiler: true,
-    exclude: ['node_modules', '.next', 'public'],
-})(nextConfig)
+const millionConfig = {
+    auto: {
+        threshold: 0.05, // default: 0.1,
+        skip: ['useBadHook', /badVariable/g], // default []
+        rsc: true,
+        // if you're using RSC: auto: { rsc: true },
+    },
+}
+
+export default million.next(nextConfig, millionConfig)
