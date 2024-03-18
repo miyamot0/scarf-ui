@@ -1,5 +1,4 @@
-import { RefObject } from 'react'
-import { deprecate } from 'util'
+import type { RefObject } from 'react'
 
 type ImageFormatTypes = 'svg' | 'png' | 'jpeg' | 'webp'
 
@@ -17,8 +16,6 @@ export function ExtractRelevantImage(ref: RefObject<HTMLDivElement>) {
     if (!ref.current) {
         throw new Error('Ref is null')
     }
-
-    console.log(ref)
 
     const svg_element = ref.current.getElementsByClassName('recharts-surface')
 

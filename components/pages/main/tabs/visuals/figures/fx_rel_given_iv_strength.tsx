@@ -7,7 +7,6 @@ import {
     Scatter,
     ScatterChart,
 } from 'recharts'
-import { CommonVisualOutput } from '../visuals_view'
 import { SymbolType } from 'recharts/types/util/types'
 import {
     ContextMenu,
@@ -20,6 +19,7 @@ import {
 import { ExtractRelevantImage, FigureOutputExportNew } from '@/lib/image_saver'
 import { useRef } from 'react'
 import { ScatterChartIcon } from 'lucide-react'
+import { CommonVisualOutput } from '@/types/CommonVisualOutput'
 
 // @ts-ignore
 const CustomTooltip = ({ active, payload, label }) => {
@@ -131,8 +131,9 @@ export function VisualFunctionalRelationGivenIV({
                                         return 'Weak'
                                     case 4:
                                         return 'Strong'
+                                    default:
+                                        return ''
                                 }
-                                return ''
                             }}
                         />
                         <ZAxis type="number" dataKey="z" range={[size, size]} />

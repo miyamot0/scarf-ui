@@ -1,4 +1,3 @@
-import { Label } from '@/components/ui/label'
 import { PanelStatus } from './data_set_status'
 import { forwardRef } from 'react'
 import { ReviewTypes } from '@/types/ReviewTypes'
@@ -42,7 +41,9 @@ export const DataInputPanelWithRef = forwardRef<
             <CardContent>
                 <input
                     ref={inputRef}
+                    id={coderType}
                     type="file"
+                    accept="application/JSON"
                     onChange={(event) => {
                         const file = event.target.files?.[0]
                         if (file) {

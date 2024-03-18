@@ -1,4 +1,4 @@
-import {
+import type {
     QuestionObjectHolder,
     StudyObject,
 } from '@/questions/types/QuestionTypes'
@@ -10,7 +10,7 @@ export const CompareResponsesInAreas = (
     let count = 0
     let total = 0
 
-    primary.forEach((question, i) => {
+    primary.forEach((question) => {
         const primary_question = question
         const reliability_question = reli.find(
             (q) => q.QuestionID === primary_question.QuestionID
