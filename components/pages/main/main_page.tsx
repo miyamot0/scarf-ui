@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { StudyDetailsDialog } from '../../dialogs/study_details_dialog'
 import {
     Card,
@@ -17,21 +17,21 @@ const InstructionsView = dynamic(
             (mod) => mod.InstructionsView
         ),
     {
-        loading: () => <p>Loading...</p>,
+        loading: () => <LoadingSpinner className="mx-auto" />,
     }
 )
 
 const StudiesView = dynamic(
     () => import('./tabs/studies/studies_view').then((mod) => mod.StudiesView),
     {
-        loading: () => <p>Loading...</p>,
+        loading: () => <LoadingSpinner className="mx-auto" />,
     }
 )
 
 const VisualsView = dynamic(
     () => import('./tabs/visuals/visuals_view').then((mod) => mod.VisualsView),
     {
-        loading: () => <p>Loading...</p>,
+        loading: () => <LoadingSpinner className="mx-auto" />,
     }
 )
 
@@ -41,12 +41,12 @@ const EmpiricalTabView = dynamic(
             (mod) => mod.EmpiricalTabView
         ),
     {
-        loading: () => <p>Loading...</p>,
+        loading: () => <LoadingSpinner className="mx-auto" />,
     }
 )
 
-import { DefaultStartingValue, dbAtom } from '@/atoms/db_atom'
-import { useHydrateAtoms, useReducerAtom } from 'jotai/utils'
+import { dbAtom } from '@/atoms/db_atom'
+import { useReducerAtom } from 'jotai/utils'
 import { StudyInternalValidityDialog } from '../../dialogs/study_internal_validity_dialog'
 import { StudyExternalValidityDialog } from '../../dialogs/study_external_validity_dialog'
 import { StudyReportingDialog } from '../../dialogs/study_reporting_dialog'
@@ -60,7 +60,6 @@ import { ButtonBar } from './views/button_bar'
 import { StudyImportDialog } from '@/components/dialogs/study_import_dialog'
 import dynamic from 'next/dynamic'
 import { Provider } from 'jotai'
-import { GlobalStateType } from '@/questions/types/GlobalStateType'
 import { useExistingData } from '@/components/hooks/useExistingData'
 
 export function MainPageShim() {
@@ -72,7 +71,7 @@ export function MainPageShim() {
 }
 
 export function MainPage() {
-    const { data, error, isLoading } = useExistingData()
+    const { data, isLoading } = useExistingData()
     const [state, dispatch] = useReducerAtom(dbAtom, database_reducer)
     const refFileInput = useRef<HTMLInputElement>(null)
 

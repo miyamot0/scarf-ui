@@ -7,8 +7,8 @@ import {
     GenerateGeneralizationRating,
     GenerateMaintenanceWindow,
     GenerateStrengthRating,
+    applyConditionalJittering,
 } from './helpers/scarf_scoring'
-import { PublicationType } from '@/questions/types/QuestionTypes'
 import { VisualFunctionalRelationGivenIV } from './figures/fx_rel_given_iv_strength'
 import { MaintenanceGivenWindow } from './figures/maintenance_given_window'
 import { GeneralizationGivenWindow } from './figures/generalization_given_window'
@@ -23,69 +23,14 @@ import {
 } from '@/components/ui/select'
 import { SymbolType } from 'recharts/types/util/types'
 import { useAtom } from 'jotai'
+import { FigureHeights, MarkerSizes } from './aesthetics/figure_aesthetics'
 
-function randomIntFromInterval(min: number, max: number) {
-    return Math.floor(Math.random() * (max - min + 1) + min)
+// TODO: complete hack to suppress error
+const error = console.error
+console.error = (...args: any) => {
+    if (/defaultProps/.test(args[0])) return
+    error(...args)
 }
-
-function applyConditionalJittering(jitter: boolean, value: number) {
-    return jitter ? value + randomIntFromInterval(-10, 10) / 100 : value
-}
-
-export type CommonVisualOutput = {
-    Tag: string
-    ID: string
-    IV: number
-    EV: number
-    Reporting: number
-    Outcome: number
-    Maintained: number
-    MaintenanceWindow: number
-    Generalized: number
-    GeneralizationRigor: number
-    Type: PublicationType
-}
-
-const MarkerSizes = [
-    {
-        value: 100,
-        label: 'Small',
-    },
-    {
-        value: 200,
-        label: 'Medium',
-    },
-    {
-        value: 400,
-        label: 'Large',
-    },
-    {
-        value: 800,
-        label: 'Extra Large',
-    },
-]
-
-const FigureHeights = [
-    {
-        value: 300,
-        label: 'Compact',
-    },
-    {
-        value: 400,
-        label: 'Normal',
-    },
-    {
-        value: 500,
-        label: 'Tall',
-    },
-    {
-        value: 600,
-        label: 'Extra Tall',
-    },
-]
-
-export type MarkerSizingType = (typeof MarkerSizes)[0]
-export type FigureSizingType = (typeof FigureHeights)[0]
 
 export function VisualsView() {
     const [state] = useAtom(dbAtom)
