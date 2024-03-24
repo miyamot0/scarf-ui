@@ -21,10 +21,13 @@ export function useExistingData() {
         const value = localStorage.getItem(KEY_LOCAL_STORAGE)
 
         if (value) {
+            const parsedValue = JSON.parse(value) as GlobalStateType
+
             setData({
                 data: {
-                    ...(JSON.parse(value) as GlobalStateType),
+                    ...parsedValue,
                     DisplayState: 'instructions',
+                    AutoSave: parsedValue.AutoSave ?? false,
                 },
                 error: null,
                 isLoading: false,

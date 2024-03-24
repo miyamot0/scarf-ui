@@ -14,4 +14,5 @@ export type GlobalStateType = {
     ReviewName?: string
     ReviewType?: ReviewTypes
     Loaded?: boolean
+    AutoSave?: boolean
 }

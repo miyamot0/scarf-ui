@@ -37,12 +37,12 @@ export type DatabaseAction =
           payload: { study_id: string; category: PublicationType }
       }
     | {
-          type: 'load_ref'
-          payload: { number: 1 | 2 | 3; ref: RefObject<SVGSVGElement> }
-      }
-    | {
           type: 'update_review'
-          payload: { review_name: string; review_type: ReviewTypes }
+          payload: {
+              review_name: string
+              review_type: ReviewTypes
+              auto_save: boolean
+          }
       }
     | {
           type: 'bulk_import_studies'

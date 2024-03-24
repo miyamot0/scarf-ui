@@ -111,26 +111,7 @@ export const database_reducer = (
                 },
                 ReviewName: action.payload.review_name,
                 ReviewType: action.payload.review_type,
-            }
-        case 'load_ref':
-            switch (action.payload.number) {
-                case 1:
-                    return {
-                        ...state,
-                        FigureRef1: action.payload.ref,
-                    }
-                case 2:
-                    return {
-                        ...state,
-                        FigureRef2: action.payload.ref,
-                    }
-                case 3:
-                    return {
-                        ...state,
-                        FigureRef3: action.payload.ref,
-                    }
-                default:
-                    return state
+                AutoSave: action.payload.auto_save,
             }
         default:
             return state

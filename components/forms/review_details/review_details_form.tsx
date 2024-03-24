@@ -25,6 +25,7 @@ import {
 } from '@/components/ui/select'
 import { Review_Types } from '@/types/ReviewTypes'
 import { toast } from 'sonner'
+import { Switch } from '@/components/ui/switch'
 
 export function ReviewDetailsForm() {
     const [state, dispatch] = useReducerAtom(dbAtom, database_reducer)
@@ -34,6 +35,7 @@ export function ReviewDetailsForm() {
         defaultValues: {
             title: state?.ReviewName ?? '',
             type: state?.ReviewType ?? 'Primary',
+            auto_save: state?.AutoSave ?? false,
         },
     })
 
@@ -43,6 +45,7 @@ export function ReviewDetailsForm() {
             payload: {
                 review_name: values.title,
                 review_type: values.type,
+                auto_save: values.auto_save,
             },
         })
 
@@ -117,6 +120,29 @@ export function ReviewDetailsForm() {
                             </FormItem>
                         )
                     }}
+                />
+
+                <FormField
+                    control={form.control}
+                    name="auto_save"
+                    render={({ field }) => (
+                        <FormItem className="flex flex-row items-center justify-between rounded-lg ">
+                            <div className="space-y-0.5">
+                                <FormLabel className="text-base">
+                                    Auto Save Progress
+                                </FormLabel>
+                                <FormDescription>
+                                    Save to local machine after each update
+                                </FormDescription>
+                            </div>
+                            <FormControl>
+                                <Switch
+                                    checked={field.value}
+                                    onCheckedChange={field.onChange}
+                                />
+                            </FormControl>
+                        </FormItem>
+                    )}
                 />
 
                 <Button type="submit" size={'lg'} className="w-full">
