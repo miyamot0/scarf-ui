@@ -19,7 +19,5 @@ describe('MainPage', () => {
     it('renders MainPage component', () => {
         const element = screen.getByText(/SCARF-UI/i)
         expect(element).toBeInTheDocument()
-
-        console.log('element', element.innerHTML)
     })
 })

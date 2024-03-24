@@ -22,8 +22,6 @@ describe('StudiesView', () => {
     it('renders StudiesView component', () => {
         const heading = screen.getByText('Study Coding')
         expect(heading).toBeInTheDocument()
-
-        console.log('heading', heading)
     })
 
     it('renders the correct heading', () => {
