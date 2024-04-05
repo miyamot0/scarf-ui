@@ -49,8 +49,10 @@ Interested parties are encouraged to reach out the Drs. Gilroy and Ledford for o
 ### Version 0.3.x
 
 -   Tests (mostly)
--   Speedups for VDOM nightmare
+-   VDOM speedup
 -   Move to cookie storage for theming (hydration headaches)
+-   Heatmaps for individual areas of interest
+-   Tooltips for ease of coder reference
 
 ### Version 0.3.0
 
