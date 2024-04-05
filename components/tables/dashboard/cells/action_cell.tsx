@@ -1,5 +1,5 @@
 import { StudyObject } from '@/questions/types/QuestionTypes'
-import { Edit, MoreHorizontal } from 'lucide-react'
+import { Edit } from 'lucide-react'
 import {
     DropdownMenu,
     DropdownMenuTrigger,
