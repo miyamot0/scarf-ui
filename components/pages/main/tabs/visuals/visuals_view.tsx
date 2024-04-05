@@ -24,6 +24,7 @@ import {
 import { SymbolType } from 'recharts/types/util/types'
 import { useAtom } from 'jotai'
 import { FigureHeights, MarkerSizes } from './aesthetics/figure_aesthetics'
+import { CommonVisualOutput } from '@/types/CommonVisualOutput'
 
 // TODO: complete hack to suppress error
 const error = console.error
@@ -90,8 +91,28 @@ export function VisualsView() {
                 jitter,
                 GenerateGeneralizationRating(study)
             ),
+            RatingOutcome:
+                study.Outcomes.Questions.find(
+                    (q) => q.QuestionID === 'Outcomes_4'
+                )?.Response ?? '',
+            RatingMaintenance:
+                study.Outcomes.Questions.find(
+                    (q) => q.QuestionID === 'Outcomes_5'
+                )?.Response ?? '',
+            DegreeMaintenance:
+                study.ExternalValidity.Questions.find(
+                    (q) => q.QuestionID === 'Maintenance_3'
+                )?.Response ?? '',
+            RatingGeneralization:
+                study.Outcomes.Questions.find(
+                    (q) => q.QuestionID === 'Outcomes_6'
+                )?.Response ?? '',
+            DegreeGeneralization:
+                study.ExternalValidity.Questions.find(
+                    (q) => q.QuestionID === 'Generality_Boundedness_7'
+                )?.Response ?? '',
             Type: study.PublicationType,
-        }
+        } satisfies CommonVisualOutput
     })
 
     return (

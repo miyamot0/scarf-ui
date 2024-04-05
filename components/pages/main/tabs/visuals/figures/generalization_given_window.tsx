@@ -18,8 +18,10 @@ import {
 } from '@/components/ui/context-menu'
 import { useRef } from 'react'
 import { ExtractRelevantImage, FigureOutputExportNew } from '@/lib/image_saver'
-import { ScatterChartIcon } from 'lucide-react'
+import { ClipboardCopyIcon, ScatterChartIcon } from 'lucide-react'
 import { CommonVisualOutput } from '@/types/CommonVisualOutput'
+import { setClipboard } from '@/lib/clipboard'
+import { toast } from 'sonner'
 
 // @ts-ignore
 const CustomTooltip = ({ active, payload, label }) => {
@@ -177,6 +179,51 @@ export function GeneralizationGivenWindow({
             </ContextMenuTrigger>
             <ContextMenuContent>
                 <ContextMenuLabel>Figure Export</ContextMenuLabel>
+                <ContextMenuSeparator />
+                <ContextMenuItem
+                    onClick={() => {
+                        const data_to_export_header = [
+                            'Study UUID',
+                            'Publication Type',
+                            'Study Label',
+                            'Category',
+                            'X',
+                            'Y',
+                            'X Label',
+                            'Y Label',
+                        ].join('\t')
+
+                        const table_ized_data = Data.map((record) => {
+                            const temp_row = [
+                                record.ID,
+                                record.Type,
+                                record.Tag,
+                                'Generalization',
+                                record.IV,
+                                record.Outcome,
+                                record.DegreeGeneralization,
+                                record.RatingGeneralization,
+                            ]
+
+                            return temp_row.join('\t')
+                        })
+
+                        const final_data = [
+                            data_to_export_header,
+                            ...table_ized_data,
+                        ].join('\n')
+
+                        setClipboard(final_data).then(() => {
+                            toast.success('Data copied to clipboard', {
+                                description:
+                                    'The data copied to your clipboard should be pasted into a spreadsheet to preserve formatting.',
+                            })
+                        })
+                    }}
+                >
+                    <ClipboardCopyIcon className="w-5 h-5 mr-2" />
+                    Copy Data to Clipboard
+                </ContextMenuItem>
                 <ContextMenuSeparator />
                 <ContextMenuItem
                     onClick={() =>

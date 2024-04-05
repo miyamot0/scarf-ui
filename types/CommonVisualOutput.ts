@@ -11,5 +11,10 @@ export type CommonVisualOutput = {
     MaintenanceWindow: number
     Generalized: number
     GeneralizationRigor: number
+    RatingOutcome: string
+    RatingMaintenance: string
+    DegreeMaintenance: string
+    RatingGeneralization: string
+    DegreeGeneralization: string
     Type: PublicationType
 }
