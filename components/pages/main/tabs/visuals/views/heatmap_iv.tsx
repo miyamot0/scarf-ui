@@ -13,14 +13,17 @@ export function HeatmapIV(state: GlobalStateType) {
                 <thead>
                     <th className="min-w-[200px]"></th>
                     {state.Studies.map((r) => (
-                        <StudyTitle text={r.StudyAuthors} />
+                        <StudyTitle
+                            key={`iv-header-${r.StudyID}`}
+                            text={r.StudyAuthors}
+                        />
                     ))}
                 </thead>
 
                 <tbody>
                     {InternalValidityQuestions.map((q) => {
                         return (
-                            <tr>
+                            <tr key={`iv-row-${q.QuestionID}`}>
                                 <StudyItemTooltip Question={q} />
 
                                 {state.Studies.map((r) => {
@@ -31,7 +34,10 @@ export function HeatmapIV(state: GlobalStateType) {
                                         )?.Response
 
                                     return (
-                                        <StudyCodedBlock Response={question} />
+                                        <StudyCodedBlock
+                                            key={`code-block-iv-${r.StudyID}`}
+                                            Response={question}
+                                        />
                                     )
                                 })}
                             </tr>
