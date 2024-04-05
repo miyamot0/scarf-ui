@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { StudyDetailsDialog } from '../../dialogs/study_details_dialog'
 import {
     Card,
@@ -10,47 +10,91 @@ import {
     CardTitle,
 } from '../../ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../ui/tabs'
-import { InstructionsView } from './tabs/instructions/instructions_view'
-import { StudiesView } from './tabs/studies/studies_view'
+
+const InstructionsView = dynamic(
+    () =>
+        import('./tabs/instructions/instructions_view').then(
+            (mod) => mod.InstructionsView
+        ),
+    {
+        loading: () => <LoadingSpinner className="mx-auto" />,
+    }
+)
+
+const StudiesView = dynamic(
+    () => import('./tabs/studies/studies_view').then((mod) => mod.StudiesView),
+    {
+        loading: () => <LoadingSpinner className="mx-auto" />,
+    }
+)
+
+const VisualsView = dynamic(
+    () => import('./tabs/visuals/visuals_view').then((mod) => mod.VisualsView),
+    {
+        loading: () => <LoadingSpinner className="mx-auto" />,
+    }
+)
+
+const EmpiricalTabView = dynamic(
+    () =>
+        import('./tabs/empirical/empirical_view').then(
+            (mod) => mod.EmpiricalTabView
+        ),
+    {
+        loading: () => <LoadingSpinner className="mx-auto" />,
+    }
+)
+
 import { dbAtom } from '@/atoms/db_atom'
 import { useReducerAtom } from 'jotai/utils'
 import { StudyInternalValidityDialog } from '../../dialogs/study_internal_validity_dialog'
 import { StudyExternalValidityDialog } from '../../dialogs/study_external_validity_dialog'
 import { StudyReportingDialog } from '../../dialogs/study_reporting_dialog'
 import { StudyOutcomesDialog } from '../../dialogs/study_outcomes_dialog'
-import { VisualsView } from './tabs/visuals/visuals_view'
 import { database_reducer } from '@/atoms/reducers/reducer'
 import { ReviewDetailsDialog } from '../../dialogs/review_details_dialog'
 import { cn } from '@/lib/utils'
 import { LoadingSpinner } from '@/components/ui/loading-spinner'
 import { Hero } from './views/hero'
-import { EmpiricalTabView } from './tabs/empirical/empirical_view'
 import { ButtonBar } from './views/button_bar'
 import { StudyImportDialog } from '@/components/dialogs/study_import_dialog'
+import dynamic from 'next/dynamic'
+import { Provider } from 'jotai'
+import { useExistingData } from '@/components/hooks/useExistingData'
+
+export function MainPageShim() {
+    return (
+        <Provider>
+            <MainPage />
+        </Provider>
+    )
+}
 
 export function MainPage() {
+    const { data, isLoading } = useExistingData()
     const [state, dispatch] = useReducerAtom(dbAtom, database_reducer)
     const refFileInput = useRef<HTMLInputElement>(null)
-    const [loading, setIsLoading] = useState(true)
 
     useEffect(() => {
-        dispatch({
-            type: 'load_local',
-        })
+        if (isLoading) return
 
-        setIsLoading(false)
-    }, [dispatch])
+        dispatch({
+            type: 'load_external',
+            payload: {
+                saved_state: data,
+            },
+        })
+    }, [dispatch, data, isLoading])
 
     return (
         <>
             <Hero />
-
             <div className="flex flex-col gap-y-4">
                 <Card className="w-full">
                     <CardHeader className="flex flex-row justify-between">
                         <div className="flex flex-col">
                             <CardTitle>{`Review: Name: ${
-                                state.ReviewName ?? 'UNNAMED'
+                                isLoading ? '' : state.ReviewName ?? 'UNNAMED'
                             }`}</CardTitle>
                             <CardDescription>{`Reviewer Type: ${
                                 state.ReviewType ?? 'Primary'
@@ -64,13 +108,13 @@ export function MainPage() {
                         />
                     </CardHeader>
                     <CardContent>
-                        {loading && <LoadingSpinner className="mx-auto" />}
+                        {isLoading ?? <LoadingSpinner className="mx-auto" />}
 
                         <Tabs
                             value={state.DisplayState}
                             className={cn(
-                                'w-full flex flex-col gap-y-4',
-                                loading ? 'hidden' : ''
+                                'w-full flex flex-col gap-y-4'
+                                //isLoading ? 'hidden' : ''
                             )}
                         >
                             <TabsList className="w-full flex flex-row">

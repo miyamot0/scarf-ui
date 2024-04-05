@@ -9,8 +9,7 @@ import { dbAtom } from '@/atoms/db_atom'
 import { useReducerAtom } from 'jotai/utils'
 import { database_reducer } from '@/atoms/reducers/reducer'
 import Spreadsheet, { CellBase, Matrix } from 'react-spreadsheet'
-import { ReactNode, useState } from 'react'
-import { useTheme } from 'next-themes'
+import { useState } from 'react'
 import { Button } from '../ui/button'
 import { StudyObject } from '@/questions/types/QuestionTypes'
 import { v4 as uuidv4 } from 'uuid'
@@ -21,6 +20,7 @@ import {
     ReportingQuestionDefault,
 } from '@/questions/questions_defaults'
 import { toast } from 'sonner'
+import { getThemeClientSide } from '../themes/helper/client_side_theming'
 
 const STUDY_LABELS = ['Tag', 'Authors', 'Title', 'Journal', 'Year']
 
@@ -33,7 +33,9 @@ const DEFAULT_DATA = [
 export function StudyImportDialog() {
     const [state, dispatch] = useReducerAtom(dbAtom, database_reducer)
     const [data, setData] = useState<Matrix<CellBase<any>>>(DEFAULT_DATA)
-    const { resolvedTheme } = useTheme()
+
+    const theme = getThemeClientSide()
+    const isDark = theme === 'dark'
 
     function onSubmit() {
         const studies: StudyObject[] = []
@@ -58,7 +60,6 @@ export function StudyImportDialog() {
                     values[3].length > 0 ? values[3] : undefined
                 const StudyYear = values[4].length > 0 ? values[4] : undefined
 
-                console.log(values)
                 if (
                     !StudyTag ||
                     !StudyAuthors ||
@@ -135,7 +136,7 @@ export function StudyImportDialog() {
                     </DialogHeader>
 
                     <Spreadsheet
-                        darkMode={resolvedTheme === 'dark'}
+                        darkMode={isDark}
                         data={data}
                         onChange={setData}
                         columnLabels={STUDY_LABELS}

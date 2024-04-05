@@ -1,3 +1,7 @@
+![Static Badge](https://img.shields.io/badge/License-MIT-green?style=flat)
+![Static Badge](https://img.shields.io/badge/Version-0.3.1-blue?style=flat)
+![Static Badge](https://img.shields.io/badge/Coverage-90.54-yellow?style=flat)
+
 # SCARF-UI
 
 SCARF-UI is a simple, web-based widget to support the critical appraisals of studies conducted using single-case experimental designs (SCEDs) and visual analysis. The design and functionality of the tool models that of the SCARF toolkit produced by Dr. Jennifer Ledford and colleages, which is available [here](https://ebip.vkcsites.org/scarfv2/).
@@ -41,6 +45,14 @@ Pull requests will be occasionally reviewed, but are rarely to be considered unl
 Interested parties are encouraged to reach out the Drs. Gilroy and Ledford for opportunities to support/contribute to the SCARF project.
 
 ## Changelog
+
+### Version 0.3.x
+
+-   Tests (mostly)
+-   VDOM speedup
+-   Move to cookie storage for theming (hydration headaches)
+-   Heatmaps for individual areas of interest
+-   Tooltips for ease of coder reference
 
 ### Version 0.3.0
 

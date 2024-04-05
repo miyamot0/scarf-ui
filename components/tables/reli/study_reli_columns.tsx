@@ -1,5 +1,5 @@
 import { StudyObjectPair } from '@/questions/types/QuestionTypes'
-import { Column, ColumnDef, Row } from '@tanstack/react-table'
+import { ColumnDef, Row } from '@tanstack/react-table'
 import { DataTableColumnHeader } from '../general/study_column_header'
 import {
     ExternalValidityQuestionDefault,
@@ -9,19 +9,26 @@ import {
 } from '@/questions/questions_defaults'
 import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
+import { DataTableColumnTooltip } from './study_column_header_tooltip'
+import {
+    ExternalValidityQuestions,
+    InternalValidityQuestions,
+    OutcomesQuestions,
+    ReportingQuestions,
+} from '@/questions/simplified_questions'
 
 const empirical_cols_1 = InternalValidityQuestionDefault.Questions.map(
     (question) => {
+        const question_lookup = InternalValidityQuestions.find(
+            (q) => q.QuestionID === question.QuestionID
+        )
+
         return {
             accessorKey: question.QuestionID,
-            header: ({
-                column,
-            }: {
-                column: Column<StudyObjectPair, unknown>
-            }) => (
-                <DataTableColumnHeader
-                    column={column}
+            header: () => (
+                <DataTableColumnTooltip
                     title={question.QuestionID}
+                    description={question_lookup?.QuestionStem ?? ''}
                 />
             ),
             cell: ({ row }: { row: Row<StudyObjectPair> }) =>
@@ -41,16 +48,16 @@ const empirical_cols_1 = InternalValidityQuestionDefault.Questions.map(
 
 const empirical_cols_2 = ExternalValidityQuestionDefault.Questions.map(
     (question) => {
+        const question_lookup = ExternalValidityQuestions.find(
+            (q) => q.QuestionID === question.QuestionID
+        )
+
         return {
             accessorKey: question.QuestionID,
-            header: ({
-                column,
-            }: {
-                column: Column<StudyObjectPair, unknown>
-            }) => (
-                <DataTableColumnHeader
-                    column={column}
+            header: () => (
+                <DataTableColumnTooltip
                     title={question.QuestionID}
+                    description={question_lookup?.QuestionStem ?? ''}
                 />
             ),
             cell: ({ row }: { row: Row<StudyObjectPair> }) =>
@@ -69,12 +76,16 @@ const empirical_cols_2 = ExternalValidityQuestionDefault.Questions.map(
 )
 
 const empirical_cols_3 = ReportingQuestionDefault.Questions.map((question) => {
+    const question_lookup = ReportingQuestions.find(
+        (q) => q.QuestionID === question.QuestionID
+    )
+
     return {
         accessorKey: question.QuestionID,
-        header: ({ column }: { column: Column<StudyObjectPair, unknown> }) => (
-            <DataTableColumnHeader
-                column={column}
+        header: () => (
+            <DataTableColumnTooltip
                 title={question.QuestionID}
+                description={question_lookup?.QuestionStem ?? ''}
             />
         ),
         cell: ({ row }: { row: Row<StudyObjectPair> }) =>
@@ -92,12 +103,16 @@ const empirical_cols_3 = ReportingQuestionDefault.Questions.map((question) => {
 })
 
 const empirical_cols_4 = OutcomesQuestionDefault.Questions.map((question) => {
+    const question_lookup = OutcomesQuestions.find(
+        (q) => q.QuestionID === question.QuestionID
+    )
+
     return {
         accessorKey: question.QuestionID,
-        header: ({ column }: { column: Column<StudyObjectPair, unknown> }) => (
-            <DataTableColumnHeader
-                column={column}
+        header: () => (
+            <DataTableColumnTooltip
                 title={question.QuestionID}
+                description={question_lookup?.QuestionStem ?? ''}
             />
         ),
         cell: ({ row }: { row: Row<StudyObjectPair> }) =>

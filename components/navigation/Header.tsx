@@ -11,12 +11,10 @@ import {
 } from '../ui/dialog'
 import {
     NavigationMenu,
-    NavigationMenuItem,
     NavigationMenuLink,
     NavigationMenuList,
     navigationMenuTriggerStyle,
 } from '../ui/navigation-menu'
-import { DialogHeaderItem } from './views/dialog_header_item'
 import Link from 'next/link'
 import {
     Code2Icon,
@@ -29,8 +27,9 @@ import {
 import { ThemeToggle } from '../themes/theme_toggle'
 import { cn } from '@/lib/utils'
 import { Button } from '../ui/button'
+import { ThemeTypes } from '../themes/theming'
 
-export const Header = () => {
+export const Header = ({ theme }: { theme: ThemeTypes }) => {
     return (
         <NavigationMenu className="w-full justify-between max-w-full">
             <NavigationMenuList className="gap-x-4 ">
@@ -178,7 +177,7 @@ export const Header = () => {
                     </DialogContent>
                 </Dialog>
 
-                <ThemeToggle />
+                <ThemeToggle theme={theme} />
             </div>
         </NavigationMenu>
     )

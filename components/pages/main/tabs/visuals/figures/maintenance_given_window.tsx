@@ -7,7 +7,6 @@ import {
     Scatter,
     ScatterChart,
 } from 'recharts'
-import { CommonVisualOutput } from '../visuals_view'
 import { SymbolType } from 'recharts/types/util/types'
 import {
     ContextMenu,
@@ -17,12 +16,12 @@ import {
     ContextMenuSeparator,
     ContextMenuTrigger,
 } from '@/components/ui/context-menu'
-import { dbAtom } from '@/atoms/db_atom'
-import { database_reducer } from '@/atoms/reducers/reducer'
-import { useReducerAtom } from 'jotai/utils'
-import { createRef, use, useEffect, useRef } from 'react'
-import { FigureOutputExport } from '@/lib/image_saver'
-import { ScatterChartIcon } from 'lucide-react'
+import { useRef } from 'react'
+import { ExtractRelevantImage, FigureOutputExportNew } from '@/lib/image_saver'
+import { ClipboardCopyIcon, ScatterChartIcon } from 'lucide-react'
+import { CommonVisualOutput } from '@/types/CommonVisualOutput'
+import { setClipboard } from '@/lib/clipboard'
+import { toast } from 'sonner'
 
 // @ts-ignore
 const CustomTooltip = ({ active, payload, label }) => {
@@ -54,8 +53,7 @@ export function MaintenanceGivenWindow({
     size: number
     height: number
 }) {
-    const [state, dispatch] = useReducerAtom(dbAtom, database_reducer)
-    const ref = useRef(null)
+    const ref = useRef<HTMLDivElement>(null)
 
     const data_published = Data.filter(
         (s: CommonVisualOutput) => s.Type === 'Journal' && s.Maintained >= 0
@@ -77,22 +75,12 @@ export function MaintenanceGivenWindow({
         z: size,
     }))
 
-    useEffect(() => {
-        if (state.FigureRef2) return
-
-        dispatch({
-            type: 'load_ref',
-            payload: { number: 2, ref: ref },
-        })
-    }, [dispatch, state.FigureRef2])
-
     return (
         <ContextMenu>
             <ContextMenuTrigger>
-                <ResponsiveContainer width="100%" height={height}>
+                <ResponsiveContainer width="100%" height={height} ref={ref}>
                     <ScatterChart
                         style={{ background: 'white' }}
-                        ref={ref}
                         margin={{
                             top: 20,
                             right: 20,
@@ -129,7 +117,6 @@ export function MaintenanceGivenWindow({
                                     default:
                                         return 'Immediate/Unclear'
                                 }
-                                return ''
                             }}
                         />
                         <YAxis
@@ -162,8 +149,9 @@ export function MaintenanceGivenWindow({
                                         return 'Weak'
                                     case 4:
                                         return 'Strong'
+                                    default:
+                                        return ''
                                 }
-                                return ''
                             }}
                         />
                         <ZAxis type="number" dataKey="z" range={[size, size]} />
@@ -194,11 +182,56 @@ export function MaintenanceGivenWindow({
                 <ContextMenuLabel>Figure Export</ContextMenuLabel>
                 <ContextMenuSeparator />
                 <ContextMenuItem
+                    onClick={() => {
+                        const data_to_export_header = [
+                            'Study UUID',
+                            'Publication Type',
+                            'Study Label',
+                            'Category',
+                            'X',
+                            'Y',
+                            'X Label',
+                            'Y Label',
+                        ].join('\t')
+
+                        const table_ized_data = Data.map((record) => {
+                            const temp_row = [
+                                record.ID,
+                                record.Type,
+                                record.Tag,
+                                'Maintenance',
+                                record.IV,
+                                record.Outcome,
+                                record.DegreeMaintenance,
+                                record.RatingMaintenance,
+                            ]
+
+                            return temp_row.join('\t')
+                        })
+
+                        const final_data = [
+                            data_to_export_header,
+                            ...table_ized_data,
+                        ].join('\n')
+
+                        setClipboard(final_data).then(() => {
+                            toast.success('Data copied to clipboard', {
+                                description:
+                                    'The data copied to your clipboard should be pasted into a spreadsheet to preserve formatting.',
+                            })
+                        })
+                    }}
+                >
+                    <ClipboardCopyIcon className="w-5 h-5 mr-2" />
+                    Copy Data
+                </ContextMenuItem>
+                <ContextMenuSeparator />
+                <ContextMenuItem
                     onClick={() =>
-                        FigureOutputExport(
+                        FigureOutputExportNew(
                             'svg',
                             'SCARF_Maintenance_Given_Rigor',
-                            state.FigureRef2
+                            ExtractRelevantImage(ref)
                         )
                     }
                 >
@@ -208,10 +241,10 @@ export function MaintenanceGivenWindow({
 
                 <ContextMenuItem
                     onClick={() =>
-                        FigureOutputExport(
+                        FigureOutputExportNew(
                             'webp',
                             'SCARF_Maintenance_Given_Rigor',
-                            state.FigureRef2
+                            ExtractRelevantImage(ref)
                         )
                     }
                 >
@@ -221,10 +254,10 @@ export function MaintenanceGivenWindow({
 
                 <ContextMenuItem
                     onClick={() =>
-                        FigureOutputExport(
+                        FigureOutputExportNew(
                             'png',
                             'SCARF_Maintenance_Given_Rigor',
-                            state.FigureRef2
+                            ExtractRelevantImage(ref)
                         )
                     }
                 >
@@ -234,10 +267,10 @@ export function MaintenanceGivenWindow({
 
                 <ContextMenuItem
                     onClick={() =>
-                        FigureOutputExport(
+                        FigureOutputExportNew(
                             'jpeg',
                             'SCARF_Maintenance_Given_Rigor',
-                            state.FigureRef2
+                            ExtractRelevantImage(ref)
                         )
                     }
                 >

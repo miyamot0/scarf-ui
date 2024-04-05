@@ -125,9 +125,6 @@ export function StudyExternalValidityForm({ study }: { study?: StudyObject }) {
     }
 
     function manual_overrides(question: QuestionObjectHolder, value: string) {
-        console.log(question)
-        console.log(value)
-
         if (question.QuestionID === 'Social_Validity_1' && value === 'No') {
             form.setValue('Social_Validity_2', 'N/A')
             form.setValue('Social_Validity_3', 'N/A')
@@ -190,7 +187,7 @@ export function StudyExternalValidityForm({ study }: { study?: StudyObject }) {
                         )?.QuestionInstruction
 
                     const questionType: string | undefined =
-                        question.QuestionInstruction ??
+                        question.QuestionType ??
                         ExternalValidityQuestions.find(
                             (q) => q.QuestionID === question.QuestionID
                         )?.QuestionType

@@ -24,11 +24,11 @@ export function StudyDetailsForm({ study }: { study?: StudyObject }) {
     const form = useForm<z.infer<typeof StudyDetailsSchema>>({
         resolver: zodResolver(StudyDetailsSchema),
         defaultValues: {
-            code: study?.StudyTag,
-            authors: study?.StudyAuthors,
-            title: study?.StudyTitle,
-            journal: study?.StudyJournal,
-            year: study?.StudyYear,
+            code: study?.StudyTag ?? '',
+            authors: study?.StudyAuthors ?? '',
+            title: study?.StudyTitle ?? '',
+            journal: study?.StudyJournal ?? '',
+            year: study?.StudyYear ?? -1,
         },
     })
 

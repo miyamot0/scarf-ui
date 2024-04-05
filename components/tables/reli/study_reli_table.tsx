@@ -21,9 +21,7 @@ import {
     TableRow,
 } from '@/components/ui/table'
 import React from 'react'
-import { Input } from '../../ui/input'
 import { DataTablePagination } from '../general/study_table_pagination'
-import { DataTableViewOptions } from '../general/study_table_column_toggle'
 import { StudyObjectPair } from '@/questions/types/QuestionTypes'
 
 interface DataTableProps<TData, TValue> {

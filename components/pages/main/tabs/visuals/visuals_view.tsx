@@ -7,8 +7,8 @@ import {
     GenerateGeneralizationRating,
     GenerateMaintenanceWindow,
     GenerateStrengthRating,
+    applyConditionalJittering,
 } from './helpers/scarf_scoring'
-import { PublicationType } from '@/questions/types/QuestionTypes'
 import { VisualFunctionalRelationGivenIV } from './figures/fx_rel_given_iv_strength'
 import { MaintenanceGivenWindow } from './figures/maintenance_given_window'
 import { GeneralizationGivenWindow } from './figures/generalization_given_window'
@@ -22,73 +22,37 @@ import {
     SelectValue,
 } from '@/components/ui/select'
 import { SymbolType } from 'recharts/types/util/types'
-import { useAtomValue } from 'jotai'
+import { useAtom } from 'jotai'
+import { FigureHeights, MarkerSizes } from './aesthetics/figure_aesthetics'
+import { CommonVisualOutput } from '@/types/CommonVisualOutput'
+import {
+    ExternalValidityQuestionDefault,
+    InternalValidityQuestionDefault,
+    ReportingQuestionDefault,
+} from '@/questions/questions_defaults'
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipTrigger,
+} from '@/components/ui/tooltip'
+import {
+    ExternalValidityQuestions,
+    InternalValidityQuestions,
+    ReportingQuestions,
+} from '@/questions/simplified_questions'
+import { HeatmapIV } from './views/heatmap_iv'
+import { HeatmapDV } from './views/heatmap_dv'
+import { HeatmapReporting } from './views/heatmap_reporting'
 
-function randomIntFromInterval(min: number, max: number) {
-    return Math.floor(Math.random() * (max - min + 1) + min)
+// TODO: complete hack to suppress error
+const error = console.error
+console.error = (...args: any) => {
+    if (/defaultProps/.test(args[0])) return
+    error(...args)
 }
-
-function applyConditionalJittering(jitter: boolean, value: number) {
-    return jitter ? value + randomIntFromInterval(-10, 10) / 100 : value
-}
-
-export type CommonVisualOutput = {
-    Tag: string
-    ID: string
-    IV: number
-    EV: number
-    Reporting: number
-    Outcome: number
-    Maintained: number
-    MaintenanceWindow: number
-    Generalized: number
-    GeneralizationRigor: number
-    Type: PublicationType
-}
-
-const MarkerSizes = [
-    {
-        value: 100,
-        label: 'Small',
-    },
-    {
-        value: 200,
-        label: 'Medium',
-    },
-    {
-        value: 400,
-        label: 'Large',
-    },
-    {
-        value: 800,
-        label: 'Extra Large',
-    },
-]
-
-const FigureHeights = [
-    {
-        value: 300,
-        label: 'Compact',
-    },
-    {
-        value: 400,
-        label: 'Normal',
-    },
-    {
-        value: 500,
-        label: 'Tall',
-    },
-    {
-        value: 600,
-        label: 'Extra Tall',
-    },
-]
-
-export type MarkerSizingType = (typeof MarkerSizes)[0]
-export type FigureSizingType = (typeof FigureHeights)[0]
 
 export function VisualsView() {
-    const state = useAtomValue(dbAtom)
+    const [state] = useAtom(dbAtom)
     const [jitter, setJitter] = React.useState(true)
     const [shape, setShape] = React.useState<SymbolType>('circle')
     const [size, setSize] = React.useState<number>(MarkerSizes[0].value)
@@ -145,116 +109,152 @@ export function VisualsView() {
                 jitter,
                 GenerateGeneralizationRating(study)
             ),
+            RatingOutcome:
+                study.Outcomes.Questions.find(
+                    (q) => q.QuestionID === 'Outcomes_4'
+                )?.Response ?? '',
+            RatingMaintenance:
+                study.Outcomes.Questions.find(
+                    (q) => q.QuestionID === 'Outcomes_5'
+                )?.Response ?? '',
+            DegreeMaintenance:
+                study.ExternalValidity.Questions.find(
+                    (q) => q.QuestionID === 'Maintenance_3'
+                )?.Response ?? '',
+            RatingGeneralization:
+                study.Outcomes.Questions.find(
+                    (q) => q.QuestionID === 'Outcomes_6'
+                )?.Response ?? '',
+            DegreeGeneralization:
+                study.ExternalValidity.Questions.find(
+                    (q) => q.QuestionID === 'Generality_Boundedness_7'
+                )?.Response ?? '',
             Type: study.PublicationType,
-        }
+        } satisfies CommonVisualOutput
     })
 
     return (
-        <div className="flex flex-col gap-y-4">
-            <div className="flex flex-row justify-between mb-2">
-                <div className="flex flex-col md:flex-row items-center md:space-x-2 space-y-2 md:space-y-0 my-auto">
-                    <Label className="md:ml-4">Marker Type: </Label>
-                    <Select
-                        value={shape}
-                        onValueChange={(value) => setShape(value as SymbolType)}
-                    >
-                        <SelectTrigger className="w-[125px]">
-                            <SelectValue placeholder="Select marker type" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectGroup>
-                                <SelectLabel>Shapes</SelectLabel>
-                                <SelectItem value="circle">Circle</SelectItem>
-                                <SelectItem value="triangle">
-                                    Triangle
-                                </SelectItem>
-                                <SelectItem value="cross">Cross</SelectItem>
-                                <SelectItem value="diamond">Diamond</SelectItem>
-                                <SelectItem value="star">Star</SelectItem>
-                            </SelectGroup>
-                        </SelectContent>
-                    </Select>
+        <div className="flex flex-col gap-y-10">
+            <div className="flex flex-col gap-y-4">
+                <div className="flex flex-row justify-between mb-2">
+                    <div className="flex flex-col md:flex-row items-center md:space-x-2 space-y-2 md:space-y-0 my-auto">
+                        <Label className="md:ml-4">Marker Type: </Label>
+                        <Select
+                            value={shape}
+                            onValueChange={(value) =>
+                                setShape(value as SymbolType)
+                            }
+                        >
+                            <SelectTrigger className="w-[125px]">
+                                <SelectValue placeholder="Select marker type" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectGroup>
+                                    <SelectLabel>Shapes</SelectLabel>
+                                    <SelectItem value="circle">
+                                        Circle
+                                    </SelectItem>
+                                    <SelectItem value="triangle">
+                                        Triangle
+                                    </SelectItem>
+                                    <SelectItem value="cross">Cross</SelectItem>
+                                    <SelectItem value="diamond">
+                                        Diamond
+                                    </SelectItem>
+                                    <SelectItem value="star">Star</SelectItem>
+                                </SelectGroup>
+                            </SelectContent>
+                        </Select>
 
-                    <Label className="md:ml-4">Marker Size: </Label>
-                    <Select
-                        value={size.toString()}
-                        onValueChange={(value) => setSize(parseInt(value))}
-                    >
-                        <SelectTrigger className="w-[125px]">
-                            <SelectValue placeholder="Select marker size" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectGroup>
-                                <SelectLabel>Sizes</SelectLabel>
-                                {MarkerSizes.map((size) => {
-                                    return (
-                                        <SelectItem
-                                            key={size.value.toString()}
-                                            value={size.value.toString()}
-                                        >
-                                            {size.label}
-                                        </SelectItem>
-                                    )
-                                })}
-                            </SelectGroup>
-                        </SelectContent>
-                    </Select>
+                        <Label className="md:ml-4">Marker Size: </Label>
+                        <Select
+                            value={size.toString()}
+                            onValueChange={(value) => setSize(parseInt(value))}
+                        >
+                            <SelectTrigger className="w-[125px]">
+                                <SelectValue placeholder="Select marker size" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectGroup>
+                                    <SelectLabel>Sizes</SelectLabel>
+                                    {MarkerSizes.map((size) => {
+                                        return (
+                                            <SelectItem
+                                                key={size.value.toString()}
+                                                value={size.value.toString()}
+                                            >
+                                                {size.label}
+                                            </SelectItem>
+                                        )
+                                    })}
+                                </SelectGroup>
+                            </SelectContent>
+                        </Select>
 
-                    <Label className="md:ml-4">Figure Height: </Label>
-                    <Select
-                        value={height.toString()}
-                        onValueChange={(value) => setHeight(parseInt(value))}
-                    >
-                        <SelectTrigger className="w-[125px]">
-                            <SelectValue placeholder="Select height size" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectGroup>
-                                <SelectLabel>Heights</SelectLabel>
-                                {FigureHeights.map((size) => {
-                                    return (
-                                        <SelectItem
-                                            key={size.value.toString()}
-                                            value={size.value.toString()}
-                                        >
-                                            {size.label}
-                                        </SelectItem>
-                                    )
-                                })}
-                            </SelectGroup>
-                        </SelectContent>
-                    </Select>
+                        <Label className="md:ml-4">Figure Height: </Label>
+                        <Select
+                            value={height.toString()}
+                            onValueChange={(value) =>
+                                setHeight(parseInt(value))
+                            }
+                        >
+                            <SelectTrigger className="w-[125px]">
+                                <SelectValue placeholder="Select height size" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectGroup>
+                                    <SelectLabel>Heights</SelectLabel>
+                                    {FigureHeights.map((size) => {
+                                        return (
+                                            <SelectItem
+                                                key={size.value.toString()}
+                                                value={size.value.toString()}
+                                            >
+                                                {size.label}
+                                            </SelectItem>
+                                        )
+                                    })}
+                                </SelectGroup>
+                            </SelectContent>
+                        </Select>
+                    </div>
+                    <div className="flex md:items-center space-x-2">
+                        <Label htmlFor="jitter-mode">Jitter Data</Label>
+                        <Switch
+                            id="jitter-mode"
+                            checked={jitter}
+                            onCheckedChange={() => setJitter(!jitter)}
+                        />
+                    </div>
                 </div>
-                <div className="flex md:items-center space-x-2">
-                    <Label htmlFor="jitter-mode">Jitter Data</Label>
-                    <Switch
-                        id="jitter-mode"
-                        checked={jitter}
-                        onCheckedChange={() => setJitter(!jitter)}
-                    />
-                </div>
+
+                <VisualFunctionalRelationGivenIV
+                    Data={recordsToVisualize}
+                    shape={shape}
+                    size={size}
+                    height={height}
+                />
+
+                <MaintenanceGivenWindow
+                    Data={recordsToVisualize}
+                    shape={shape}
+                    size={size}
+                    height={height}
+                />
+
+                <GeneralizationGivenWindow
+                    Data={recordsToVisualize}
+                    shape={shape}
+                    size={size}
+                    height={height}
+                />
             </div>
 
-            <VisualFunctionalRelationGivenIV
-                Data={recordsToVisualize}
-                shape={shape}
-                size={size}
-                height={height}
-            />
+            <HeatmapIV {...state} />
 
-            <MaintenanceGivenWindow
-                Data={recordsToVisualize}
-                shape={shape}
-                size={size}
-                height={height}
-            />
+            <HeatmapDV {...state} />
 
-            <GeneralizationGivenWindow
-                Data={recordsToVisualize}
-                shape={shape}
-                size={size}
-                height={height}
-            />
+            <HeatmapReporting {...state} />
         </div>
     )
 }

@@ -7,7 +7,6 @@ import {
     Scatter,
     ScatterChart,
 } from 'recharts'
-import { CommonVisualOutput } from '../visuals_view'
 import { SymbolType } from 'recharts/types/util/types'
 import {
     ContextMenu,
@@ -17,12 +16,12 @@ import {
     ContextMenuSeparator,
     ContextMenuTrigger,
 } from '@/components/ui/context-menu'
-import { dbAtom } from '@/atoms/db_atom'
-import { database_reducer } from '@/atoms/reducers/reducer'
-import { useReducerAtom } from 'jotai/utils'
-import { useEffect, useRef } from 'react'
-import { FigureOutputExport } from '@/lib/image_saver'
-import { ScatterChartIcon } from 'lucide-react'
+import { useRef } from 'react'
+import { ExtractRelevantImage, FigureOutputExportNew } from '@/lib/image_saver'
+import { ClipboardCopyIcon, ScatterChartIcon } from 'lucide-react'
+import { CommonVisualOutput } from '@/types/CommonVisualOutput'
+import { setClipboard } from '@/lib/clipboard'
+import { toast } from 'sonner'
 
 // @ts-ignore
 const CustomTooltip = ({ active, payload, label }) => {
@@ -54,8 +53,7 @@ export function GeneralizationGivenWindow({
     size: number
     height: number
 }) {
-    const [state, dispatch] = useReducerAtom(dbAtom, database_reducer)
-    const ref = useRef(null)
+    const ref = useRef<HTMLDivElement>(null)
 
     const data_published = Data.filter(
         (s: CommonVisualOutput) => s.Type === 'Journal' && s.Generalized >= 0
@@ -77,22 +75,12 @@ export function GeneralizationGivenWindow({
         z: size,
     }))
 
-    useEffect(() => {
-        if (state.FigureRef3) return
-
-        dispatch({
-            type: 'load_ref',
-            payload: { number: 3, ref: ref },
-        })
-    }, [dispatch, state.FigureRef3])
-
     return (
         <ContextMenu>
             <ContextMenuTrigger>
-                <ResponsiveContainer width="100%" height={height}>
+                <ResponsiveContainer width="100%" height={height} ref={ref}>
                     <ScatterChart
                         style={{ background: 'white' }}
-                        ref={ref}
                         margin={{
                             top: 20,
                             right: 20,
@@ -129,7 +117,6 @@ export function GeneralizationGivenWindow({
                                     default:
                                         return 'Post Only'
                                 }
-                                return ''
                             }}
                         />
                         <YAxis
@@ -161,8 +148,9 @@ export function GeneralizationGivenWindow({
                                         return 'Weak'
                                     case 4:
                                         return 'Strong'
+                                    default:
+                                        return ''
                                 }
-                                return ''
                             }}
                         />
                         <ZAxis type="number" dataKey="z" range={[size, size]} />
@@ -193,11 +181,56 @@ export function GeneralizationGivenWindow({
                 <ContextMenuLabel>Figure Export</ContextMenuLabel>
                 <ContextMenuSeparator />
                 <ContextMenuItem
+                    onClick={() => {
+                        const data_to_export_header = [
+                            'Study UUID',
+                            'Publication Type',
+                            'Study Label',
+                            'Category',
+                            'X',
+                            'Y',
+                            'X Label',
+                            'Y Label',
+                        ].join('\t')
+
+                        const table_ized_data = Data.map((record) => {
+                            const temp_row = [
+                                record.ID,
+                                record.Type,
+                                record.Tag,
+                                'Generalization',
+                                record.IV,
+                                record.Outcome,
+                                record.DegreeGeneralization,
+                                record.RatingGeneralization,
+                            ]
+
+                            return temp_row.join('\t')
+                        })
+
+                        const final_data = [
+                            data_to_export_header,
+                            ...table_ized_data,
+                        ].join('\n')
+
+                        setClipboard(final_data).then(() => {
+                            toast.success('Data copied to clipboard', {
+                                description:
+                                    'The data copied to your clipboard should be pasted into a spreadsheet to preserve formatting.',
+                            })
+                        })
+                    }}
+                >
+                    <ClipboardCopyIcon className="w-5 h-5 mr-2" />
+                    Copy Data
+                </ContextMenuItem>
+                <ContextMenuSeparator />
+                <ContextMenuItem
                     onClick={() =>
-                        FigureOutputExport(
+                        FigureOutputExportNew(
                             'svg',
                             'SCARF_Generalization_Given_Duration',
-                            state.FigureRef3
+                            ExtractRelevantImage(ref)
                         )
                     }
                 >
@@ -207,10 +240,10 @@ export function GeneralizationGivenWindow({
 
                 <ContextMenuItem
                     onClick={() =>
-                        FigureOutputExport(
+                        FigureOutputExportNew(
                             'webp',
                             'SCARF_Generalization_Given_Duration',
-                            state.FigureRef3
+                            ExtractRelevantImage(ref)
                         )
                     }
                 >
@@ -220,10 +253,10 @@ export function GeneralizationGivenWindow({
 
                 <ContextMenuItem
                     onClick={() =>
-                        FigureOutputExport(
+                        FigureOutputExportNew(
                             'png',
                             'SCARF_Generalization_Given_Duration',
-                            state.FigureRef3
+                            ExtractRelevantImage(ref)
                         )
                     }
                 >
@@ -233,10 +266,10 @@ export function GeneralizationGivenWindow({
 
                 <ContextMenuItem
                     onClick={() =>
-                        FigureOutputExport(
+                        FigureOutputExportNew(
                             'jpeg',
                             'SCARF_Generalization_Given_Duration',
-                            state.FigureRef3
+                            ExtractRelevantImage(ref)
                         )
                     }
                 >

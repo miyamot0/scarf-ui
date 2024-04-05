@@ -1,4 +1,4 @@
-import {
+import type {
     QuestionObjectHolder,
     StudyObject,
 } from '@/questions/types/QuestionTypes'
@@ -10,7 +10,7 @@ export const CompareResponsesInAreas = (
     let count = 0
     let total = 0
 
-    primary.forEach((question, i) => {
+    primary.forEach((question) => {
         const primary_question = question
         const reliability_question = reli.find(
             (q) => q.QuestionID === primary_question.QuestionID
@@ -35,10 +35,36 @@ export const CompareResponsesInAreas = (
     }
 }
 
+type CalculateAgreementReturn = {
+    TotalCount: number
+    TotalTotal: number
+    TotalPercent: number
+    IV: {
+        Count: number
+        Total: number
+        Percent: number
+    }
+    EV: {
+        Count: number
+        Total: number
+        Percent: number
+    }
+    Reporting: {
+        Count: number
+        Total: number
+        Percent: number
+    }
+    Outcomes: {
+        Count: number
+        Total: number
+        Percent: number
+    }
+}
+
 export const CalculateAgreement = (
     primary: StudyObject[],
     reli: StudyObject[]
-) => {
+): CalculateAgreementReturn => {
     let iv_count = 0
     let iv_total = 0
     let ev_count = 0
