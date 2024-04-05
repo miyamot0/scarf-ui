@@ -25,21 +25,6 @@ import { SymbolType } from 'recharts/types/util/types'
 import { useAtom } from 'jotai'
 import { FigureHeights, MarkerSizes } from './aesthetics/figure_aesthetics'
 import { CommonVisualOutput } from '@/types/CommonVisualOutput'
-import {
-    ExternalValidityQuestionDefault,
-    InternalValidityQuestionDefault,
-    ReportingQuestionDefault,
-} from '@/questions/questions_defaults'
-import {
-    Tooltip,
-    TooltipContent,
-    TooltipTrigger,
-} from '@/components/ui/tooltip'
-import {
-    ExternalValidityQuestions,
-    InternalValidityQuestions,
-    ReportingQuestions,
-} from '@/questions/simplified_questions'
 import { HeatmapIV } from './views/heatmap_iv'
 import { HeatmapDV } from './views/heatmap_dv'
 import { HeatmapReporting } from './views/heatmap_reporting'

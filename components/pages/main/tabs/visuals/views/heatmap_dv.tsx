@@ -13,14 +13,17 @@ export function HeatmapDV(state: GlobalStateType) {
                 <thead>
                     <th className="min-w-[200px]"></th>
                     {state.Studies.map((r) => (
-                        <StudyTitle text={r.StudyAuthors} />
+                        <StudyTitle
+                            key={`ev-header-${r.StudyID}`}
+                            text={r.StudyAuthors}
+                        />
                     ))}
                 </thead>
 
                 <tbody>
                     {ExternalValidityQuestions.map((q) => {
                         return (
-                            <tr>
+                            <tr key={`ev-row-${q.QuestionID}`}>
                                 <StudyItemTooltip Question={q} />
 
                                 {state.Studies.map((r) => {
@@ -31,7 +34,10 @@ export function HeatmapDV(state: GlobalStateType) {
                                         )?.Response
 
                                     return (
-                                        <StudyCodedBlock Response={question} />
+                                        <StudyCodedBlock
+                                            key={`code-block-ev-${r.StudyID}`}
+                                            Response={question}
+                                        />
                                     )
                                 })}
                             </tr>

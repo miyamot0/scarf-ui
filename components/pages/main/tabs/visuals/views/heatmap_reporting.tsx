@@ -13,14 +13,17 @@ export function HeatmapReporting(state: GlobalStateType) {
                 <thead>
                     <th className="min-w-[200px]"></th>
                     {state.Studies.map((r) => (
-                        <StudyTitle text={r.StudyAuthors} />
+                        <StudyTitle
+                            key={`reporting-header-${r.StudyID}`}
+                            text={r.StudyAuthors}
+                        />
                     ))}
                 </thead>
 
                 <tbody>
                     {ReportingQuestions.map((q) => {
                         return (
-                            <tr>
+                            <tr key={`reporting-row-${q.QuestionID}`}>
                                 <StudyItemTooltip Question={q} />
 
                                 {state.Studies.map((r) => {
@@ -29,7 +32,10 @@ export function HeatmapReporting(state: GlobalStateType) {
                                     )?.Response
 
                                     return (
-                                        <StudyCodedBlock Response={question} />
+                                        <StudyCodedBlock
+                                            key={`code-block-reporting-${r.StudyID}`}
+                                            Response={question}
+                                        />
                                     )
                                 })}
                             </tr>

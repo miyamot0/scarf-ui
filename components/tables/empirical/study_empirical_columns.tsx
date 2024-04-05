@@ -1,5 +1,5 @@
 import { StudyObject } from '@/questions/types/QuestionTypes'
-import { Column, ColumnDef, Row } from '@tanstack/react-table'
+import { ColumnDef, Row } from '@tanstack/react-table'
 import { DataTableColumnHeader } from '../general/study_column_header'
 import {
     ExternalValidityQuestionDefault,
