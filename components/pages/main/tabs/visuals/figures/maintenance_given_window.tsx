@@ -223,7 +223,7 @@ export function MaintenanceGivenWindow({
                     }}
                 >
                     <ClipboardCopyIcon className="w-5 h-5 mr-2" />
-                    Copy Data to Clipboard
+                    Copy Data
                 </ContextMenuItem>
                 <ContextMenuSeparator />
                 <ContextMenuItem
