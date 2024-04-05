@@ -25,6 +25,24 @@ import { SymbolType } from 'recharts/types/util/types'
 import { useAtom } from 'jotai'
 import { FigureHeights, MarkerSizes } from './aesthetics/figure_aesthetics'
 import { CommonVisualOutput } from '@/types/CommonVisualOutput'
+import {
+    ExternalValidityQuestionDefault,
+    InternalValidityQuestionDefault,
+    ReportingQuestionDefault,
+} from '@/questions/questions_defaults'
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipTrigger,
+} from '@/components/ui/tooltip'
+import {
+    ExternalValidityQuestions,
+    InternalValidityQuestions,
+    ReportingQuestions,
+} from '@/questions/simplified_questions'
+import { HeatmapIV } from './views/heatmap_iv'
+import { HeatmapDV } from './views/heatmap_dv'
+import { HeatmapReporting } from './views/heatmap_reporting'
 
 // TODO: complete hack to suppress error
 const error = console.error
@@ -116,111 +134,127 @@ export function VisualsView() {
     })
 
     return (
-        <div className="flex flex-col gap-y-4">
-            <div className="flex flex-row justify-between mb-2">
-                <div className="flex flex-col md:flex-row items-center md:space-x-2 space-y-2 md:space-y-0 my-auto">
-                    <Label className="md:ml-4">Marker Type: </Label>
-                    <Select
-                        value={shape}
-                        onValueChange={(value) => setShape(value as SymbolType)}
-                    >
-                        <SelectTrigger className="w-[125px]">
-                            <SelectValue placeholder="Select marker type" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectGroup>
-                                <SelectLabel>Shapes</SelectLabel>
-                                <SelectItem value="circle">Circle</SelectItem>
-                                <SelectItem value="triangle">
-                                    Triangle
-                                </SelectItem>
-                                <SelectItem value="cross">Cross</SelectItem>
-                                <SelectItem value="diamond">Diamond</SelectItem>
-                                <SelectItem value="star">Star</SelectItem>
-                            </SelectGroup>
-                        </SelectContent>
-                    </Select>
+        <div className="flex flex-col gap-y-10">
+            <div className="flex flex-col gap-y-4">
+                <div className="flex flex-row justify-between mb-2">
+                    <div className="flex flex-col md:flex-row items-center md:space-x-2 space-y-2 md:space-y-0 my-auto">
+                        <Label className="md:ml-4">Marker Type: </Label>
+                        <Select
+                            value={shape}
+                            onValueChange={(value) =>
+                                setShape(value as SymbolType)
+                            }
+                        >
+                            <SelectTrigger className="w-[125px]">
+                                <SelectValue placeholder="Select marker type" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectGroup>
+                                    <SelectLabel>Shapes</SelectLabel>
+                                    <SelectItem value="circle">
+                                        Circle
+                                    </SelectItem>
+                                    <SelectItem value="triangle">
+                                        Triangle
+                                    </SelectItem>
+                                    <SelectItem value="cross">Cross</SelectItem>
+                                    <SelectItem value="diamond">
+                                        Diamond
+                                    </SelectItem>
+                                    <SelectItem value="star">Star</SelectItem>
+                                </SelectGroup>
+                            </SelectContent>
+                        </Select>
 
-                    <Label className="md:ml-4">Marker Size: </Label>
-                    <Select
-                        value={size.toString()}
-                        onValueChange={(value) => setSize(parseInt(value))}
-                    >
-                        <SelectTrigger className="w-[125px]">
-                            <SelectValue placeholder="Select marker size" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectGroup>
-                                <SelectLabel>Sizes</SelectLabel>
-                                {MarkerSizes.map((size) => {
-                                    return (
-                                        <SelectItem
-                                            key={size.value.toString()}
-                                            value={size.value.toString()}
-                                        >
-                                            {size.label}
-                                        </SelectItem>
-                                    )
-                                })}
-                            </SelectGroup>
-                        </SelectContent>
-                    </Select>
+                        <Label className="md:ml-4">Marker Size: </Label>
+                        <Select
+                            value={size.toString()}
+                            onValueChange={(value) => setSize(parseInt(value))}
+                        >
+                            <SelectTrigger className="w-[125px]">
+                                <SelectValue placeholder="Select marker size" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectGroup>
+                                    <SelectLabel>Sizes</SelectLabel>
+                                    {MarkerSizes.map((size) => {
+                                        return (
+                                            <SelectItem
+                                                key={size.value.toString()}
+                                                value={size.value.toString()}
+                                            >
+                                                {size.label}
+                                            </SelectItem>
+                                        )
+                                    })}
+                                </SelectGroup>
+                            </SelectContent>
+                        </Select>
 
-                    <Label className="md:ml-4">Figure Height: </Label>
-                    <Select
-                        value={height.toString()}
-                        onValueChange={(value) => setHeight(parseInt(value))}
-                    >
-                        <SelectTrigger className="w-[125px]">
-                            <SelectValue placeholder="Select height size" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectGroup>
-                                <SelectLabel>Heights</SelectLabel>
-                                {FigureHeights.map((size) => {
-                                    return (
-                                        <SelectItem
-                                            key={size.value.toString()}
-                                            value={size.value.toString()}
-                                        >
-                                            {size.label}
-                                        </SelectItem>
-                                    )
-                                })}
-                            </SelectGroup>
-                        </SelectContent>
-                    </Select>
+                        <Label className="md:ml-4">Figure Height: </Label>
+                        <Select
+                            value={height.toString()}
+                            onValueChange={(value) =>
+                                setHeight(parseInt(value))
+                            }
+                        >
+                            <SelectTrigger className="w-[125px]">
+                                <SelectValue placeholder="Select height size" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectGroup>
+                                    <SelectLabel>Heights</SelectLabel>
+                                    {FigureHeights.map((size) => {
+                                        return (
+                                            <SelectItem
+                                                key={size.value.toString()}
+                                                value={size.value.toString()}
+                                            >
+                                                {size.label}
+                                            </SelectItem>
+                                        )
+                                    })}
+                                </SelectGroup>
+                            </SelectContent>
+                        </Select>
+                    </div>
+                    <div className="flex md:items-center space-x-2">
+                        <Label htmlFor="jitter-mode">Jitter Data</Label>
+                        <Switch
+                            id="jitter-mode"
+                            checked={jitter}
+                            onCheckedChange={() => setJitter(!jitter)}
+                        />
+                    </div>
                 </div>
-                <div className="flex md:items-center space-x-2">
-                    <Label htmlFor="jitter-mode">Jitter Data</Label>
-                    <Switch
-                        id="jitter-mode"
-                        checked={jitter}
-                        onCheckedChange={() => setJitter(!jitter)}
-                    />
-                </div>
+
+                <VisualFunctionalRelationGivenIV
+                    Data={recordsToVisualize}
+                    shape={shape}
+                    size={size}
+                    height={height}
+                />
+
+                <MaintenanceGivenWindow
+                    Data={recordsToVisualize}
+                    shape={shape}
+                    size={size}
+                    height={height}
+                />
+
+                <GeneralizationGivenWindow
+                    Data={recordsToVisualize}
+                    shape={shape}
+                    size={size}
+                    height={height}
+                />
             </div>
 
-            <VisualFunctionalRelationGivenIV
-                Data={recordsToVisualize}
-                shape={shape}
-                size={size}
-                height={height}
-            />
+            <HeatmapIV {...state} />
 
-            <MaintenanceGivenWindow
-                Data={recordsToVisualize}
-                shape={shape}
-                size={size}
-                height={height}
-            />
+            <HeatmapDV {...state} />
 
-            <GeneralizationGivenWindow
-                Data={recordsToVisualize}
-                shape={shape}
-                size={size}
-                height={height}
-            />
+            <HeatmapReporting {...state} />
         </div>
     )
 }
