@@ -119,12 +119,9 @@ export function MainPage() {
 
                         <Tabs
                             value={state.DisplayState}
-                            className={cn(
-                                'w-full flex flex-col gap-y-4'
-                                //isLoading ? 'hidden' : ''
-                            )}
+                            className={cn('w-full flex flex-col gap-y-4')}
                         >
-                            <TabsList className="w-full flex flex-row">
+                            <TabsList className="w-full flex flex-row border">
                                 <TabsTrigger
                                     value="instructions"
                                     className="w-full"

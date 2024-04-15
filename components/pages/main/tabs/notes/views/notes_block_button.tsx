@@ -16,7 +16,7 @@ export const BlockButton = ({ format, icon }: { format: any; icon: any }) => {
             onPressedChange={() => {
                 toggleBlock(editor, format)
             }}
-            className="border"
+            className="border shadow"
         >
             {icon}
         </Toggle>

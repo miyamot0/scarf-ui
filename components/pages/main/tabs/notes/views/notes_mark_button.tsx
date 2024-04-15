@@ -11,7 +11,7 @@ export const MarkButton = ({ format, icon }: { format: any; icon: any }) => {
             onPressedChange={() => {
                 toggleMark(editor, format)
             }}
-            className="border p-3"
+            className="border p-3 shadow"
         >
             {icon}
         </Toggle>
