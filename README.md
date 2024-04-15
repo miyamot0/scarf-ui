@@ -53,6 +53,9 @@ Interested parties are encouraged to reach out the Drs. Gilroy and Ledford for o
 -   Move to cookie storage for theming (hydration headaches)
 -   Heatmaps for individual areas of interest
 -   Tooltips for ease of coder reference
+-   Note taking
+-   Visual edits for clarity
+-   Fixes for table issues
 
 ### Version 0.3.0
 

@@ -102,7 +102,7 @@ export function NotesTabView() {
                 />
             </MenuToolbar>
             <Editable
-                className="p-2"
+                className="p-2 border rounded"
                 renderElement={renderElement}
                 renderLeaf={renderLeaf}
                 spellCheck
