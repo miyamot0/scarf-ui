@@ -9,7 +9,6 @@ export const DefaultStartingValue: GlobalStateType = {
     DisplayState: 'instructions',
     Studies: [],
     Loaded: undefined,
-    Notes: '',
 }
 
 export const DefaultStartingValueExpanded = {
@@ -1623,7 +1622,6 @@ export const DefaultStartingValueExpanded = {
             PublicationType: 'Journal',
         },
     ],
-    Notes: 'Enter notes/journaling here, as necessary.',
 }
 
 export const dbAtom = atom<GlobalStateType>(DefaultStartingValue)

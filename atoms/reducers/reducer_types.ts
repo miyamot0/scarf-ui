@@ -7,6 +7,7 @@ import type {
 } from '@/questions/types/QuestionTypes'
 import { ReviewTypes } from '@/types/ReviewTypes'
 import { RefObject } from 'react'
+import { Descendant } from 'slate'
 
 export type DatabaseAction =
     | {
@@ -47,4 +48,10 @@ export type DatabaseAction =
     | {
           type: 'bulk_import_studies'
           payload: { studies: StudyObject[] }
+      }
+    | {
+          type: 'update_notes'
+          payload: {
+              notes: Descendant[]
+          }
       }
