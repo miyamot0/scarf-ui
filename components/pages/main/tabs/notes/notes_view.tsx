@@ -1,6 +1,6 @@
 import { dbAtom } from '@/atoms/db_atom'
 import { database_reducer } from '@/atoms/reducers/reducer'
-import { useReducerAtom } from 'jotai/utils'
+import { useReducerAtomLocal as useReducerAtom } from '@/components/hooks/useReducerAtomLocal'
 import React, { useMemo, useCallback } from 'react'
 import { Descendant, createEditor } from 'slate'
 import { Slate, Editable, withReact } from 'slate-react'

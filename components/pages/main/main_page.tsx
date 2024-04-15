@@ -53,7 +53,7 @@ const NotesTabView = dynamic(
 )
 
 import { dbAtom } from '@/atoms/db_atom'
-import { useReducerAtom } from 'jotai/utils'
+import { useReducerAtomLocal as useReducerAtom } from '@/components/hooks/useReducerAtomLocal'
 import { StudyInternalValidityDialog } from '../../dialogs/study_internal_validity_dialog'
 import { StudyExternalValidityDialog } from '../../dialogs/study_external_validity_dialog'
 import { StudyReportingDialog } from '../../dialogs/study_reporting_dialog'

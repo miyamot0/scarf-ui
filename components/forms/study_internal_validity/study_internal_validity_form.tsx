@@ -13,7 +13,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { dbAtom } from '@/atoms/db_atom'
 import { database_reducer } from '@/atoms/reducers/reducer'
-import { useReducerAtom } from 'jotai/utils'
+import { useReducerAtomLocal as useReducerAtom } from '@/components/hooks/useReducerAtomLocal'
 import {
     QuestionObjectHolder,
     QuestionType,

@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/form'
 import { Button } from '@/components/ui/button'
 import { dbAtom } from '@/atoms/db_atom'
-import { useReducerAtom } from 'jotai/utils'
+import { useReducerAtomLocal as useReducerAtom } from '@/components/hooks/useReducerAtomLocal'
 import {
     QuestionObjectHolder,
     QuestionType,
