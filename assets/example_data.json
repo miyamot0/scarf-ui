@@ -1,6 +1,7 @@
 {
     "DialogState": {},
     "DisplayState": "studies",
+    "Notes": "Enter notes/journaling here, as necessary.",
     "Studies": [
         {
             "StudyID": "79691207-fc42-4c2f-aa46-40ce299def07",
@@ -1147,14 +1148,5 @@
             },
             "PublicationType": "Journal"
         }
-    ],
-    "FigureRef1": {
-        "current": null
-    },
-    "FigureRef2": {
-        "current": null
-    },
-    "FigureRef3": {
-        "current": null
-    }
+    ]
 }

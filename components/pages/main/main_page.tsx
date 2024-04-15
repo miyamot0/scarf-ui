@@ -45,6 +45,13 @@ const EmpiricalTabView = dynamic(
     }
 )
 
+const NotesTabView = dynamic(
+    () => import('./tabs/notes/notes_view').then((mod) => mod.NotesTabView),
+    {
+        loading: () => <LoadingSpinner className="mx-auto" />,
+    }
+)
+
 import { dbAtom } from '@/atoms/db_atom'
 import { useReducerAtom } from 'jotai/utils'
 import { StudyInternalValidityDialog } from '../../dialogs/study_internal_validity_dialog'
@@ -189,6 +196,23 @@ export function MainPage() {
                                 >
                                     Visualize Coding
                                 </TabsTrigger>
+                                <TabsTrigger
+                                    value="notes"
+                                    className="w-full"
+                                    onClick={() => {
+                                        if (state.DisplayState === 'notes')
+                                            return
+
+                                        dispatch({
+                                            type: 'update_display_state',
+                                            payload: {
+                                                display_state: 'notes',
+                                            },
+                                        })
+                                    }}
+                                >
+                                    Notes
+                                </TabsTrigger>
                             </TabsList>
                             <TabsContent value="instructions">
                                 <InstructionsView />
@@ -201,6 +225,9 @@ export function MainPage() {
                             </TabsContent>
                             <TabsContent value="visuals">
                                 <VisualsView />
+                            </TabsContent>
+                            <TabsContent value="notes">
+                                <NotesTabView />
                             </TabsContent>
                         </Tabs>
                     </CardContent>
