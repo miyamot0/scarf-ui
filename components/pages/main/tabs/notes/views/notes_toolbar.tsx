@@ -24,6 +24,8 @@ const NotesMenu = forwardRef(
     )
 )
 
+NotesMenu.displayName = 'NotesMenu'
+
 export const MenuToolbar = forwardRef(
     (
         { className, ...props }: PropsWithChildren<BaseProps>,
@@ -39,3 +41,5 @@ export const MenuToolbar = forwardRef(
         />
     )
 )
+
+MenuToolbar.displayName = 'MenuToolbar'
