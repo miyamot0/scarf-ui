@@ -38,6 +38,8 @@ export function HeatmapReporting(state: GlobalStateType) {
                                         />
                                     )
                                 })}
+
+                                <td className="w-full"></td>
                             </tr>
                         )
                     })}

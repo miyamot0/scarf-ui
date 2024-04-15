@@ -40,6 +40,8 @@ export function HeatmapIV(state: GlobalStateType) {
                                         />
                                     )
                                 })}
+
+                                <td className="w-full"></td>
                             </tr>
                         )
                     })}
