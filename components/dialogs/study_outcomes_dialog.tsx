@@ -6,7 +6,7 @@ import {
     DialogOverlay,
 } from '../ui/dialog'
 import { dbAtom } from '@/atoms/db_atom'
-import { useReducerAtom } from 'jotai/utils'
+import { useReducerAtomLocal as useReducerAtom } from '@/components/hooks/useReducerAtomLocal'
 import { StudyOutcomesForm } from '../forms/study_outcomes_form/study_outcomes_form'
 import { database_reducer } from '@/atoms/reducers/reducer'
 

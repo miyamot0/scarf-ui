@@ -7,9 +7,6 @@ export const DefaultStartingValue: GlobalStateType = {
         study: undefined,
     },
     DisplayState: 'instructions',
-    FigureRef1: undefined,
-    FigureRef2: undefined,
-    FigureRef3: undefined,
     Studies: [],
     Loaded: undefined,
 }
@@ -20,9 +17,6 @@ export const DefaultStartingValueExpanded = {
         study: undefined,
     },
     DisplayState: 'instructions',
-    FigureRef1: undefined,
-    FigureRef2: undefined,
-    FigureRef3: undefined,
     Studies: [
         {
             StudyID: '79691207-fc42-4c2f-aa46-40ce299def07',

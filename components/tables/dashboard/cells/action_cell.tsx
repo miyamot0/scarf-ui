@@ -15,7 +15,7 @@ import {
     DropdownMenuCheckboxItem,
 } from '@/components/ui/dropdown-menu'
 import { dbAtom } from '@/atoms/db_atom'
-import { useReducerAtom } from 'jotai/utils'
+import { useReducerAtomLocal as useReducerAtom } from '@/components/hooks/useReducerAtomLocal'
 import { database_reducer } from '@/atoms/reducers/reducer'
 import { Button } from '@/components/ui/button'
 import { toast } from 'sonner'

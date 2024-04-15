@@ -4,3 +4,4 @@ export type DisplayStateType =
     | 'visuals'
     | 'metrics'
     | 'empirical'
+    | 'notes'

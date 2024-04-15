@@ -21,7 +21,7 @@ export function StudyItemTooltip({
     return (
         <Tooltip>
             <TooltipTrigger asChild>
-                <div className="pr-2">
+                <div className="pr-2 whitespace-nowrap">
                     {Question?.QuestionID.replaceAll('_', ' ')}
                 </div>
             </TooltipTrigger>

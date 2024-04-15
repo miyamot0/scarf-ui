@@ -1,6 +1,7 @@
 import { DefaultStartingValue } from '@/atoms/db_atom'
 import { GlobalStateType } from '@/questions/types/GlobalStateType'
 import { useEffect, useState } from 'react'
+import { toast } from 'sonner'
 
 const KEY_LOCAL_STORAGE = 'scarf-web-ui'
 
@@ -23,15 +24,24 @@ export function useExistingData() {
         if (value) {
             const parsedValue = JSON.parse(value) as GlobalStateType
 
-            setData({
-                data: {
-                    ...parsedValue,
-                    DisplayState: 'instructions',
-                    AutoSave: parsedValue.AutoSave ?? false,
-                },
-                error: null,
-                isLoading: false,
-            })
+            if (!parsedValue) {
+                toast.warning(
+                    'Error: Attempts to read data from local storage failed. Please reload review state or clear your local cache.',
+                    {
+                        duration: 2000,
+                    }
+                )
+            } else {
+                setData({
+                    data: {
+                        ...parsedValue,
+                        DisplayState: 'instructions',
+                        AutoSave: parsedValue.AutoSave ?? false,
+                    },
+                    error: null,
+                    isLoading: false,
+                })
+            }
         } else
             setData({
                 ...data,

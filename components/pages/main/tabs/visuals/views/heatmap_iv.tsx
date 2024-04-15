@@ -11,20 +11,24 @@ export function HeatmapIV(state: GlobalStateType) {
         <div className="flex flex-col gap-y-4 overflow-x-auto">
             <table className="border-separate border-spacing-[1px]">
                 <thead>
-                    <th className="min-w-[200px]"></th>
-                    {state.Studies.map((r) => (
-                        <StudyTitle
-                            key={`iv-header-${r.StudyID}`}
-                            text={r.StudyAuthors}
-                        />
-                    ))}
+                    <tr>
+                        <th className="min-w-[200px]"></th>
+                        {state.Studies.map((r) => (
+                            <StudyTitle
+                                key={`iv-header-${r.StudyID}`}
+                                text={r.StudyAuthors}
+                            />
+                        ))}
+                    </tr>
                 </thead>
 
                 <tbody>
                     {InternalValidityQuestions.map((q) => {
                         return (
                             <tr key={`iv-row-${q.QuestionID}`}>
-                                <StudyItemTooltip Question={q} />
+                                <td>
+                                    <StudyItemTooltip Question={q} />
+                                </td>
 
                                 {state.Studies.map((r) => {
                                     const question =
@@ -40,6 +44,8 @@ export function HeatmapIV(state: GlobalStateType) {
                                         />
                                     )
                                 })}
+
+                                <td className="w-full"></td>
                             </tr>
                         )
                     })}

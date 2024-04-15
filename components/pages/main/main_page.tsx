@@ -45,8 +45,15 @@ const EmpiricalTabView = dynamic(
     }
 )
 
+const NotesTabView = dynamic(
+    () => import('./tabs/notes/notes_view').then((mod) => mod.NotesTabView),
+    {
+        loading: () => <LoadingSpinner className="mx-auto" />,
+    }
+)
+
 import { dbAtom } from '@/atoms/db_atom'
-import { useReducerAtom } from 'jotai/utils'
+import { useReducerAtomLocal as useReducerAtom } from '@/components/hooks/useReducerAtomLocal'
 import { StudyInternalValidityDialog } from '../../dialogs/study_internal_validity_dialog'
 import { StudyExternalValidityDialog } from '../../dialogs/study_external_validity_dialog'
 import { StudyReportingDialog } from '../../dialogs/study_reporting_dialog'
@@ -112,12 +119,9 @@ export function MainPage() {
 
                         <Tabs
                             value={state.DisplayState}
-                            className={cn(
-                                'w-full flex flex-col gap-y-4'
-                                //isLoading ? 'hidden' : ''
-                            )}
+                            className={cn('w-full flex flex-col gap-y-4')}
                         >
-                            <TabsList className="w-full flex flex-row">
+                            <TabsList className="w-full flex flex-row border">
                                 <TabsTrigger
                                     value="instructions"
                                     className="w-full"
@@ -189,6 +193,23 @@ export function MainPage() {
                                 >
                                     Visualize Coding
                                 </TabsTrigger>
+                                <TabsTrigger
+                                    value="notes"
+                                    className="w-full"
+                                    onClick={() => {
+                                        if (state.DisplayState === 'notes')
+                                            return
+
+                                        dispatch({
+                                            type: 'update_display_state',
+                                            payload: {
+                                                display_state: 'notes',
+                                            },
+                                        })
+                                    }}
+                                >
+                                    Notes
+                                </TabsTrigger>
                             </TabsList>
                             <TabsContent value="instructions">
                                 <InstructionsView />
@@ -201,6 +222,9 @@ export function MainPage() {
                             </TabsContent>
                             <TabsContent value="visuals">
                                 <VisualsView />
+                            </TabsContent>
+                            <TabsContent value="notes">
+                                <NotesTabView />
                             </TabsContent>
                         </Tabs>
                     </CardContent>

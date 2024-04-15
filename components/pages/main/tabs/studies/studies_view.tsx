@@ -7,7 +7,7 @@ import {
     HardDriveDownloadIcon,
     SaveIcon,
 } from 'lucide-react'
-import { useReducerAtom } from 'jotai/utils'
+import { useReducerAtomLocal as useReducerAtom } from '@/components/hooks/useReducerAtomLocal'
 import { dbAtom } from '@/atoms/db_atom'
 import { study_columns } from '@/components/tables/dashboard/study_status_columns'
 import { StudyStatusDataTable } from '@/components/tables/dashboard/study_status_table'

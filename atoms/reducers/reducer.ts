@@ -151,6 +151,15 @@ export const database_reducer = (
             if (new_state.AutoSave) SaveToLocalStorage(new_state)
 
             return new_state
+        case 'update_notes':
+            new_state = {
+                ...state,
+                Notes: action.payload.notes,
+            }
+
+            if (state.AutoSave) SaveToLocalStorage(new_state)
+
+            return new_state
         default:
             return state
     }
