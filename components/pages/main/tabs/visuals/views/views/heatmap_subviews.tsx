@@ -37,12 +37,27 @@ export function StudyCodedBlock({ Response }: { Response?: string }) {
 
     switch (Response) {
         case 'Yes':
+        case 'SCD':
+        case '>= 1 Month':
+        case 'Generalized':
+        case 'Yes, Both Conditions':
             coding = 'green'
             break
         case 'No':
+        case 'None':
+        case 'Post Only':
+        case 'Immediately after Cessation':
+        case 'Context Bound':
             coding = 'red'
             break
         case 'Partial':
+        case 'For Some':
+        case 'Intermittent':
+        case 'Pre/Post':
+        case '>= 1 Week':
+        case '>= 2 Weeks':
+        case 'Partially Context Bound':
+        case 'Yes, Intervention Only':
             coding = 'yellow'
             break
     }

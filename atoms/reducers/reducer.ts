@@ -8,6 +8,7 @@ import {
 import type { DatabaseAction } from './reducer_types'
 import { v4 as uuidv4 } from 'uuid'
 import { StudyObject } from '@/questions/types/QuestionTypes'
+import { generateRandomStartState } from '../db_atom'
 
 const KEY_LOCAL_STORAGE = 'scarf-web-ui'
 
@@ -40,6 +41,8 @@ export const database_reducer = (
             SaveToLocalStorage(state)
 
             return state
+        case 'generate_random':
+            return generateRandomStartState(state)
 
         case 'add':
             const new_study: StudyObject = {

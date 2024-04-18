@@ -6,7 +6,6 @@ import type {
     PublicationType,
 } from '@/questions/types/QuestionTypes'
 import { ReviewTypes } from '@/types/ReviewTypes'
-import { RefObject } from 'react'
 import { Descendant } from 'slate'
 
 export type DatabaseAction =
@@ -15,6 +14,7 @@ export type DatabaseAction =
       }
     | { type: 'load_external'; payload: { saved_state: GlobalStateType } }
     | { type: 'save_local' }
+    | { type: 'generate_random' }
     | { type: 'add' }
     | {
           type: 'update_display_state'

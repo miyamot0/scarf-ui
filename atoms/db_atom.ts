@@ -1,5 +1,20 @@
 import { atom } from 'jotai'
 import { GlobalStateType } from '@/questions/types/GlobalStateType'
+import {
+    PublicationType,
+    QuestionObjectHolder,
+    QuestionType,
+    StudyObject,
+    TypeOfValidityObject,
+} from '@/questions/types/QuestionTypes'
+import { v4 as uuidv4 } from 'uuid'
+import {
+    ExternalValidityQuestions,
+    InternalValidityQuestions,
+    OutcomesQuestions,
+    ReportingQuestions,
+} from '@/questions/simplified_questions'
+import { GetSelectOptionsFromTag } from '@/components/forms/inputs/select_options'
 
 export const DefaultStartingValue: GlobalStateType = {
     DialogState: {
@@ -1622,6 +1637,88 @@ export const DefaultStartingValueExpanded = {
             PublicationType: 'Journal',
         },
     ],
+}
+
+/*
+export type QuestionType =
+    | 'YesNo'
+    | 'Text'
+    | 'YesNoNotPossible'
+    | 'YesNoPartial'
+    | 'YesNoNotApplicable'
+    | 'YesNoNotApplicableForSome'
+    | 'CbPcbG'
+    | 'YIntOnlyYBothNo'
+    | 'GeneralizationOutcomes'
+    | 'MaintenancePeriod'
+    | 'PrimarySecondaryUnknown'
+    | 'ConditionChangeCharacterization'
+    | 'ConditionChangeCharacterizationNA'
+*/
+
+function pullRandomResponse(items: string[]) {
+    return items[Math.floor(Math.random() * items.length)]
+}
+
+function generateResponseFromResponseType(question_type: QuestionType) {
+    return pullRandomResponse(
+        GetSelectOptionsFromTag(question_type).map((option) => option)
+    )
+}
+
+function generateRandomResponses(
+    questions: QuestionObjectHolder[]
+): TypeOfValidityObject {
+    const generated_answers = questions.map((question) => {
+        return {
+            ...question,
+            Response: generateResponseFromResponseType(question.QuestionType!),
+        }
+    })
+
+    return {
+        Status: 'Completed',
+        Questions: generated_answers,
+    }
+}
+
+function generateRandomEntry(tag_string: string): StudyObject {
+    return {
+        StudyID: uuidv4(),
+        StudyTag: tag_string,
+        StudyAuthors: `Generated for ${tag_string}`,
+        StudyTitle: '',
+        StudyJournal: '',
+        StudyYear: 2000,
+        InternalValidity: generateRandomResponses(InternalValidityQuestions),
+        ExternalValidity: generateRandomResponses(ExternalValidityQuestions),
+        Reporting: generateRandomResponses(ReportingQuestions),
+        Outcomes: generateRandomResponses(OutcomesQuestions),
+        PublicationType: pullRandomResponse([
+            'Journal',
+            'Unpublished',
+        ]) as PublicationType,
+    } satisfies StudyObject
+}
+
+export function generateRandomStartState(state: GlobalStateType) {
+    const n_studies = 100
+
+    function padDigits(number: string, digits: number) {
+        return (
+            Array(Math.max(digits - String(number).length + 1, 0)).join('0') +
+            number
+        )
+    }
+
+    const new_studies = Array.from({ length: n_studies }, (_, index) =>
+        generateRandomEntry(padDigits(`Study ${(index + 1).toString()}`, 4))
+    )
+
+    return {
+        ...state,
+        Studies: new_studies,
+    } satisfies GlobalStateType
 }
 
 export const dbAtom = atom<GlobalStateType>(DefaultStartingValue)

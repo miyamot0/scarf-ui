@@ -1,4 +1,3 @@
-import { RefObject } from 'react'
 import { DisplayStateType } from './DisplayStateTypes'
 import { StudyObject } from './QuestionTypes'
 import { ReviewTypes } from '../../types/ReviewTypes'

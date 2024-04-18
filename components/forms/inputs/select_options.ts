@@ -82,6 +82,6 @@ export function GetSelectOptionsFromTag(type: QuestionType) {
             return StrongWeakCounterTherapeuticNA
 
         default:
-            throw new Error('Invalid Question Type')
+            throw new Error(`Invalid Question Type: ${type}`)
     }
 }
