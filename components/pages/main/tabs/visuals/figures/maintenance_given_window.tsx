@@ -81,9 +81,6 @@ export function MaintenanceGivenWindow({
         z: size,
     }))
 
-    console.log(data_published)
-    console.log(data_unpublished)
-
     return (
         <ContextMenu>
             <ContextMenuTrigger>

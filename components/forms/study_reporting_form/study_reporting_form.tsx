@@ -135,7 +135,7 @@ export function StudyReportingForm({ study }: { study?: StudyObject }) {
                         )?.QuestionInstruction
 
                     const questionType: string | undefined =
-                        question.QuestionInstruction ??
+                        question.QuestionType ??
                         ReportingQuestions.find(
                             (q) => q.QuestionID === question.QuestionID
                         )?.QuestionType

@@ -1672,6 +1672,7 @@ function generateRandomResponses(
     const generated_answers = questions.map((question) => {
         return {
             ...question,
+            QuestionType: question.QuestionType!,
             Response: generateResponseFromResponseType(question.QuestionType!),
         }
     })
