@@ -29,12 +29,8 @@ const CustomTooltip = ({ active, payload, label }) => {
         return (
             <div className="bg-white border border-black p-2 rounded dark:text-black">
                 <p>{`Study: ${payload[0].payload.label}`}</p>
-                <p>{`Period of Maintenance: ${Math.round(
-                    payload[0].payload.x
-                )}`}</p>
-                <p>{`Maintained Outcome Strength: ${Math.round(
-                    payload[1].value
-                )}`}</p>
+                <p>{`Period of Maintenance: ${payload[0].payload.period}`}</p>
+                <p>{`Maintained Outcome Strength: ${payload[0].payload.level}`}</p>
             </div>
         )
     }
@@ -65,6 +61,8 @@ export function MaintenanceGivenWindow({
         y: record.Maintained,
         id: record.ID,
         label: record.Tag,
+        level: record.RatingMaintenance,
+        period: record.DegreeMaintenance,
         z: size,
     }))
 
@@ -78,6 +76,8 @@ export function MaintenanceGivenWindow({
         y: record.Outcome,
         id: record.ID,
         label: record.Tag,
+        level: record.RatingMaintenance,
+        period: record.DegreeMaintenance,
         z: size,
     }))
 

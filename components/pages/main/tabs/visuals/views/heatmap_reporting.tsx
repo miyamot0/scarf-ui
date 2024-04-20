@@ -16,7 +16,7 @@ export function HeatmapReporting(state: GlobalStateType) {
                         {state.Studies.map((r) => (
                             <StudyTitle
                                 key={`reporting-header-${r.StudyID}`}
-                                text={r.StudyAuthors}
+                                text={r.StudyTag}
                             />
                         ))}
                     </tr>
