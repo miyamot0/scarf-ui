@@ -29,12 +29,8 @@ const CustomTooltip = ({ active, payload, label }) => {
         return (
             <div className="bg-white border border-black p-2 rounded dark:text-black">
                 <p>{`Study: ${payload[0].payload.label}`}</p>
-                <p>{`Rigor of Generalization: ${Math.round(
-                    payload[0].payload.x
-                )}`}</p>
-                <p>{`Generalized Outcome Strength: ${Math.round(
-                    payload[1].value
-                )}`}</p>
+                <p>{`Rigor of Generalization: ${payload[0].payload.degree}`}</p>
+                <p>{`Generalized Outcome Strength: ${payload[0].payload.level}`}</p>
             </div>
         )
     }
@@ -56,22 +52,32 @@ export function GeneralizationGivenWindow({
     const ref = useRef<HTMLDivElement>(null)
 
     const data_published = Data.filter(
-        (s: CommonVisualOutput) => s.Type === 'Journal' && s.Generalized >= 0
+        (s: CommonVisualOutput) =>
+            s.Type === 'Journal' &&
+            s.Generalized >= 0 &&
+            s.GeneralizationRigor >= -0.5
     ).map((record) => ({
         x: record.GeneralizationRigor,
         y: record.Generalized,
         id: record.ID,
         label: record.Tag,
+        level: record.RatingGeneralization,
+        degree: record.DegreeGeneralization,
         z: size,
     }))
 
     const data_unpublished = Data.filter(
-        (s) => s.Type === 'Unpublished' && s.Generalized >= 0
+        (s) =>
+            s.Type === 'Unpublished' &&
+            s.Generalized >= 0 &&
+            s.GeneralizationRigor >= -0.5
     ).map((record) => ({
         x: record.GeneralizationRigor,
         y: record.Outcome,
         id: record.ID,
         label: record.Tag,
+        level: record.RatingGeneralization,
+        degree: record.DegreeGeneralization,
         z: size,
     }))
 

@@ -168,7 +168,7 @@ try {
                 Status: 'Completed',
                 Questions: [],
             },
-            PublicationType: 'Journal',
+            PublicationType: individual_study_entry.Status,
         }
 
         const skips = ['StudyID', 'StudyName', 'StudyAuthors', 'Status']

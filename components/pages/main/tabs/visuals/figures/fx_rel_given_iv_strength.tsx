@@ -30,7 +30,7 @@ const CustomTooltip = ({ active, payload, label }) => {
             <div className="bg-white border border-black p-2 rounded dark:text-black">
                 <p>{`Study: ${payload[0].payload.label}`}</p>
                 <p>{`Indicators of IV: ${Math.round(payload[0].payload.x)}`}</p>
-                <p>{`Strength of Relation: ${Math.round(payload[1].value)}`}</p>
+                <p>{`Strength of Relation: ${payload[0].payload.level}`}</p>
             </div>
         )
     }
@@ -58,6 +58,7 @@ export function VisualFunctionalRelationGivenIV({
         y: record.Outcome,
         id: record.ID,
         label: record.Tag,
+        level: record.RatingOutcome,
         z: size,
     }))
 
@@ -68,6 +69,7 @@ export function VisualFunctionalRelationGivenIV({
         y: record.Outcome,
         id: record.ID,
         label: record.Tag,
+        level: record.RatingOutcome,
         z: size,
     }))
 

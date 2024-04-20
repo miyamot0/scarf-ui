@@ -141,7 +141,9 @@ export function GenerateGeneralizationRating(study: StudyObject) {
             return 2
         case 'Pre/Post':
             return 1
-        default:
+        case 'Post Only':
             return 0
+        default:
+            return -1
     }
 }
