@@ -5,7 +5,7 @@ export function applyConditionalJittering(jitter: boolean, value: number) {
         return Math.floor(Math.random() * (max - min + 1) + min)
     }
 
-    return jitter ? value + randomIntFromInterval(-10, 10) / 100 : value
+    return jitter ? value + randomIntFromInterval(-20, 20) / 100 : value
 }
 
 export function CalculateOutcomeScore(

@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import { StudyDetailsDialog } from '../../dialogs/study_details_dialog'
 import {
     Card,
@@ -77,6 +77,8 @@ import dynamic from 'next/dynamic'
 import { Provider } from 'jotai'
 import { useExistingData } from '@/components/hooks/useExistingData'
 import { toast } from 'sonner'
+import { DisplayStateType } from '@/questions/types/DisplayStateTypes'
+import { GlobalStateType } from '@/questions/types/GlobalStateType'
 
 export function MainPageShim() {
     return (
@@ -101,6 +103,28 @@ export function MainPage() {
             },
         })
     }, [dispatch, data, isLoading])
+
+    const catch_navigation = (
+        local_state: GlobalStateType,
+        display: DisplayStateType
+    ) => {
+        if (local_state.DisplayState === display) return
+
+        if (local_state.ReviewPlans.Status === 'NotStarted') {
+            toast('Please complete the planning tab before proceeding.', {
+                duration: 2000,
+            })
+
+            return
+        }
+
+        dispatch({
+            type: 'update_display_state',
+            payload: {
+                display_state: display,
+            },
+        })
+    }
 
     return (
         <>
@@ -177,33 +201,11 @@ export function MainPage() {
                                             ? 'opacity-50'
                                             : ''
                                     )}
-                                    onClick={() => {
-                                        if (state.DisplayState === 'studies')
-                                            return
-
-                                        if (
-                                            state.ReviewPlans.Status ===
-                                            'NotStarted'
-                                        ) {
-                                            toast(
-                                                'Please complete the planning tab before proceeding to study coding.',
-                                                {
-                                                    duration: 2000,
-                                                }
-                                            )
-
-                                            return
-                                        }
-
-                                        dispatch({
-                                            type: 'update_display_state',
-                                            payload: {
-                                                display_state: 'studies',
-                                            },
-                                        })
-                                    }}
+                                    onClick={() =>
+                                        catch_navigation(state, 'studies')
+                                    }
                                 >
-                                    Study Coding
+                                    Coding
                                 </TabsTrigger>
                                 <TabsTrigger
                                     value="empirical"
@@ -214,31 +216,9 @@ export function MainPage() {
                                             ? 'opacity-50'
                                             : ''
                                     )}
-                                    onClick={() => {
-                                        if (state.DisplayState === 'empirical')
-                                            return
-
-                                        if (
-                                            state.ReviewPlans.Status ===
-                                            'NotStarted'
-                                        ) {
-                                            toast(
-                                                'Please complete the planning tab before proceeding.',
-                                                {
-                                                    duration: 2000,
-                                                }
-                                            )
-
-                                            return
-                                        }
-
-                                        dispatch({
-                                            type: 'update_display_state',
-                                            payload: {
-                                                display_state: 'empirical',
-                                            },
-                                        })
-                                    }}
+                                    onClick={() =>
+                                        catch_navigation(state, 'empirical')
+                                    }
                                 >
                                     Data Inspection
                                 </TabsTrigger>
@@ -251,33 +231,11 @@ export function MainPage() {
                                             ? 'opacity-50'
                                             : ''
                                     )}
-                                    onClick={() => {
-                                        if (state.DisplayState === 'visuals')
-                                            return
-
-                                        if (
-                                            state.ReviewPlans.Status ===
-                                            'NotStarted'
-                                        ) {
-                                            toast(
-                                                'Please complete the planning tab before proceeding.',
-                                                {
-                                                    duration: 2000,
-                                                }
-                                            )
-
-                                            return
-                                        }
-
-                                        dispatch({
-                                            type: 'update_display_state',
-                                            payload: {
-                                                display_state: 'visuals',
-                                            },
-                                        })
-                                    }}
+                                    onClick={() =>
+                                        catch_navigation(state, 'visuals')
+                                    }
                                 >
-                                    Visualize Coding
+                                    Data Visualization
                                 </TabsTrigger>
                                 <TabsTrigger
                                     value="notes"
@@ -288,33 +246,11 @@ export function MainPage() {
                                             ? 'opacity-50'
                                             : ''
                                     )}
-                                    onClick={() => {
-                                        if (state.DisplayState === 'notes')
-                                            return
-
-                                        if (
-                                            state.ReviewPlans.Status ===
-                                            'NotStarted'
-                                        ) {
-                                            toast(
-                                                'Please complete the planning tab before proceeding.',
-                                                {
-                                                    duration: 2000,
-                                                }
-                                            )
-
-                                            return
-                                        }
-
-                                        dispatch({
-                                            type: 'update_display_state',
-                                            payload: {
-                                                display_state: 'notes',
-                                            },
-                                        })
-                                    }}
+                                    onClick={() =>
+                                        catch_navigation(state, 'notes')
+                                    }
                                 >
-                                    Notes
+                                    Review Notes
                                 </TabsTrigger>
                             </TabsList>
                             <TabsContent value="instructions">

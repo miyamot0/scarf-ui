@@ -52,7 +52,7 @@ export function DataTablePagination<TData>({
                             />
                         </SelectTrigger>
                         <SelectContent side="top">
-                            {[10, 20, 30, 40, 50].map((pageSize) => (
+                            {[10, 20, 30, 40, 50, 100, 250].map((pageSize) => (
                                 <SelectItem
                                     key={pageSize}
                                     value={`${pageSize}`}

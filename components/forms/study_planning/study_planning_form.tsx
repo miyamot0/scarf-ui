@@ -55,6 +55,9 @@ export function StudyPlanningForm() {
             Plan_Reporting_6: state.ReviewPlans.Questions.find(
                 (q) => q.QuestionID === 'Plan_Reporting_6'
             )?.Response,
+            Plan_Reporting_7: state.ReviewPlans.Questions.find(
+                (q) => q.QuestionID === 'Plan_Reporting_7'
+            )?.Response,
             Plan_DV_Measurement_4: state.ReviewPlans.Questions.find(
                 (q) => q.QuestionID === 'Plan_DV_Measurement_4'
             )?.Response,
