@@ -134,7 +134,9 @@ export function MainPage() {
                     <CardHeader className="flex flex-row justify-between">
                         <div className="flex flex-col">
                             <CardTitle>{`Review: Name: ${
-                                isLoading ? '' : state.ReviewName ?? 'UNNAMED'
+                                isLoading
+                                    ? 'Loading state...'
+                                    : state.ReviewName ?? 'UNNAMED'
                             }`}</CardTitle>
                             <CardDescription>{`Reviewer Type: ${
                                 state.ReviewType ?? 'Primary'

@@ -48,12 +48,13 @@ export function useExistingData() {
                     isLoading: false,
                 })
             }
-        } else
+        } else {
             setData({
                 ...data,
                 error: 'No data found',
                 isLoading: false,
             })
+        }
     }, [])
 
     return {

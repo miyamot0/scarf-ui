@@ -62,3 +62,6 @@ export type DatabaseAction =
               plans: TypeOfPlanningObject
           }
       }
+    | {
+          type: 'reset'
+      }

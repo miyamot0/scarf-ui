@@ -1,4 +1,15 @@
 import { DatabaseAction } from '@/atoms/reducers/reducer_types'
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
 import {
     Tooltip,
@@ -6,15 +17,14 @@ import {
     TooltipTrigger,
 } from '@/components/ui/tooltip'
 import { GlobalStateType } from '@/questions/types/GlobalStateType'
-import { QuestionMarkIcon } from '@radix-ui/react-icons'
 import {
+    DeleteIcon,
     HardDriveDownloadIcon,
     HardDriveUploadIcon,
     ListPlusIcon,
     SaveIcon,
     Settings2Icon,
     UserSearchIcon,
-    XIcon,
 } from 'lucide-react'
 import { RefObject } from 'react'
 import { toast } from 'sonner'
@@ -44,19 +54,6 @@ export function ButtonBar({
 
     return (
         <div className="flex flex-row gap-x-2">
-            {/*
-                <Button
-                    size={'sm'}
-                    variant={'outline'}
-                    className="bg-red-500"
-                    onClick={() => {
-                        dispatch({ type: 'generate_random' })
-                    }}
-                >
-                    <QuestionMarkIcon />
-                </Button>                
-                */}
-
             <input
                 type="file"
                 ref={refFileInput}
@@ -87,7 +84,8 @@ export function ButtonBar({
                     <Button
                         size={'sm'}
                         variant={'outline'}
-                        className=""
+                        className="data-[status=true]:bg-green-500 data-[status=true]:text-white"
+                        data-status={state.AutoSave ? false : state.NeedSave}
                         onClick={() => {
                             dispatch({ type: 'save_local' })
 
@@ -280,6 +278,59 @@ export function ButtonBar({
                 </TooltipTrigger>
                 <TooltipContent>
                     <p>Edit project name and/or coder role.</p>
+                </TooltipContent>
+            </Tooltip>
+
+            <Tooltip>
+                <TooltipTrigger asChild>
+                    <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                            <Button
+                                size={'sm'}
+                                variant={'outline'}
+                                className="bg-red-500 hover:bg-red-600 text-white hover:text-white"
+                            >
+                                <DeleteIcon size={18} />
+                            </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                            <AlertDialogHeader>
+                                <AlertDialogTitle>
+                                    Are you absolutely sure?
+                                </AlertDialogTitle>
+                                <AlertDialogDescription>
+                                    This action will remove data from the local
+                                    cache and this action cannot be undone.
+                                    Ensure that you have exported the latest
+                                    data to a file should you wish to revisit
+                                    that data at a later time.
+                                </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                <AlertDialogAction
+                                    className="bg-red-500 hover:bg-red-600 text-white hover:text-white"
+                                    onClick={() => {
+                                        dispatch({
+                                            type: 'reset',
+                                        })
+
+                                        toast('Local data reset', {
+                                            description:
+                                                'Your local data cache has been reset. Either load another set or begin another review.',
+                                            duration: 2000,
+                                            dismissible: true,
+                                        })
+                                    }}
+                                >
+                                    Clear Data
+                                </AlertDialogAction>
+                            </AlertDialogFooter>
+                        </AlertDialogContent>
+                    </AlertDialog>
+                </TooltipTrigger>
+                <TooltipContent>
+                    <p>Delete/Unload Project.</p>
                 </TooltipContent>
             </Tooltip>
         </div>
