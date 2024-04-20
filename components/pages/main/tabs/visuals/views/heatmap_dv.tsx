@@ -16,7 +16,7 @@ export function HeatmapDV(state: GlobalStateType) {
                         {state.Studies.map((r) => (
                             <StudyTitle
                                 key={`ev-header-${r.StudyID}`}
-                                text={r.StudyAuthors}
+                                text={r.StudyTag}
                             />
                         ))}
                     </tr>
