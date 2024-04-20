@@ -14,4 +14,4 @@ const millionConfig = {
     },
 }
 
-export default million.next(nextConfig, millionConfig)
+export default nextConfig

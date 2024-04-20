@@ -144,7 +144,7 @@ export function StudyInternalValidityForm({ study }: { study?: StudyObject }) {
                         )?.QuestionInstruction
 
                     const questionType: string | undefined =
-                        question.QuestionInstruction ??
+                        question.QuestionType ??
                         InternalValidityQuestions.find(
                             (q) => q.QuestionID === question.QuestionID
                         )?.QuestionType

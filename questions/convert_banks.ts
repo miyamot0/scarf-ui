@@ -46,6 +46,16 @@ try {
         .utf8Encoding()
         .supportQuotedField(true)
         .generateJsonFileFromCsv(fileInputName, fileOutputName)
+
+    fileInputName = './questions/banks/planning_questions.csv'
+    fileOutputName = './questions/generated/planning_questions.json'
+
+    console.log(`Converting ${fileInputName} to ${fileOutputName}`)
+    csvToJson
+        .fieldDelimiter(',')
+        .utf8Encoding()
+        .supportQuotedField(true)
+        .generateJsonFileFromCsv(fileInputName, fileOutputName)
 } catch (error) {
     console.log('Error converting external validity questions: ', error)
 }

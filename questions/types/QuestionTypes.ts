@@ -65,3 +65,8 @@ export type TypeOfValidityObject = {
     Status: ResponseStatus
     Questions: QuestionObjectHolder[]
 }
+
+export type TypeOfPlanningObject = {
+    Status: ResponseStatus
+    Questions: QuestionObjectHolder[]
+}

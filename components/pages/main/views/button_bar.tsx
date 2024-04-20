@@ -6,6 +6,7 @@ import {
     TooltipTrigger,
 } from '@/components/ui/tooltip'
 import { GlobalStateType } from '@/questions/types/GlobalStateType'
+import { QuestionMarkIcon } from '@radix-ui/react-icons'
 import {
     HardDriveDownloadIcon,
     HardDriveUploadIcon,
@@ -13,6 +14,7 @@ import {
     SaveIcon,
     Settings2Icon,
     UserSearchIcon,
+    XIcon,
 } from 'lucide-react'
 import { RefObject } from 'react'
 import { toast } from 'sonner'
@@ -42,6 +44,19 @@ export function ButtonBar({
 
     return (
         <div className="flex flex-row gap-x-2">
+            {/*
+                <Button
+                    size={'sm'}
+                    variant={'outline'}
+                    className="bg-red-500"
+                    onClick={() => {
+                        dispatch({ type: 'generate_random' })
+                    }}
+                >
+                    <QuestionMarkIcon />
+                </Button>                
+                */}
+
             <input
                 type="file"
                 ref={refFileInput}

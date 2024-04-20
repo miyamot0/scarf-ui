@@ -8,6 +8,7 @@ import {
 import type { DatabaseAction } from './reducer_types'
 import { v4 as uuidv4 } from 'uuid'
 import { StudyObject } from '@/questions/types/QuestionTypes'
+import { generateRandomStartState } from '../db_atom'
 
 const KEY_LOCAL_STORAGE = 'scarf-web-ui'
 
@@ -25,11 +26,12 @@ export const database_reducer = (
         case 'load_local':
             const value = localStorage.getItem(KEY_LOCAL_STORAGE)
 
-            if (value)
+            if (value) {
                 return {
                     ...(JSON.parse(value) as GlobalStateType),
                     Loaded: true,
                 }
+            }
 
             return state
 
@@ -40,6 +42,8 @@ export const database_reducer = (
             SaveToLocalStorage(state)
 
             return state
+        case 'generate_random':
+            return generateRandomStartState(state)
 
         case 'add':
             const new_study: StudyObject = {
@@ -155,6 +159,16 @@ export const database_reducer = (
             new_state = {
                 ...state,
                 Notes: action.payload.notes,
+            }
+
+            if (state.AutoSave) SaveToLocalStorage(new_state)
+
+            return new_state
+
+        case 'update_review_plans':
+            new_state = {
+                ...state,
+                ReviewPlans: action.payload.plans,
             }
 
             if (state.AutoSave) SaveToLocalStorage(new_state)

@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import { StudyDetailsDialog } from '../../dialogs/study_details_dialog'
 import {
     Card,
@@ -16,6 +16,14 @@ const InstructionsView = dynamic(
         import('./tabs/instructions/instructions_view').then(
             (mod) => mod.InstructionsView
         ),
+    {
+        loading: () => <LoadingSpinner className="mx-auto" />,
+    }
+)
+
+const PlanningView = dynamic(
+    () =>
+        import('./tabs/planning/planning_view').then((mod) => mod.PlanningView),
     {
         loading: () => <LoadingSpinner className="mx-auto" />,
     }
@@ -68,6 +76,9 @@ import { StudyImportDialog } from '@/components/dialogs/study_import_dialog'
 import dynamic from 'next/dynamic'
 import { Provider } from 'jotai'
 import { useExistingData } from '@/components/hooks/useExistingData'
+import { toast } from 'sonner'
+import { DisplayStateType } from '@/questions/types/DisplayStateTypes'
+import { GlobalStateType } from '@/questions/types/GlobalStateType'
 
 export function MainPageShim() {
     return (
@@ -92,6 +103,28 @@ export function MainPage() {
             },
         })
     }, [dispatch, data, isLoading])
+
+    const catch_navigation = (
+        local_state: GlobalStateType,
+        display: DisplayStateType
+    ) => {
+        if (local_state.DisplayState === display) return
+
+        if (local_state.ReviewPlans.Status === 'NotStarted') {
+            toast('Please complete the planning tab before proceeding.', {
+                duration: 2000,
+            })
+
+            return
+        }
+
+        dispatch({
+            type: 'update_display_state',
+            payload: {
+                display_state: display,
+            },
+        })
+    }
 
     return (
         <>
@@ -140,79 +173,91 @@ export function MainPage() {
                                         })
                                     }}
                                 >
-                                    Coding Instructions
+                                    Instructions
                                 </TabsTrigger>
                                 <TabsTrigger
-                                    value="studies"
+                                    value="planning"
                                     className="w-full"
                                     onClick={() => {
-                                        if (state.DisplayState === 'studies')
+                                        if (state.DisplayState === 'planning')
                                             return
 
                                         dispatch({
                                             type: 'update_display_state',
                                             payload: {
-                                                display_state: 'studies',
+                                                display_state: 'planning',
                                             },
                                         })
                                     }}
                                 >
-                                    Study Coding
+                                    Planning
+                                </TabsTrigger>
+                                <TabsTrigger
+                                    value="studies"
+                                    className={cn(
+                                        'w-full',
+                                        state.ReviewPlans.Status ===
+                                            'NotStarted'
+                                            ? 'opacity-50'
+                                            : ''
+                                    )}
+                                    onClick={() =>
+                                        catch_navigation(state, 'studies')
+                                    }
+                                >
+                                    Coding
                                 </TabsTrigger>
                                 <TabsTrigger
                                     value="empirical"
-                                    className="w-full"
-                                    onClick={() => {
-                                        if (state.DisplayState === 'empirical')
-                                            return
-
-                                        dispatch({
-                                            type: 'update_display_state',
-                                            payload: {
-                                                display_state: 'empirical',
-                                            },
-                                        })
-                                    }}
+                                    className={cn(
+                                        'w-full',
+                                        state.ReviewPlans.Status ===
+                                            'NotStarted'
+                                            ? 'opacity-50'
+                                            : ''
+                                    )}
+                                    onClick={() =>
+                                        catch_navigation(state, 'empirical')
+                                    }
                                 >
                                     Data Inspection
                                 </TabsTrigger>
                                 <TabsTrigger
                                     value="visuals"
-                                    className="w-full"
-                                    onClick={() => {
-                                        if (state.DisplayState === 'visuals')
-                                            return
-
-                                        dispatch({
-                                            type: 'update_display_state',
-                                            payload: {
-                                                display_state: 'visuals',
-                                            },
-                                        })
-                                    }}
+                                    className={cn(
+                                        'w-full',
+                                        state.ReviewPlans.Status ===
+                                            'NotStarted'
+                                            ? 'opacity-50'
+                                            : ''
+                                    )}
+                                    onClick={() =>
+                                        catch_navigation(state, 'visuals')
+                                    }
                                 >
-                                    Visualize Coding
+                                    Data Visualization
                                 </TabsTrigger>
                                 <TabsTrigger
                                     value="notes"
-                                    className="w-full"
-                                    onClick={() => {
-                                        if (state.DisplayState === 'notes')
-                                            return
-
-                                        dispatch({
-                                            type: 'update_display_state',
-                                            payload: {
-                                                display_state: 'notes',
-                                            },
-                                        })
-                                    }}
+                                    className={cn(
+                                        'w-full',
+                                        state.ReviewPlans.Status ===
+                                            'NotStarted'
+                                            ? 'opacity-50'
+                                            : ''
+                                    )}
+                                    onClick={() =>
+                                        catch_navigation(state, 'notes')
+                                    }
                                 >
-                                    Notes
+                                    Review Notes
                                 </TabsTrigger>
                             </TabsList>
                             <TabsContent value="instructions">
                                 <InstructionsView />
+                            </TabsContent>
+                            <TabsContent value="planning">
+                                <PlanningView />
                             </TabsContent>
                             <TabsContent value="studies">
                                 <StudiesView />

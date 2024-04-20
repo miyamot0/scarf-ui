@@ -4,9 +4,9 @@ import type { GlobalStateType } from '@/questions/types/GlobalStateType'
 import type {
     StudyObject,
     PublicationType,
+    TypeOfPlanningObject,
 } from '@/questions/types/QuestionTypes'
 import { ReviewTypes } from '@/types/ReviewTypes'
-import { RefObject } from 'react'
 import { Descendant } from 'slate'
 
 export type DatabaseAction =
@@ -15,6 +15,7 @@ export type DatabaseAction =
       }
     | { type: 'load_external'; payload: { saved_state: GlobalStateType } }
     | { type: 'save_local' }
+    | { type: 'generate_random' }
     | { type: 'add' }
     | {
           type: 'update_display_state'
@@ -53,5 +54,11 @@ export type DatabaseAction =
           type: 'update_notes'
           payload: {
               notes: Descendant[]
+          }
+      }
+    | {
+          type: 'update_review_plans'
+          payload: {
+              plans: TypeOfPlanningObject
           }
       }

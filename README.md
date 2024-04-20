@@ -46,6 +46,11 @@ Interested parties are encouraged to reach out the Drs. Gilroy and Ledford for o
 
 ## Changelog
 
+### Version 0.3.4
+
+-   Revert VDOM speediums
+-   Add in planning panel
+
 ### Version 0.3.x
 
 -   Tests (mostly)

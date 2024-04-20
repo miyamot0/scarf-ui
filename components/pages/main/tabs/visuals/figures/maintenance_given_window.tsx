@@ -56,7 +56,10 @@ export function MaintenanceGivenWindow({
     const ref = useRef<HTMLDivElement>(null)
 
     const data_published = Data.filter(
-        (s: CommonVisualOutput) => s.Type === 'Journal' && s.Maintained >= 0
+        (s: CommonVisualOutput) =>
+            s.Type === 'Journal' &&
+            s.Maintained > 0.5 &&
+            s.DegreeMaintenance !== 'N/A'
     ).map((record) => ({
         x: record.MaintenanceWindow,
         y: record.Maintained,
@@ -66,7 +69,10 @@ export function MaintenanceGivenWindow({
     }))
 
     const data_unpublished = Data.filter(
-        (s) => s.Type === 'Unpublished' && s.Maintained >= 0
+        (s) =>
+            s.Type === 'Unpublished' &&
+            s.Maintained > 0.5 &&
+            s.DegreeMaintenance !== 'N/A'
     ).map((record) => ({
         x: record.MaintenanceWindow,
         y: record.Outcome,
@@ -103,7 +109,7 @@ export function MaintenanceGivenWindow({
                             }}
                             domain={['dataMin-0.5', 'dataMax+0.5']}
                             axisLine={{ stroke: 'black' }}
-                            ticks={[0, 1, 2, 3, 4]}
+                            ticks={[0, 1, 2, 3]}
                             tickFormatter={(value) => {
                                 switch (value) {
                                     case 0:
@@ -115,7 +121,7 @@ export function MaintenanceGivenWindow({
                                     case 3:
                                         return '>= 1 Month'
                                     default:
-                                        return 'Immediate/Unclear'
+                                        return value
                                 }
                             }}
                         />

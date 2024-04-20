@@ -1,5 +1,7 @@
 import { DefaultStartingValue } from '@/atoms/db_atom'
+import { PlanningQuestions } from '@/questions/simplified_questions'
 import { GlobalStateType } from '@/questions/types/GlobalStateType'
+import { parse } from 'path'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 
@@ -37,6 +39,10 @@ export function useExistingData() {
                         ...parsedValue,
                         DisplayState: 'instructions',
                         AutoSave: parsedValue.AutoSave ?? false,
+                        ReviewPlans: parsedValue.ReviewPlans ?? {
+                            Status: 'NotStarted',
+                            Questions: PlanningQuestions,
+                        },
                     },
                     error: null,
                     isLoading: false,

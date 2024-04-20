@@ -121,7 +121,7 @@ export function StudyOutcomesForm({ study }: { study?: StudyObject }) {
                         )?.QuestionInstruction
 
                     const questionType: string | undefined =
-                        question.QuestionInstruction ??
+                        question.QuestionType ??
                         OutcomesQuestions.find(
                             (q) => q.QuestionID === question.QuestionID
                         )?.QuestionType
