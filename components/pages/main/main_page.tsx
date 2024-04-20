@@ -21,6 +21,14 @@ const InstructionsView = dynamic(
     }
 )
 
+const PlanningView = dynamic(
+    () =>
+        import('./tabs/planning/planning_view').then((mod) => mod.PlanningView),
+    {
+        loading: () => <LoadingSpinner className="mx-auto" />,
+    }
+)
+
 const StudiesView = dynamic(
     () => import('./tabs/studies/studies_view').then((mod) => mod.StudiesView),
     {
@@ -140,7 +148,24 @@ export function MainPage() {
                                         })
                                     }}
                                 >
-                                    Coding Instructions
+                                    Instructions
+                                </TabsTrigger>
+                                <TabsTrigger
+                                    value="planning"
+                                    className="w-full"
+                                    onClick={() => {
+                                        if (state.DisplayState === 'planning')
+                                            return
+
+                                        dispatch({
+                                            type: 'update_display_state',
+                                            payload: {
+                                                display_state: 'planning',
+                                            },
+                                        })
+                                    }}
+                                >
+                                    Planning
                                 </TabsTrigger>
                                 <TabsTrigger
                                     value="studies"
@@ -213,6 +238,9 @@ export function MainPage() {
                             </TabsList>
                             <TabsContent value="instructions">
                                 <InstructionsView />
+                            </TabsContent>
+                            <TabsContent value="planning">
+                                <PlanningView />
                             </TabsContent>
                             <TabsContent value="studies">
                                 <StudiesView />

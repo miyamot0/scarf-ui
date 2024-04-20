@@ -5,3 +5,4 @@ export type DisplayStateType =
     | 'metrics'
     | 'empirical'
     | 'notes'
+    | 'planning'

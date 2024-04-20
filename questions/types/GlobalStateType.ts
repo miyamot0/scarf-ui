@@ -1,5 +1,5 @@
 import { DisplayStateType } from './DisplayStateTypes'
-import { StudyObject } from './QuestionTypes'
+import { StudyObject, TypeOfPlanningObject } from './QuestionTypes'
 import { ReviewTypes } from '../../types/ReviewTypes'
 import { DialogStateType } from './DialogStateTypes'
 import { Descendant } from 'slate'
@@ -10,6 +10,7 @@ export type GlobalStateType = {
     Studies: StudyObject[]
     ReviewName?: string
     ReviewType?: ReviewTypes
+    ReviewPlans: TypeOfPlanningObject
     Loaded?: boolean
     AutoSave?: boolean
     Notes?: Descendant[]

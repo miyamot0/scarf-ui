@@ -12,6 +12,7 @@ import {
     ExternalValidityQuestions,
     InternalValidityQuestions,
     OutcomesQuestions,
+    PlanningQuestions,
     ReportingQuestions,
 } from '@/questions/simplified_questions'
 import { GetSelectOptionsFromTag } from '@/components/forms/inputs/select_options'
@@ -20,6 +21,10 @@ export const DefaultStartingValue: GlobalStateType = {
     DialogState: {
         dialog_type: undefined,
         study: undefined,
+    },
+    ReviewPlans: {
+        Status: 'NotStarted',
+        Questions: PlanningQuestions,
     },
     DisplayState: 'instructions',
     Studies: [],

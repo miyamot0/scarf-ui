@@ -26,11 +26,12 @@ export const database_reducer = (
         case 'load_local':
             const value = localStorage.getItem(KEY_LOCAL_STORAGE)
 
-            if (value)
+            if (value) {
                 return {
                     ...(JSON.parse(value) as GlobalStateType),
                     Loaded: true,
                 }
+            }
 
             return state
 
