@@ -12,17 +12,14 @@ import {
     FormMessage,
 } from '@/components/ui/form'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 import { dbAtom } from '@/atoms/db_atom'
 import { useReducerAtomLocal as useReducerAtom } from '@/components/hooks/useReducerAtomLocal'
 import { database_reducer } from '@/atoms/reducers/reducer'
 import { toast } from 'sonner'
-import { PlanningState } from '@/questions/types/PlanningStateTypes'
-import { PlanningQuestions } from '@/questions/simplified_questions'
 import { Textarea } from '@/components/ui/textarea'
 import { TypeOfPlanningObject } from '@/questions/types/QuestionTypes'
 
-export function StudyPlanningForm({ planning }: { planning?: PlanningState }) {
+export function StudyPlanningForm() {
     const [state, dispatch] = useReducerAtom(dbAtom, database_reducer)
 
     const form = useForm<z.infer<typeof StudyDetailsSchema>>({
@@ -131,7 +128,7 @@ export function StudyPlanningForm({ planning }: { planning?: PlanningState }) {
         })
 
         toast('Study Plans Updated.', {
-            description: 'You may not begin inserting studies and coding.',
+            description: 'You may begin inserting studies and coding.',
             duration: 2000,
             dismissible: true,
         })

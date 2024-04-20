@@ -170,7 +170,13 @@ export function MainPage() {
                                 </TabsTrigger>
                                 <TabsTrigger
                                     value="studies"
-                                    className="w-full"
+                                    className={cn(
+                                        'w-full',
+                                        state.ReviewPlans.Status ===
+                                            'NotStarted'
+                                            ? 'opacity-50'
+                                            : ''
+                                    )}
                                     onClick={() => {
                                         if (state.DisplayState === 'studies')
                                             return
@@ -201,7 +207,13 @@ export function MainPage() {
                                 </TabsTrigger>
                                 <TabsTrigger
                                     value="empirical"
-                                    className="w-full"
+                                    className={cn(
+                                        'w-full',
+                                        state.ReviewPlans.Status ===
+                                            'NotStarted'
+                                            ? 'opacity-50'
+                                            : ''
+                                    )}
                                     onClick={() => {
                                         if (state.DisplayState === 'empirical')
                                             return
@@ -232,7 +244,13 @@ export function MainPage() {
                                 </TabsTrigger>
                                 <TabsTrigger
                                     value="visuals"
-                                    className="w-full"
+                                    className={cn(
+                                        'w-full',
+                                        state.ReviewPlans.Status ===
+                                            'NotStarted'
+                                            ? 'opacity-50'
+                                            : ''
+                                    )}
                                     onClick={() => {
                                         if (state.DisplayState === 'visuals')
                                             return
@@ -263,7 +281,13 @@ export function MainPage() {
                                 </TabsTrigger>
                                 <TabsTrigger
                                     value="notes"
-                                    className="w-full"
+                                    className={cn(
+                                        'w-full',
+                                        state.ReviewPlans.Status ===
+                                            'NotStarted'
+                                            ? 'opacity-50'
+                                            : ''
+                                    )}
                                     onClick={() => {
                                         if (state.DisplayState === 'notes')
                                             return
