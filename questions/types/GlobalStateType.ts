@@ -14,4 +14,5 @@ export type GlobalStateType = {
     Loaded?: boolean
     AutoSave?: boolean
     Notes?: Descendant[]
+    NeedSave: boolean
 }

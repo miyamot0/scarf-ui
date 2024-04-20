@@ -29,6 +29,7 @@ export const DefaultStartingValue: GlobalStateType = {
     DisplayState: 'instructions',
     Studies: [],
     Loaded: undefined,
+    NeedSave: false,
 }
 
 export const DefaultStartingValueExpanded = {

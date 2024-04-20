@@ -8,7 +8,7 @@ import {
 import type { DatabaseAction } from './reducer_types'
 import { v4 as uuidv4 } from 'uuid'
 import { StudyObject } from '@/questions/types/QuestionTypes'
-import { generateRandomStartState } from '../db_atom'
+import { DefaultStartingValue, generateRandomStartState } from '../db_atom'
 
 const KEY_LOCAL_STORAGE = 'scarf-web-ui'
 
@@ -38,10 +38,16 @@ export const database_reducer = (
         case 'load_external':
             return action.payload.saved_state
 
+        case 'reset':
+            return DefaultStartingValue
+
         case 'save_local':
             SaveToLocalStorage(state)
 
-            return state
+            return {
+                ...state,
+                NeedSave: false,
+            }
         case 'generate_random':
             return generateRandomStartState(state)
 
@@ -65,9 +71,12 @@ export const database_reducer = (
                 Studies: [...state.Studies, new_study],
             }
 
-            if (state.AutoSave) SaveToLocalStorage(new_state)
+            if (state.AutoSave) {
+                SaveToLocalStorage(new_state)
+                return new_state
+            }
 
-            return new_state
+            return { ...new_state, NeedSave: true }
         case 'bulk_import_studies':
             new_state = {
                 ...state,
@@ -78,9 +87,12 @@ export const database_reducer = (
                 Studies: [...state.Studies, ...action.payload.studies],
             }
 
-            if (state.AutoSave) SaveToLocalStorage(new_state)
+            if (state.AutoSave) {
+                SaveToLocalStorage(new_state)
+                return new_state
+            }
 
-            return new_state
+            return { ...new_state, NeedSave: true }
         case 'remove':
             new_state = {
                 ...state,
@@ -89,9 +101,12 @@ export const database_reducer = (
                 ),
             }
 
-            if (state.AutoSave) SaveToLocalStorage(new_state)
+            if (state.AutoSave) {
+                SaveToLocalStorage(new_state)
+                return new_state
+            }
 
-            return new_state
+            return { ...new_state, NeedSave: true }
         case 'update_display_state':
             new_state = {
                 ...state,
@@ -124,9 +139,12 @@ export const database_reducer = (
                 ),
             }
 
-            if (state.AutoSave) SaveToLocalStorage(new_state)
+            if (state.AutoSave) {
+                SaveToLocalStorage(new_state)
+                return new_state
+            }
 
-            return new_state
+            return { ...new_state, NeedSave: true }
         case 'update_study_category':
             new_state = {
                 ...state,
@@ -137,9 +155,12 @@ export const database_reducer = (
                 ),
             }
 
-            if (state.AutoSave) SaveToLocalStorage(new_state)
+            if (state.AutoSave) {
+                SaveToLocalStorage(new_state)
+                return new_state
+            }
 
-            return new_state
+            return { ...new_state, NeedSave: true }
         case 'update_review':
             new_state = {
                 ...state,
@@ -152,18 +173,24 @@ export const database_reducer = (
                 AutoSave: action.payload.auto_save,
             }
 
-            if (new_state.AutoSave) SaveToLocalStorage(new_state)
+            if (state.AutoSave) {
+                SaveToLocalStorage(new_state)
+                return new_state
+            }
 
-            return new_state
+            return { ...new_state, NeedSave: true }
         case 'update_notes':
             new_state = {
                 ...state,
                 Notes: action.payload.notes,
             }
 
-            if (state.AutoSave) SaveToLocalStorage(new_state)
+            if (state.AutoSave) {
+                SaveToLocalStorage(new_state)
+                return new_state
+            }
 
-            return new_state
+            return { ...new_state, NeedSave: true }
 
         case 'update_review_plans':
             new_state = {
@@ -171,9 +198,12 @@ export const database_reducer = (
                 ReviewPlans: action.payload.plans,
             }
 
-            if (state.AutoSave) SaveToLocalStorage(new_state)
+            if (state.AutoSave) {
+                SaveToLocalStorage(new_state)
+                return new_state
+            }
 
-            return new_state
+            return { ...new_state, NeedSave: true }
         default:
             return state
     }
