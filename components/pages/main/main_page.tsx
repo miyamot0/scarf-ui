@@ -76,6 +76,7 @@ import { StudyImportDialog } from '@/components/dialogs/study_import_dialog'
 import dynamic from 'next/dynamic'
 import { Provider } from 'jotai'
 import { useExistingData } from '@/components/hooks/useExistingData'
+import { toast } from 'sonner'
 
 export function MainPageShim() {
     return (
@@ -174,6 +175,20 @@ export function MainPage() {
                                         if (state.DisplayState === 'studies')
                                             return
 
+                                        if (
+                                            state.ReviewPlans.Status ===
+                                            'NotStarted'
+                                        ) {
+                                            toast(
+                                                'Please complete the planning tab before proceeding to study coding.',
+                                                {
+                                                    duration: 2000,
+                                                }
+                                            )
+
+                                            return
+                                        }
+
                                         dispatch({
                                             type: 'update_display_state',
                                             payload: {
@@ -190,6 +205,20 @@ export function MainPage() {
                                     onClick={() => {
                                         if (state.DisplayState === 'empirical')
                                             return
+
+                                        if (
+                                            state.ReviewPlans.Status ===
+                                            'NotStarted'
+                                        ) {
+                                            toast(
+                                                'Please complete the planning tab before proceeding.',
+                                                {
+                                                    duration: 2000,
+                                                }
+                                            )
+
+                                            return
+                                        }
 
                                         dispatch({
                                             type: 'update_display_state',
@@ -208,6 +237,20 @@ export function MainPage() {
                                         if (state.DisplayState === 'visuals')
                                             return
 
+                                        if (
+                                            state.ReviewPlans.Status ===
+                                            'NotStarted'
+                                        ) {
+                                            toast(
+                                                'Please complete the planning tab before proceeding.',
+                                                {
+                                                    duration: 2000,
+                                                }
+                                            )
+
+                                            return
+                                        }
+
                                         dispatch({
                                             type: 'update_display_state',
                                             payload: {
@@ -224,6 +267,20 @@ export function MainPage() {
                                     onClick={() => {
                                         if (state.DisplayState === 'notes')
                                             return
+
+                                        if (
+                                            state.ReviewPlans.Status ===
+                                            'NotStarted'
+                                        ) {
+                                            toast(
+                                                'Please complete the planning tab before proceeding.',
+                                                {
+                                                    duration: 2000,
+                                                }
+                                            )
+
+                                            return
+                                        }
 
                                         dispatch({
                                             type: 'update_display_state',

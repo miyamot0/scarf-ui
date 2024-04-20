@@ -4,6 +4,7 @@ import type { GlobalStateType } from '@/questions/types/GlobalStateType'
 import type {
     StudyObject,
     PublicationType,
+    TypeOfPlanningObject,
 } from '@/questions/types/QuestionTypes'
 import { ReviewTypes } from '@/types/ReviewTypes'
 import { Descendant } from 'slate'
@@ -53,5 +54,11 @@ export type DatabaseAction =
           type: 'update_notes'
           payload: {
               notes: Descendant[]
+          }
+      }
+    | {
+          type: 'update_review_plans'
+          payload: {
+              plans: TypeOfPlanningObject
           }
       }
