@@ -16,7 +16,7 @@ export function HeatmapIV(state: GlobalStateType) {
                         {state.Studies.map((r) => (
                             <StudyTitle
                                 key={`iv-header-${r.StudyID}`}
-                                text={r.StudyAuthors}
+                                text={r.StudyTag}
                             />
                         ))}
                     </tr>
