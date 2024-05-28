@@ -17,4 +17,5 @@ export type CommonVisualOutput = {
     RatingGeneralization: string
     DegreeGeneralization: string
     Type: PublicationType
+    Authors: string
 }

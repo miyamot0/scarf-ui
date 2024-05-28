@@ -28,7 +28,8 @@ const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
         return (
             <div className="bg-white border border-black p-2 rounded dark:text-black">
-                <p>{`Study: ${payload[0].payload.label}`}</p>
+                <p>{`Tag: ${payload[0].payload.label}`}</p>
+                <p>{`Study: ${payload[0].payload.authors}`}</p>
                 <p>{`Rigor of Generalization: ${payload[0].payload.degree}`}</p>
                 <p>{`Generalized Outcome Strength: ${payload[0].payload.level}`}</p>
             </div>
@@ -63,6 +64,7 @@ export function GeneralizationGivenWindow({
         label: record.Tag,
         level: record.RatingGeneralization,
         degree: record.DegreeGeneralization,
+        authors: record.Authors,
         z: size,
     }))
 
@@ -78,6 +80,7 @@ export function GeneralizationGivenWindow({
         label: record.Tag,
         level: record.RatingGeneralization,
         degree: record.DegreeGeneralization,
+        authors: record.Authors,
         z: size,
     }))
 
