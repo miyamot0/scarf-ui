@@ -19,7 +19,11 @@ import { toast } from 'sonner'
 import { Textarea } from '@/components/ui/textarea'
 import { TypeOfPlanningObject } from '@/questions/types/QuestionTypes'
 
-export function StudyPlanningForm() {
+export function StudyPlanningForm({
+    readonly = false,
+}: {
+    readonly?: boolean
+}) {
     const [state, dispatch] = useReducerAtom(dbAtom, database_reducer)
 
     const form = useForm<z.infer<typeof StudyDetailsSchema>>({
@@ -167,9 +171,11 @@ export function StudyPlanningForm() {
                     )
                 })}
 
-                <Button type="submit" size={'lg'} className="w-full">
-                    Update Review
-                </Button>
+                {readonly !== true && (
+                    <Button type="submit" size={'lg'} className="w-full">
+                        Update Review
+                    </Button>
+                )}
             </form>
         </Form>
     )

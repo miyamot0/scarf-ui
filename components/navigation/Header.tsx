@@ -18,6 +18,7 @@ import {
 import Link from 'next/link'
 import {
     Code2Icon,
+    DatabaseIcon,
     GithubIcon,
     InfoIcon,
     ListChecksIcon,
@@ -64,6 +65,17 @@ export const Header = ({ theme }: { theme: ThemeTypes }) => {
                 >
                     <UserSearchIcon size={20} />
                     Reliability
+                </NavigationMenuLink>
+
+                <NavigationMenuLink
+                    href="/archive"
+                    className={cn(
+                        navigationMenuTriggerStyle(),
+                        'flex flex-row gap-x-2 border shadow'
+                    )}
+                >
+                    <DatabaseIcon size={20} />
+                    Archives
                 </NavigationMenuLink>
             </NavigationMenuList>
 

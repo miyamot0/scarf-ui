@@ -16,3 +16,10 @@ export type GlobalStateType = {
     Notes?: Descendant[]
     NeedSave: boolean
 }
+
+export type SavedGlobalStateType = GlobalStateType & {
+    ID: string
+    DateSaved: string
+    Title: string
+    Author: string
+}

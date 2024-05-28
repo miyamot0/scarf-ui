@@ -1,25 +1,8 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
-import { StudyDetailsDialog } from '../../dialogs/study_details_dialog'
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
-} from '../../ui/card'
+import { useEffect } from 'react'
+import { Card, CardContent, CardHeader, CardTitle } from '../../ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../ui/tabs'
-
-const InstructionsView = dynamic(
-    () =>
-        import('./tabs/instructions/instructions_view').then(
-            (mod) => mod.InstructionsView
-        ),
-    {
-        loading: () => <LoadingSpinner className="mx-auto" />,
-    }
-)
 
 const PlanningView = dynamic(
     () =>
@@ -62,47 +45,35 @@ const NotesTabView = dynamic(
 
 import { dbAtom } from '@/atoms/db_atom'
 import { useReducerAtomLocal as useReducerAtom } from '@/components/hooks/useReducerAtomLocal'
-import { StudyInternalValidityDialog } from '../../dialogs/study_internal_validity_dialog'
-import { StudyExternalValidityDialog } from '../../dialogs/study_external_validity_dialog'
-import { StudyReportingDialog } from '../../dialogs/study_reporting_dialog'
-import { StudyOutcomesDialog } from '../../dialogs/study_outcomes_dialog'
 import { database_reducer } from '@/atoms/reducers/reducer'
-import { ReviewDetailsDialog } from '../../dialogs/review_details_dialog'
 import { cn } from '@/lib/utils'
 import { LoadingSpinner } from '@/components/ui/loading-spinner'
 import { Hero } from './views/hero'
-import { ButtonBar } from './views/button_bar'
-import { StudyImportDialog } from '@/components/dialogs/study_import_dialog'
 import dynamic from 'next/dynamic'
 import { Provider } from 'jotai'
-import { useExistingData } from '@/components/hooks/useExistingData'
 import { toast } from 'sonner'
 import { DisplayStateType } from '@/questions/types/DisplayStateTypes'
 import { GlobalStateType } from '@/questions/types/GlobalStateType'
 
-export function MainPageShim() {
+export function MainPageShim({ data }: { data: GlobalStateType }) {
     return (
         <Provider>
-            <MainPage />
+            <MainPageArchived data={{ ...data, DisplayState: 'planning' }} />
         </Provider>
     )
 }
 
-export function MainPage() {
-    const { data, isLoading } = useExistingData()
+export function MainPageArchived({ data }: { data: GlobalStateType }) {
     const [state, dispatch] = useReducerAtom(dbAtom, database_reducer)
-    const refFileInput = useRef<HTMLInputElement>(null)
 
     useEffect(() => {
-        if (isLoading) return
-
         dispatch({
             type: 'load_external',
             payload: {
                 saved_state: data,
             },
         })
-    }, [dispatch, data, isLoading])
+    }, [dispatch, data])
 
     const catch_navigation = (
         local_state: GlobalStateType,
@@ -133,50 +104,17 @@ export function MainPage() {
                 <Card className="w-full">
                     <CardHeader className="flex flex-row justify-between">
                         <div className="flex flex-col">
-                            <CardTitle>{`Review Name: ${
-                                isLoading
-                                    ? 'Loading state...'
-                                    : state.ReviewName ?? 'UNNAMED'
+                            <CardTitle>{`Archived Review: ${
+                                state.ReviewName ?? 'Loading...'
                             }`}</CardTitle>
-                            <CardDescription>{`Reviewer Type: ${
-                                state.ReviewType ?? 'Primary'
-                            }`}</CardDescription>
                         </div>
-
-                        <ButtonBar
-                            state={state}
-                            dispatch={dispatch}
-                            refFileInput={refFileInput}
-                        />
                     </CardHeader>
                     <CardContent>
-                        {isLoading ?? <LoadingSpinner className="mx-auto" />}
-
                         <Tabs
                             value={state.DisplayState}
                             className={cn('w-full flex flex-col gap-y-4')}
                         >
                             <TabsList className="w-full flex flex-row border">
-                                <TabsTrigger
-                                    value="instructions"
-                                    className="w-full"
-                                    onClick={() => {
-                                        if (
-                                            state.DisplayState ===
-                                            'instructions'
-                                        )
-                                            return
-
-                                        dispatch({
-                                            type: 'update_display_state',
-                                            payload: {
-                                                display_state: 'instructions',
-                                            },
-                                        })
-                                    }}
-                                >
-                                    Instructions
-                                </TabsTrigger>
                                 <TabsTrigger
                                     value="planning"
                                     className="w-full"
@@ -255,36 +193,24 @@ export function MainPage() {
                                     Review Notes
                                 </TabsTrigger>
                             </TabsList>
-                            <TabsContent value="instructions">
-                                <InstructionsView />
-                            </TabsContent>
                             <TabsContent value="planning">
-                                <PlanningView />
+                                <PlanningView readonly={true} />
                             </TabsContent>
                             <TabsContent value="studies">
-                                <StudiesView />
+                                <StudiesView readonly={true} />
                             </TabsContent>
                             <TabsContent value="empirical">
-                                <EmpiricalTabView />
+                                <EmpiricalTabView readonly={true} />
                             </TabsContent>
                             <TabsContent value="visuals">
                                 <VisualsView />
                             </TabsContent>
                             <TabsContent value="notes">
-                                <NotesTabView />
+                                <NotesTabView readonly={true} />
                             </TabsContent>
                         </Tabs>
                     </CardContent>
                 </Card>
-
-                {/* Dialogs */}
-                <StudyImportDialog />
-                <ReviewDetailsDialog />
-                <StudyDetailsDialog />
-                <StudyInternalValidityDialog />
-                <StudyExternalValidityDialog />
-                <StudyReportingDialog />
-                <StudyOutcomesDialog />
             </div>
         </>
     )

@@ -73,6 +73,7 @@ export const study_columns: ColumnDef<StudyObject>[] = [
         ),
     },
     {
+        id: 'StudyStatus',
         accessorKey: 'StudyStatus',
         header: 'Status',
         enableHiding: false,

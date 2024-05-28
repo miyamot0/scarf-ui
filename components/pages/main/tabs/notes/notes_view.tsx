@@ -34,7 +34,7 @@ const initialValue = [
     },
 ] satisfies Descendant[]
 
-export function NotesTabView() {
+export function NotesTabView({ readonly }: { readonly?: boolean }) {
     const [state, dispatch] = useReducerAtom(dbAtom, database_reducer)
     const editor = useMemo(() => withHistory(withReact(createEditor())), [])
 
@@ -49,6 +49,8 @@ export function NotesTabView() {
             editor={editor}
             initialValue={state.Notes ?? initialValue}
             onChange={(value: Descendant[]) => {
+                if (readonly) return
+
                 const isAstChange = editor.operations.some(
                     (op) => 'set_selection' !== op.type
                 )
@@ -62,51 +64,46 @@ export function NotesTabView() {
                 }
             }}
         >
-            <MenuToolbar>
-                <MarkButton
-                    format="bold"
-                    icon={<BoldIcon className="h-4 w-4" />}
-                />
-                <MarkButton
-                    format="italic"
-                    icon={<ItalicIcon className="h-4 w-4" />}
-                />
-                <MarkButton
-                    format="underline"
-                    icon={<UnderlineIcon className="h-4 w-4" />}
-                />
-                {/* TODO: Expand these if anyone cares
-                <BlockButton format="heading-one" icon={<Heading1Icon />} />
-                <BlockButton format="heading-two" icon={<Heading2Icon />} />
-                <BlockButton
-                    format="numbered-list"
-                    icon={<ListOrderedIcon />}
-                />
-                <BlockButton format="bulleted-list" icon={<ListBulletIcon />} />
-                */}
-                <BlockButton
-                    format="left"
-                    icon={<AlignLeftIcon className="h-4 w-4 p-0 m-0" />}
-                />
-                <BlockButton
-                    format="center"
-                    icon={<AlignCenterIcon className="h-4 w-4" />}
-                />
-                <BlockButton
-                    format="right"
-                    icon={<AlignRightIcon className="h-4 w-4" />}
-                />
-                <BlockButton
-                    format="justify"
-                    icon={<AlignJustifyIcon className="h-4 w-4" />}
-                />
-            </MenuToolbar>
+            {!readonly && (
+                <MenuToolbar>
+                    <MarkButton
+                        format="bold"
+                        icon={<BoldIcon className="h-4 w-4" />}
+                    />
+                    <MarkButton
+                        format="italic"
+                        icon={<ItalicIcon className="h-4 w-4" />}
+                    />
+                    <MarkButton
+                        format="underline"
+                        icon={<UnderlineIcon className="h-4 w-4" />}
+                    />
+
+                    <BlockButton
+                        format="left"
+                        icon={<AlignLeftIcon className="h-4 w-4 p-0 m-0" />}
+                    />
+                    <BlockButton
+                        format="center"
+                        icon={<AlignCenterIcon className="h-4 w-4" />}
+                    />
+                    <BlockButton
+                        format="right"
+                        icon={<AlignRightIcon className="h-4 w-4" />}
+                    />
+                    <BlockButton
+                        format="justify"
+                        icon={<AlignJustifyIcon className="h-4 w-4" />}
+                    />
+                </MenuToolbar>
+            )}
             <Editable
                 className="p-2 border rounded"
                 renderElement={renderElement}
                 renderLeaf={renderLeaf}
                 spellCheck
                 autoFocus
+                readOnly={readonly}
                 onKeyDown={(event) => {
                     for (const hotkey in HOTKEYS) {
                         if (isHotkey(hotkey, event as any)) {
