@@ -10,8 +10,6 @@ import {
 import { getAllArchivedFiles } from '@/lib/api'
 import Link from 'next/link'
 
-export const dynamic = 'force-static'
-
 export default async function Page() {
     const archived_files = (await getAllArchivedFiles()).sort((a, b) => {
         return Date.parse(a.DateSaved).valueOf < Date.parse(b.DateSaved).valueOf
@@ -21,6 +19,15 @@ export default async function Page() {
 
     return (
         <>
+            <div className="flex flex-col gap-y-4 my-8">
+                <h1 className="text-6xl font-semibold text-center">
+                    SCARF-UI Archives
+                </h1>
+                <p className="text-center">
+                    Public records and data sets available for viewing.
+                </p>
+            </div>
+
             <Card>
                 <CardHeader>
                     <CardTitle>Archived SCARF-UI Records</CardTitle>

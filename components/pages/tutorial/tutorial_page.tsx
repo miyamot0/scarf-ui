@@ -17,6 +17,8 @@ import { ExecutionSection } from './views/step_2_execution'
 import { EvaluationSection } from './views/step_3_evaluation'
 import { ExportingSection } from './views/step_4_exporting'
 
+export const dynamic = 'force-static'
+
 export function TutorialPage() {
     return (
         <div className="flex flex-col gap-y-4">
