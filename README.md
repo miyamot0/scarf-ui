@@ -46,9 +46,15 @@ Interested parties are encouraged to reach out the Drs. Gilroy and Ledford for o
 
 ## Changelog
 
+### Version 0.3.5
+
+-   Expanded tooltips
+-   Added in early archiving features
+-   Bump to React 19
+
 ### Version 0.3.4
 
--   Revert VDOM speediums
+-   Revert VDOM speedups
 -   Add in planning panel
 
 ### Version 0.3.x

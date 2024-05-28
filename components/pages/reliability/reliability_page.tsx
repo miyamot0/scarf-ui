@@ -13,6 +13,8 @@ import { ReliabilityState } from '@/types/ReliabilityState'
 import { AgreementStatus } from './views/agreement_status'
 import { DataInputPanelWithRef } from './views/data_input_panels'
 
+export const dynamic = 'force-static'
+
 export function ReliabilityPage() {
     const [reliState, setReliState] = useState<ReliabilityState>({})
 

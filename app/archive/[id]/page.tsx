@@ -10,7 +10,7 @@ export default async function Page({
     const saved_data = await getFileByID(id)
 
     if (!saved_data) {
-        return <div>empty</div>
+        return <div>No records found.</div>
     }
 
     return <MainPageShim data={saved_data as GlobalStateType} />

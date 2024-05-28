@@ -36,7 +36,7 @@ export function ButtonBar({
 }: {
     state: GlobalStateType
     dispatch: (action: DatabaseAction) => void
-    refFileInput: RefObject<HTMLInputElement>
+    refFileInput: RefObject<HTMLInputElement | null>
 }) {
     function saveTxtToFile(fileName: string, textData: string) {
         const blobData = new Blob([textData], { type: 'text/plain' })

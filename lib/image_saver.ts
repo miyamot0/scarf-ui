@@ -12,8 +12,8 @@ function download(href: string, name: string) {
     link.remove()
 }
 
-export function ExtractRelevantImage(ref: RefObject<HTMLDivElement>) {
-    if (!ref.current) {
+export function ExtractRelevantImage(ref: RefObject<HTMLDivElement | null>) {
+    if (ref === null || !ref.current) {
         throw new Error('Ref is null')
     }
 

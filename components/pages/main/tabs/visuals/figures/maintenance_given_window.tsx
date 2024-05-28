@@ -1,3 +1,5 @@
+// @ts-nocheck Does not like React 19
+
 import {
     ResponsiveContainer,
     XAxis,

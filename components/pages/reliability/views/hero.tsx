@@ -5,7 +5,7 @@ export const Hero = () => {
                 SCARF-UI Reliability Check
             </h1>
             <p className="text-center">
-                Web-based resource for appraising SCED research.
+                Assess and evaluate levels of data coder agreement.
             </p>
         </div>
     )
