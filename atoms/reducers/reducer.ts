@@ -126,17 +126,28 @@ export const database_reducer = (
 
             return new_state
         case 'update_study':
+            const local_study_id = action.payload.study_id
+
+            const original_study = state.Studies.find(
+                (item) => item.StudyID === local_study_id
+            )
+
+            if (!original_study)
+                throw new Error(`Study with ID ${local_study_id} not found`)
+
+            const refreshed_studies = state.Studies.map((item) =>
+                item.StudyID === local_study_id
+                    ? action.payload.updatedData
+                    : item
+            )
+
             new_state = {
                 ...state,
                 DialogState: {
                     dialog_type: undefined,
                     study: undefined,
                 },
-                Studies: state.Studies.map((item) =>
-                    item.StudyID === action.payload.study_id
-                        ? { ...item, ...action.payload.updatedData }
-                        : item
-                ),
+                Studies: refreshed_studies,
             }
 
             if (state.AutoSave) {

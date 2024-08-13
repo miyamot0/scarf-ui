@@ -91,7 +91,9 @@ export function StudyInternalValidityForm({ study }: { study?: StudyObject }) {
     function onSubmit(values: z.infer<typeof StudyInternalValiditySchema>) {
         if (!study) throw new Error('Study should not be undefined')
 
-        let questions = study.InternalValidity.Questions
+        let questions = study.InternalValidity.Questions.map((q) => {
+            return { ...q }
+        })
 
         let t: keyof QuestionObjectHolder
 

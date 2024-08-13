@@ -61,7 +61,9 @@ export function StudyOutcomesForm({ study }: { study?: StudyObject }) {
     function onSubmit(values: z.infer<typeof StudyOutcomesSchema>) {
         if (!study) throw new Error('Study should not be undefined')
 
-        let questions = study.Outcomes.Questions
+        let questions = study.Outcomes.Questions.map((q) => {
+            return { ...q }
+        })
 
         let t: keyof QuestionObjectHolder
 

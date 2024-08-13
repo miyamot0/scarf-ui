@@ -95,6 +95,8 @@ export function StudyImportDialog() {
                 description: 'No complete records were found in the widget.',
             })
         } else {
+            setData(DEFAULT_DATA)
+
             dispatch({
                 type: 'bulk_import_studies',
                 payload: { studies },

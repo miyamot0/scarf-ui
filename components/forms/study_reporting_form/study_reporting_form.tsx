@@ -82,7 +82,9 @@ export function StudyReportingForm({ study }: { study?: StudyObject }) {
     function onSubmit(values: z.infer<typeof StudyReportingSchema>) {
         if (!study) throw new Error('Study should not be undefined')
 
-        let questions = study.Reporting.Questions
+        let questions = study.Reporting.Questions.map((q) => {
+            return { ...q }
+        })
 
         let t: keyof QuestionObjectHolder
 
