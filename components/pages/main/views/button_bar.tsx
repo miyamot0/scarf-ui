@@ -36,7 +36,7 @@ export function ButtonBar({
 }: {
     state: GlobalStateType
     dispatch: (action: DatabaseAction) => void
-    refFileInput: RefObject<HTMLInputElement | null>
+    refFileInput: RefObject<HTMLInputElement> | null
 }) {
     function saveTxtToFile(fileName: string, textData: string) {
         const blobData = new Blob([textData], { type: 'text/plain' })
@@ -110,7 +110,7 @@ export function ButtonBar({
                         variant="outline"
                         size="sm"
                         onClick={() => {
-                            if (refFileInput.current) {
+                            if (refFileInput && refFileInput.current) {
                                 refFileInput.current.click()
                             }
                         }}

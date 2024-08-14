@@ -2,6 +2,8 @@ import { MainPageShim } from '@/components/pages/main/main_page_archived'
 import { getAllArchivedFiles, getFileByID } from '@/lib/api'
 import { GlobalStateType } from '@/questions/types/GlobalStateType'
 
+export const dynamic = 'force-static'
+
 export default async function Page({
     params: { id },
 }: {

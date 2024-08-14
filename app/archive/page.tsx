@@ -10,6 +10,8 @@ import {
 import { getAllArchivedFiles } from '@/lib/api'
 import Link from 'next/link'
 
+export const dynamic = 'force-static'
+
 export default async function Page() {
     const archived_files = (await getAllArchivedFiles()).sort((a, b) => {
         return Date.parse(a.DateSaved).valueOf < Date.parse(b.DateSaved).valueOf
