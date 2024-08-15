@@ -20,7 +20,7 @@ export function DataTableColumnTooltip({
         <div className={cn('flex items-center space-x-2', className)}>
             <Tooltip>
                 <TooltipTrigger asChild>
-                    <div className={cn(className)}>{title}</div>
+                    <div className={cn(className, 'text-nowrap')}>{title}</div>
                 </TooltipTrigger>
                 <TooltipContent>
                     <p className="max-w-[300px]">{description}</p>

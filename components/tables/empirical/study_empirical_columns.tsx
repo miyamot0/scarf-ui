@@ -27,7 +27,7 @@ const empirical_cols_1 = InternalValidityQuestionDefault.Questions.map(
             accessorKey: question.QuestionID,
             header: () => (
                 <DataTableColumnTooltip
-                    title={question.QuestionID}
+                    title={question.QuestionID.replaceAll('_', ' ')}
                     description={question_lookup?.QuestionStem ?? ''}
                 />
             ),
@@ -56,7 +56,7 @@ const empirical_cols_2 = ExternalValidityQuestionDefault.Questions.map(
             accessorKey: question.QuestionID,
             header: () => (
                 <DataTableColumnTooltip
-                    title={question.QuestionID}
+                    title={question.QuestionID.replaceAll('_', ' ')}
                     description={question_lookup?.QuestionStem ?? ''}
                 />
             ),
@@ -84,7 +84,7 @@ const empirical_cols_3 = ReportingQuestionDefault.Questions.map((question) => {
         accessorKey: question.QuestionID,
         header: () => (
             <DataTableColumnTooltip
-                title={question.QuestionID}
+                title={question.QuestionID.replaceAll('_', ' ')}
                 description={question_lookup?.QuestionStem ?? ''}
             />
         ),
@@ -111,7 +111,7 @@ const empirical_cols_4 = OutcomesQuestionDefault.Questions.map((question) => {
         accessorKey: question.QuestionID,
         header: () => (
             <DataTableColumnTooltip
-                title={question.QuestionID}
+                title={question.QuestionID.replaceAll('_', ' ')}
                 description={question_lookup?.QuestionStem ?? ''}
             />
         ),

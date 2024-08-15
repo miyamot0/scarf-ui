@@ -20,6 +20,30 @@ import { database_reducer } from '@/atoms/reducers/reducer'
 import { Button } from '@/components/ui/button'
 import { toast } from 'sonner'
 
+const StatusHighlight = ({
+    status,
+    text,
+}: {
+    status: 'complete' | 'incomplete'
+    text: string
+}) => {
+    if (status === 'complete') {
+        return (
+            <>
+                <span className="w-2 h-2 mr-2 bg-green-500 rounded-full"></span>
+                {text}
+            </>
+        )
+    }
+
+    return (
+        <>
+            <span className="w-2 h-2 mr-2 bg-gray-500 rounded-full"></span>
+            {text}
+        </>
+    )
+}
+
 export function ActionCell({ Study }: { Study: StudyObject }) {
     const [, dispatch] = useReducerAtom(dbAtom, database_reducer)
 
@@ -52,13 +76,23 @@ export function ActionCell({ Study }: { Study: StudyObject }) {
                         })
                     }}
                 >
-                    Study Information
+                    <StatusHighlight
+                        status="complete"
+                        text="Study Information"
+                    />
                 </DropdownMenuItem>
 
                 <DropdownMenuGroup>
                     <DropdownMenuSub>
                         <DropdownMenuSubTrigger>
-                            <span>Peer Review Status</span>
+                            <StatusHighlight
+                                status={
+                                    Study.PublicationType === 'Unclassified'
+                                        ? 'incomplete'
+                                        : 'complete'
+                                }
+                                text="Peer Review Status"
+                            />
                         </DropdownMenuSubTrigger>
                         <DropdownMenuPortal>
                             <DropdownMenuSubContent>
@@ -149,7 +183,14 @@ export function ActionCell({ Study }: { Study: StudyObject }) {
                         })
                     }}
                 >
-                    Internal Validity Details
+                    <StatusHighlight
+                        status={
+                            Study.InternalValidity.Status === 'Completed'
+                                ? 'complete'
+                                : 'incomplete'
+                        }
+                        text="Internal Validity Details"
+                    />
                 </DropdownMenuItem>
                 <DropdownMenuItem
                     onClick={() => {
@@ -164,7 +205,14 @@ export function ActionCell({ Study }: { Study: StudyObject }) {
                         })
                     }}
                 >
-                    External Validity Details
+                    <StatusHighlight
+                        status={
+                            Study.ExternalValidity.Status === 'Completed'
+                                ? 'complete'
+                                : 'incomplete'
+                        }
+                        text="External Validity Details"
+                    />
                 </DropdownMenuItem>
                 <DropdownMenuItem
                     onClick={() => {
@@ -179,7 +227,14 @@ export function ActionCell({ Study }: { Study: StudyObject }) {
                         })
                     }}
                 >
-                    Reporting Details
+                    <StatusHighlight
+                        status={
+                            Study.Reporting.Status === 'Completed'
+                                ? 'complete'
+                                : 'incomplete'
+                        }
+                        text="Reporting Details"
+                    />
                 </DropdownMenuItem>
                 <DropdownMenuItem
                     onClick={() => {
@@ -194,7 +249,14 @@ export function ActionCell({ Study }: { Study: StudyObject }) {
                         })
                     }}
                 >
-                    Outcomes Details
+                    <StatusHighlight
+                        status={
+                            Study.Outcomes.Status === 'Completed'
+                                ? 'complete'
+                                : 'incomplete'
+                        }
+                        text="Outcomes Details"
+                    />
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>

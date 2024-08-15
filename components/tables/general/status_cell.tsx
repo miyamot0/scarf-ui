@@ -19,7 +19,9 @@ export function StatusCell({ Study }: { Study: StudyObject }) {
         Study.StudyYear !== -1
     ) {
         return (
-            <Badge className="bg-green-500 hover:bg-green-600">Completed</Badge>
+            <Badge className="bg-green-500 hover:bg-green-600 text-nowrap">
+                Completed
+            </Badge>
         )
     }
 
@@ -33,11 +35,15 @@ export function StatusCell({ Study }: { Study: StudyObject }) {
     ) {
         // Note: at leat one of the values is completed
         return (
-            <Badge className="bg-orange-500 hover:bg-orange-600">
+            <Badge className="bg-orange-500 hover:bg-orange-600 text-nowrap">
                 In Progress
             </Badge>
         )
     }
 
-    return <Badge className="bg-red-500 hover:bg-red-600">Not Started</Badge>
+    return (
+        <Badge className="bg-red-500 hover:bg-red-600 text-nowrap">
+            Not Started
+        </Badge>
+    )
 }
