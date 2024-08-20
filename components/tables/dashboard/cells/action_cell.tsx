@@ -258,6 +258,23 @@ export function ActionCell({ Study }: { Study: StudyObject }) {
                         text="Outcomes Details"
                     />
                 </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                    onClick={() => {
+                        dispatch({
+                            type: 'add_copy',
+                            payload: { study_id: Study.StudyID },
+                        })
+
+                        toast('Study Copy Appended to Dataset', {
+                            description: 'See the main table to begin coding.',
+                            duration: 2000,
+                            dismissible: true,
+                        })
+                    }}
+                >
+                    Duplicate Record
+                </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>
     )
