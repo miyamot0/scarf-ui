@@ -90,7 +90,7 @@
     {
         "Category": "Planning",
         "QuestionID": "Plan_DV_Measurement_4",
-        "QuestionStem": "For the purposes of this review, what frequency is sufficient for reliability data colletion (i.e., how often must authors collect interobserver agreement data in each condition)? If you are primarily interested in only included the studies with the highest believability, or if included studies are expected to have complex dependent variables measured in complex settings, you may want to set a high criterion. Otherwise, you may want to include a lower criterion. ",
+        "QuestionStem": "For the purposes of this review, what frequency is sufficient for reliability data collection (i.e., how often must authors collect interobserver agreement data in each condition)? If you are primarily interested in only included the studies with the highest believability, or if included studies are expected to have complex dependent variables measured in complex settings, you may want to set a high criterion. Otherwise, you may want to include a lower criterion. ",
         "QuestionInstruction": "",
         "QuestionType": "Text",
         "Locale": "en-us"
@@ -154,7 +154,7 @@
     {
         "Category": "Planning",
         "QuestionID": "Plan_Fidelity_3",
-        "QuestionStem": "For the purposes of this review, what frequency is sufficient for fidelity data colletion (i.e., how often must authors collect fidelity data in each condition)? If you are primarily interested in only included the studies with the highest believability, or if included studies are expected to have complex dependent variables measured in complex settings, you may want to set a high criterion. Otherwise, you may want to include a lower criterion. Note that fidelity data may be graphed and is not necessarily reported as a percentage correct (e.g., if your research question is about responsive interventions, you may have a study that graphs the number of adult responsivity behaviors in each condition).",
+        "QuestionStem": "For the purposes of this review, what frequency is sufficient for fidelity data collection (i.e., how often must authors collect fidelity data in each condition)? If you are primarily interested in only included the studies with the highest believability, or if included studies are expected to have complex dependent variables measured in complex settings, you may want to set a high criterion. Otherwise, you may want to include a lower criterion. Note that fidelity data may be graphed and is not necessarily reported as a percentage correct (e.g., if your research question is about responsive interventions, you may have a study that graphs the number of adult responsivity behaviors in each condition).",
         "QuestionInstruction": "",
         "QuestionType": "Text",
         "Locale": "en-us"
