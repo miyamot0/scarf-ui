@@ -211,7 +211,7 @@ export function MaintenanceGivenWindow({
                                 record.Type,
                                 record.Tag,
                                 'Maintenance',
-                                record.IV,
+                                record.MaintenanceWindow,
                                 record.Outcome,
                                 record.DegreeMaintenance,
                                 record.RatingMaintenance,

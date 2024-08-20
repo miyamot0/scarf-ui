@@ -204,13 +204,15 @@ export function GeneralizationGivenWindow({
                             'Y Label',
                         ].join('\t')
 
+                        console.log(Data)
+
                         const table_ized_data = Data.map((record) => {
                             const temp_row = [
                                 record.ID,
                                 record.Type,
                                 record.Tag,
                                 'Generalization',
-                                record.IV,
+                                record.GeneralizationRigor,
                                 record.Outcome,
                                 record.DegreeGeneralization,
                                 record.RatingGeneralization,
